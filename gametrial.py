@@ -14,11 +14,12 @@ def main():
 
     exit = False
     while not exit:
+        #update game
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit = True
-
-        #update game
+            elif event.type == pygame.KEYDOWN:
+                circuit_grid.handle_input(event.key)       
 
         #draw
         circuit_grid.draw(screen)

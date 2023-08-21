@@ -99,6 +99,38 @@ class CircuitGrid(pygame.sprite.RenderPlain):
     def get_selected_node_gate_part(self):
         return self.circuit_grid_model.get_node_gate_part(self.selected_wire, self.selected_column)
 
+    def handle_input(self,key):
+        if key == pygame.K_a :
+            self.move_to_adjacent_node(MOVE_LEFT)
+        elif key == pygame.K_d :
+            self.move_to_adjacent_node(MOVE_RIGHT) 
+        elif key == pygame.K_w :
+            self.move_to_adjacent_node(MOVE_UP)
+        elif key == pygame.K_s :
+            self.move_to_adjacent_node(MOVE_DOWN)
+        elif key == pygame.K_x :
+            self.handle_input_x()
+        elif key == pygame.K_y :
+            self.handle_input_y()
+        elif key == pygame.K_z :
+            self.handle_input_z()
+        elif key == pygame.K_h :
+            self.handle_input_h()
+        elif key == pygame.K_BACKSPACE:
+            self.handle_input_delete()
+        elif key == pygame.K_c :
+            self.handle_input_ctrl()
+        elif key == pygame.K_UP :
+            self.handle_input_move_ctrl(MOVE_UP)
+        elif key == pygame.K_DOWN :
+            self.handle_input_move_ctrl(MOVE_DOWN)
+        elif key == pygame.K_LEFT :
+            self.handle_input_rotate(-np.pi/8)
+        elif key == pygame.K_RIGHT :
+            self.handle_input_rotate(np.pi/8)
+
+
+
     def handle_input_x(self):
         selected_node_gate_part = self.get_selected_node_gate_part()
         if selected_node_gate_part == node_types.EMPTY:
