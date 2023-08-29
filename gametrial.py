@@ -10,8 +10,10 @@ clock = pygame.time.Clock()
 
 def main():
     #initialise game 
-    circuit_grid_model = CircuitGridModel(3,19)
-    circuit_grid = CircuitGrid(0,518,circuit_grid_model)
+    circuit_grid_model_3 = CircuitGridModel(3,19)
+    circuit_grid_3 = CircuitGrid(0,518,circuit_grid_model_3)
+    circuit_grid_model_2 = CircuitGridModel(2,19)  
+    circuit_grid_2 = CircuitGrid(0,552,circuit_grid_model_2)
     #display cards
 
     exit = False
@@ -23,14 +25,14 @@ def main():
             if event.type == pygame.QUIT:
                 exit = True
             elif event.type == pygame.KEYDOWN:
-                circuit_grid.handle_input(event.key)
+                circuit_grid_3.handle_input(event.key)
 
         #add cards
         
         tabletop.display(352.4214876,38,shuffled_cards)
 
         #draw
-        circuit_grid.draw(screen)
+        circuit_grid_3.draw(screen)
         pygame.display.flip()
 
         #set framerate
