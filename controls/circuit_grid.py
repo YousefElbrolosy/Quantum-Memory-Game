@@ -102,6 +102,8 @@ class CircuitGrid(pygame.sprite.RenderPlain):
     def handle_input(self,key):
         if key == pygame.K_a :
             self.move_to_adjacent_node(MOVE_LEFT)
+        elif key == pygame.K_i :
+            self.handle_input_i()
         elif key == pygame.K_d :
             self.move_to_adjacent_node(MOVE_RIGHT) 
         elif key == pygame.K_w :
@@ -135,6 +137,13 @@ class CircuitGrid(pygame.sprite.RenderPlain):
         selected_node_gate_part = self.get_selected_node_gate_part()
         if selected_node_gate_part == node_types.EMPTY:
             circuit_grid_node = CircuitGridNode(node_types.X)
+            self.circuit_grid_model.set_node(self.selected_wire, self.selected_column, circuit_grid_node)
+        self.update()
+
+    def handle_input_i(self):
+        selected_node_gate_part = self.get_selected_node_gate_part()
+        if selected_node_gate_part == node_types.EMPTY:
+            circuit_grid_node = CircuitGridNode(node_types.IDEN)
             self.circuit_grid_model.set_node(self.selected_wire, self.selected_column, circuit_grid_node)
         self.update()
 

@@ -2,8 +2,8 @@ import pygame
 from controls.circuit_grid import CircuitGrid
 from model.circuit_grid_model import CircuitGridModel
 pygame.init()
-screen = pygame.display.set_mode((1185,700))
-pygame.display.set_caption('Brolos')
+screen = pygame.display.set_mode((1200,800))
+pygame.display.set_caption('Quantum Memory')
 clock = pygame.time.Clock()
 
 def main():
