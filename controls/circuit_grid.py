@@ -56,7 +56,7 @@ class CircuitGrid(pygame.sprite.RenderPlain):
         self.update()
 
     def update(self, *args):
-        print("in CircuitGrid#update()")
+        #print("in CircuitGrid#update()")
 
         sprite_list = self.sprites()
         for sprite in sprite_list:
