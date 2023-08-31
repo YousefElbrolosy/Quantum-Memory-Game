@@ -33,6 +33,7 @@ def display(posX,posY,cards):
     tmp = posX
     j = 0
     for i in range(len(cards)):
+        #displays and adds to a matrix
         screen.blit(cards[i],(posX,posY))
         matrix[j].append(cards[i])
         posX +=82.6446281

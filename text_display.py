@@ -8,52 +8,62 @@ class Text():
     text3Y = 10
     def __init__(self):
         pass
-    def show_00(self,x,y,screen):
-        ket =self.font.render("|00>",True,(255,255,255))
+    def show_00(self,x,y,screen,color):
+        ket =self.font.render("|00>",True,color)
         screen.blit(ket, (x,y))
-    def show_01(self,x,y,screen):
-        ket =self.font.render("|01>",True,(255,255,255))
+    def show_01(self,x,y,screen,color):
+        ket =self.font.render("|01>",True,color)
         screen.blit(ket, (x,y))
-    def show_10(self,x,y,screen):
-        ket =self.font.render("|10>",True,(255,255,255))
+    def show_10(self,x,y,screen,color):
+        ket =self.font.render("|10>",True,color)
         screen.blit(ket, (x,y))
-    def show_11(self,x,y,screen):
-        ket =self.font.render("|11>",True,(255,255,255))
+    def show_11(self,x,y,screen,color):
+        ket =self.font.render("|11>",True,color)
         screen.blit(ket, (x,y))
-    def show_000(self,x,y,screen):
-        ket =self.font_size_2.render("|000>",True,(255,255,255))
+    def show_000(self,x,y,screen,color):
+        ket =self.font_size_2.render("|000>",True,color)
         screen.blit(ket, (x,y))
-    def show_001(self,x,y,screen):
-        ket =self.font_size_2.render("|001>",True,(255,255,255))
+    def show_001(self,x,y,screen,color):
+        ket =self.font_size_2.render("|001>",True,color)
         screen.blit(ket, (x,y))
-    def show_010(self,x,y,screen):
-        ket =self.font_size_2.render("|010>",True,(255,255,255))
+    def show_010(self,x,y,screen,color):
+        ket =self.font_size_2.render("|010>",True,color)
         screen.blit(ket, (x,y))
-    def show_011(self,x,y,screen):
-        ket =self.font_size_2.render("|011>",True,(255,255,255))
+    def show_011(self,x,y,screen,color):
+        ket =self.font_size_2.render("|011>",True,color)
         screen.blit(ket, (x,y))
-    def show_100(self,x,y,screen):
-        ket =self.font_size_2.render("|100>",True,(255,255,255))
+    def show_100(self,x,y,screen,color):
+        ket =self.font_size_2.render("|100>",True,color)
         screen.blit(ket, (x,y))
-    def show_101(self,x,y,screen):
-        ket =self.font_size_2.render("|101>",True,(255,255,255))
+    def show_101(self,x,y,screen,color):
+        ket =self.font_size_2.render("|101>",True,color)
         screen.blit(ket, (x,y))
-    def show_110(self,x,y,screen):
-        ket =self.font_size_2.render("|110>",True,(255,255,255))
+    def show_110(self,x,y,screen,color):
+        ket =self.font_size_2.render("|110>",True,color)
         screen.blit(ket, (x,y))
-    def show_111(self,x,y,screen):
-        ket =self.font_size_2.render("|111>",True,(255,255,255))
+    def show_111(self,x,y,screen,color):
+        ket =self.font_size_2.render("|111>",True,color)
         screen.blit(ket, (x,y))
-    def display_text(self,screen):
-        self.show_00(self.text2X,self.text2Y,screen)
-        self.show_01(self.text2X,self.text2Y+(120*1),screen)
-        self.show_10(self.text2X,self.text2Y+(120*2),screen)
-        self.show_11(self.text2X,self.text2Y+(120*3),screen)
-        self.show_000(self.text3X+(82*0),self.text3Y,screen)
-        self.show_001(self.text3X+(82*1),self.text3Y,screen)
-        self.show_010(self.text3X+(82*2),self.text3Y,screen)
-        self.show_011(self.text3X+(82*3),self.text3Y,screen)
-        self.show_100(self.text3X+(82*4),self.text3Y,screen)
-        self.show_101(self.text3X+(82*5),self.text3Y,screen)
-        self.show_110(self.text3X+(82*6),self.text3Y,screen)
-        self.show_111(self.text3X+(82*7),self.text3Y,screen)
+    def display_text(self,screen,color):
+        self.show_00(self.text2X,self.text2Y,screen,color)
+        self.text2Y+=(120*1)
+        self.show_01(self.text2X,self.text2Y,screen,color)
+        self.text2Y+=(120*1)
+        self.show_10(self.text2X,self.text2Y,screen,color)
+        self.text2Y+=(120*1)
+        self.show_11(self.text2X,self.text2Y,screen,color)
+        self.show_000(self.text3X,self.text3Y,screen,color)
+        self.text3X+=(82*1)
+        self.show_001(self.text3X,self.text3Y,screen,color)
+        self.text3X+=(82*1)
+        self.show_010(self.text3X,self.text3Y,screen,color)
+        self.text3X+=(82*1)
+        self.show_011(self.text3X,self.text3Y,screen,color)
+        self.text3X+=(82*1)
+        self.show_100(self.text3X,self.text3Y,screen,color)
+        self.text3X+=(82*1)
+        self.show_101(self.text3X,self.text3Y,screen,color)
+        self.text3X+=(82*1)
+        self.show_110(self.text3X,self.text3Y,screen,color)
+        self.text3X+=(82*1)
+        self.show_111(self.text3X,self.text3Y,screen,color)
