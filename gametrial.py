@@ -2,11 +2,13 @@ import pygame
 from controls.circuit_grid import CircuitGrid
 from model.circuit_grid_model import CircuitGridModel
 import tabletop
+from text_display import Text
 pygame.init()
 #my aspect ratio is 1366 by 768
 screen = pygame.display.set_mode((1366,768))
 pygame.display.set_caption('Quantum Memory')
 clock = pygame.time.Clock()
+bgImg = pygame.image.load('data/photos/space.jpg')
 
 def main():
     #initialise game 
@@ -19,7 +21,9 @@ def main():
     exit = False
     shuffled_cards = tabletop.shuffle(tabletop.cards_xpics_x910)
     while not exit:
-        screen.fill((100,255,100))
+        screen.fill((0,0,0))
+        screen.blit(bgImg,(0,0))
+        screen.blit(bgImg,(683,0))
         #update game
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -30,7 +34,9 @@ def main():
         #add cards
         
         tabletop.display(352.4214876,38,shuffled_cards)
-
+        #text
+        text_display = Text()
+        text_display.display_text(screen)
         #draw
         circuit_grid_3.draw(screen)
         pygame.display.flip()
