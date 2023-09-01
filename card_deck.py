@@ -39,7 +39,7 @@ class CardDeck():
         #screen.blit(pygame.transform.scale(pygame.image.load('playing_cards/'+'2'+'_of_clubs.png'),(82.6446281,120)),(10,10))
         for i in range(len(cards)):
             #displays and adds to a matrix
-            screen.blit(cards[i].get_card_img(),(posX,posY))
+            screen.blit(cards[i].back_img,(posX,posY))
             
             self.matrix[j].append(cards[i])
             
