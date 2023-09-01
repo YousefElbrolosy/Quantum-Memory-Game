@@ -6,64 +6,37 @@ class Text():
     text2Y = 90
     text3X = 360
     text3Y = 10
+    color00 = (255,255,255)
+    color01 = (255,255,255)
+    color10 = (255,255,255)
+    color11 = (255,255,255)
+    color000 = (255,255,255)
+    color001 = (255,255,255)
+    color010 = (255,255,255)
+    color011 = (255,255,255)
+    color100 = (255,255,255)
+    color101 = (255,255,255)
+    color110 = (255,255,255)
+    color111 = (255,255,255)
+    color_list_2 = [color00,color01,color10,color11]
+    color_list_3 = [color000,color001,color010,color011,color100,color101,color110,color111]
+    state_list_2 = ["|00>","|01>","|10>","|11>"]
+    state_list_3 = ["|000>","|001>","|010>","|011>","|100>","|101>","|110>","|111>"]
     def __init__(self):
         pass
-    def show_00(self,x,y,screen,color):
-        ket =self.font.render("|00>",True,color)
-        screen.blit(ket, (x,y))
-    def show_01(self,x,y,screen,color):
-        ket =self.font.render("|01>",True,color)
-        screen.blit(ket, (x,y))
-    def show_10(self,x,y,screen,color):
-        ket =self.font.render("|10>",True,color)
-        screen.blit(ket, (x,y))
-    def show_11(self,x,y,screen,color):
-        ket =self.font.render("|11>",True,color)
-        screen.blit(ket, (x,y))
-    def show_000(self,x,y,screen,color):
-        ket =self.font_size_2.render("|000>",True,color)
-        screen.blit(ket, (x,y))
-    def show_001(self,x,y,screen,color):
-        ket =self.font_size_2.render("|001>",True,color)
-        screen.blit(ket, (x,y))
-    def show_010(self,x,y,screen,color):
-        ket =self.font_size_2.render("|010>",True,color)
-        screen.blit(ket, (x,y))
-    def show_011(self,x,y,screen,color):
-        ket =self.font_size_2.render("|011>",True,color)
-        screen.blit(ket, (x,y))
-    def show_100(self,x,y,screen,color):
-        ket =self.font_size_2.render("|100>",True,color)
-        screen.blit(ket, (x,y))
-    def show_101(self,x,y,screen,color):
-        ket =self.font_size_2.render("|101>",True,color)
-        screen.blit(ket, (x,y))
-    def show_110(self,x,y,screen,color):
-        ket =self.font_size_2.render("|110>",True,color)
-        screen.blit(ket, (x,y))
-    def show_111(self,x,y,screen,color):
-        ket =self.font_size_2.render("|111>",True,color)
-        screen.blit(ket, (x,y))
-    def display_text(self,screen,color):
-        self.show_00(self.text2X,self.text2Y,screen,color)
-        self.text2Y+=(120*1)
-        self.show_01(self.text2X,self.text2Y,screen,color)
-        self.text2Y+=(120*1)
-        self.show_10(self.text2X,self.text2Y,screen,color)
-        self.text2Y+=(120*1)
-        self.show_11(self.text2X,self.text2Y,screen,color)
-        self.show_000(self.text3X,self.text3Y,screen,color)
-        self.text3X+=(82*1)
-        self.show_001(self.text3X,self.text3Y,screen,color)
-        self.text3X+=(82*1)
-        self.show_010(self.text3X,self.text3Y,screen,color)
-        self.text3X+=(82*1)
-        self.show_011(self.text3X,self.text3Y,screen,color)
-        self.text3X+=(82*1)
-        self.show_100(self.text3X,self.text3Y,screen,color)
-        self.text3X+=(82*1)
-        self.show_101(self.text3X,self.text3Y,screen,color)
-        self.text3X+=(82*1)
-        self.show_110(self.text3X,self.text3Y,screen,color)
-        self.text3X+=(82*1)
-        self.show_111(self.text3X,self.text3Y,screen,color)
+    def gen2(self,screen):
+        for i in range(len(self.state_list_2)):
+            ket = self.font.render(self.state_list_2[i],True,self.color_list_2[i])
+            screen.blit(ket,(self.text2X,self.text2Y))
+            self.text2Y+=(120*1)
+    def gen3(self,screen):
+        for i in range(len(self.state_list_3)):
+            ket = self.font_size_2.render(self.state_list_3[i],True,self.color_list_3[i])
+            screen.blit(ket,(self.text3X,self.text3Y))
+            self.text3X+=(82*1)
+    def display_grid(self,screen):
+        self.gen2(screen)
+        self.gen3(screen)
+    def reset(self):
+        self.color_list_2 = [self.color00,self.color01,self.color10,self.color11]
+        self.color_list_3 = [self.color000,self.color001,self.color010,self.color011,self.color100,self.color101,self.color110,self.color111]
