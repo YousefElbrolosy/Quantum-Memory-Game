@@ -2,7 +2,7 @@ import pygame
 from controls.circuit_grid import CircuitGrid
 from model.circuit_grid_model import CircuitGridModel
 from Quantum import Quantum_control
-import tabletop
+from card_deck import CardDeck
 from text_display import Text
 pygame.init()
 #my aspect ratio is 1366 by 768
@@ -24,7 +24,9 @@ def main():
     #############
     exit = False
     #shuffle cards
-    shuffled_cards = tabletop.shuffle(tabletop.cards_xpics_x910)
+    card_deck = CardDeck()
+    card_deck.add_cards()
+    shuffled_cards = card_deck.shuffle(card_deck.cards_xpics_x910)
     while not exit:
         screen.fill((0,0,0))
         screen.blit(bgImg,(0,0))
@@ -39,20 +41,19 @@ def main():
 
 
         #display cards
-        tabletop.display(352.4214876,38,shuffled_cards)
+        card_deck.display(352.4214876,38,shuffled_cards,screen)
         #text
         text_display = Text()
         text_display.reset()
         #draw
-
         #row control (add sounds later)
+        #this can be written using a for loop but I prefer not to
         if row_flag == True:
             circuit_grid_2.draw(screen)
             quantum_control = Quantum_control(circuit_grid_2)
-            bra_ket = quantum_control.select_row()
+            bra_ket = quantum_control.select_row() 
             if bra_ket == "|00>":
                 text_display.color_list_2[0] = (0,255,255)
-                print(text_display.color00)
             if bra_ket == "|01>":
                 text_display.color_list_2[1] = (0,255,255)
             if bra_ket == "|10>":
