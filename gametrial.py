@@ -48,12 +48,11 @@ def main():
                 if (event.key == pygame.K_LSHIFT):
                     col_button.pressed = True
                     col_flag = True
-                    row_button.enabled = False
+                    
                 elif (event.key == pygame.K_RSHIFT):
                     row_button.pressed = True
-                    print("pressed succ")
                     row_flag = True
-                    col_button.enabled = False
+                    
             
         #display cards
         card_deck.display(352.4214876,38,shuffled_cards,screen)
