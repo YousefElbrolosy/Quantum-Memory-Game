@@ -7,6 +7,14 @@ class CardDeck():
     cards = []
     cards_xpics_x910 = []
     matrix = [[],[],[],[]]
+    dictionary = {}
+    tmpi = 0
+    tmpj = 0
+    border_matrix = [[False,False,False,False,False,False,False,False],
+              [False,False,False,False,False,False,False,False],
+              [False,False,False,False,False,False,False,False],
+              [False,False,False,False,False,False,False,False]]
+    
     def __init__(self):
         pass
     # comment is full deck
@@ -48,4 +56,35 @@ class CardDeck():
                 posX = tmp
                 posY+=120
                 j+=1
+    
+    def add_border(self,i,j):
+        self.matrix[i][j].set_border()
+        self.dictionary.update({(i,j):self.matrix[i][j]})
 
+    def reset8(self):
+        for key,value in self.dictionary.items():
+            value.remove_border()
+
+    """
+    def set_border(self,i,j):
+        self.matrix[i][j].set_border(True)
+        self.temp[(i,j)] = self.matrix[i].pop(j)
+    
+    def display_border(self,index1,index2):
+        self.border_matrix[index1][index2] = True
+        (self.matrix[index1][index2]).set_border(self.border_matrix[index1][index2])
+    
+    def reset(self,cards):
+        for i in range(len(cards)):
+            cards[i].update_img()
+    def reset2(self):
+        self.border_matrix = [[False,False,False,False,False,False,False,False],
+              [False,False,False,False,False,False,False,False],
+              [False,False,False,False,False,False,False,False],
+              [False,False,False,False,False,False,False,False]]
+    def reset3(self,stack):
+        # here I want to re insert any removed element back into its position
+        # I think that I will need to make a hashmap
+        if len(hmap) > 0:
+            matrix[hmap.get_val()]
+    """
