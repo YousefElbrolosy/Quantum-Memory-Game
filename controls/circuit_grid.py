@@ -100,6 +100,7 @@ class CircuitGrid(pygame.sprite.RenderPlain):
         return self.circuit_grid_model.get_node_gate_part(self.selected_wire, self.selected_column)
 
     def handle_input(self,key):
+        keys = pygame.key.get_pressed()
         if key == pygame.K_a :
             self.move_to_adjacent_node(MOVE_LEFT)
         elif key == pygame.K_i :
@@ -120,7 +121,7 @@ class CircuitGrid(pygame.sprite.RenderPlain):
             self.handle_input_h()
         elif key == pygame.K_BACKSPACE:
             self.handle_input_delete()
-        elif key == pygame.K_c :
+        elif key == pygame.K_c and not keys[pygame.K_LSHIFT]:
             self.handle_input_ctrl()
         elif key == pygame.K_UP :
             self.handle_input_move_ctrl(MOVE_UP)
@@ -320,7 +321,7 @@ class CircuitGrid(pygame.sprite.RenderPlain):
             # ALSO: Refactor with similar code in this method
             for wire_idx in range(min(gate_wire_num, control_wire_num),
                                   max(gate_wire_num, control_wire_num) + 1):
-                print("Replacing wire ", wire_idx, " in column ", column_num)
+                #print("Replacing wire ", wire_idx, " in column ", column_num)
                 circuit_grid_node = CircuitGridNode(node_types.EMPTY)
                 self.circuit_grid_model.set_node(wire_idx, column_num, circuit_grid_node)
 
