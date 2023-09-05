@@ -5,6 +5,7 @@ from quantum import Quantum_control
 from card_deck import CardDeck
 from text_display import Text
 from button import Button
+import time
 pygame.init()
 #my aspect ratio is 1366 by 768
 screen = pygame.display.set_mode((1366,768))
@@ -15,9 +16,13 @@ default_text_color = (255,255,255)
 def main():
     #initialise game 
     circuit_grid_model_3 = CircuitGridModel(3,19)
+    tmp_m_3 = circuit_grid_model_3
     circuit_grid_3 = CircuitGrid(0,518,circuit_grid_model_3)
+    tmp_3 = circuit_grid_3
     circuit_grid_model_2 = CircuitGridModel(2,19)  
+    tmp_m_2 = circuit_grid_model_2
     circuit_grid_2 = CircuitGrid(0,575,circuit_grid_model_2)
+    tmp_2 = circuit_grid_2
     # should be made ito a button
     row_flag = True
     #should be unpressable unless row is selected
@@ -41,6 +46,8 @@ def main():
 
         button_row.add_button(1025,10)
         button_column.add_button(1025,60)
+        global tmpi
+        global tmpj
         if row_flag:
             button_column.un_press()
         
@@ -54,24 +61,44 @@ def main():
                 if col_flag and not row_flag:
                     circuit_grid_3.handle_input(event.key)
                 keys = pygame.key.get_pressed()
-                if keys[pygame.K_r] and keys[pygame.K_LSHIFT]:
+                #prevents switching back to row
+                """
+                if keys[pygame.K_r] and (keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]):
                     button_column.un_press()
                     button_row.press()
                     row_flag =True
                     col_flag = False
-                    
-                if keys[pygame.K_c] and keys[pygame.K_LSHIFT]:
+                """    
+                if keys[pygame.K_c] and (keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]):
                     button_row.un_press()
                     button_column.press()
                     col_flag = True
                     row_flag = False
+                
+                if event.key == pygame.K_RETURN and button_column.pressed:
+                    card_deck.flip(tmpi,tmpj)
+                    button_row.press()
+                    button_column.un_press()
+                    row_flag = True
+                    col_flag = False
+                    circuit_grid_model_3 = CircuitGridModel(3,19)
+                    circuit_grid_3 = CircuitGrid(0,518,circuit_grid_model_3)
+                    circuit_grid_model_2 = CircuitGridModel(2,19)  
+                    circuit_grid_2 = CircuitGrid(0,575,circuit_grid_model_2)
+                elif event.key == pygame.K_q:
+                    card_deck.cheat(352.4214876,38,shuffled_cards,screen)
+                    
+                    
+                    
+                    
             
         #display cards
         card_deck.display(352.4214876,38,shuffled_cards,screen)
         card_deck.reset8()
         text_display.reset()
-        global tmpi
-        global tmpj
+        if len(card_deck.flip_dictionary) == 2:
+                        time.sleep(3)
+                        card_deck.check_cards()
         tmpj = 0
         #draw
         #row control (add sounds later)
