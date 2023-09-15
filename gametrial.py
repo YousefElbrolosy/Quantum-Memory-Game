@@ -99,6 +99,7 @@ def main():
         card_deck.reset8()
         text_display.reset()
         if len(card_deck.flip_dictionary) == 2:
+            #time.sleep(1)
             card_deck.check_cards()
         tmpj = 0
         #draw
