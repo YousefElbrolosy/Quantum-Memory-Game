@@ -11,12 +11,9 @@ class CardDeck():
     border_dictionary = {}
     flip_dictionary = {}
     flipped_list = []
+    checked = False
     tmpi = 0
     tmpj = 0
-    border_matrix = [[False,False,False,False,False,False,False,False],
-              [False,False,False,False,False,False,False,False],
-              [False,False,False,False,False,False,False,False],
-              [False,False,False,False,False,False,False,False]]
     
     def __init__(self):
         pass
@@ -49,6 +46,21 @@ class CardDeck():
             self.matrix[j].append(cards[i])
             if i == 7 or i == 15 or i == 23 or i == 31 or i == 39 or i == 47 or i == 55 :
                 j+=1
+
+    def display_matrix(self,posX,posY,screen):
+        tmp = posX
+        for i in range(len(self.matrix)):
+            for j in range(len(self.matrix[i])):
+                if self.matrix[i][j].flipped:
+                    screen.blit(self.matrix[i][j].get_card_img(),(posX,posY))
+                else:
+                    screen.blit(self.matrix[i][j].get_back_img(),(posX,posY))
+                posX +=82.6446281
+                if j == 7: 
+                    posX = tmp
+                    posY+=120
+                    break
+
     def display(self,posX,posY,cards,screen):
         tmp = posX
         j = 0
@@ -105,9 +117,10 @@ class CardDeck():
     def un_flip(self):
         for value in self.flipped_list:
             value.un_flip()
-            self.flipped_list.remove(value)
+            del value
 
     def check_cards(self):
+        self.checked = True
         if list(self.flip_dictionary.values())[0].img_text == list(self.flip_dictionary.values())[1].img_text:
             for (i,j), value in self.flip_dictionary.items():
                 del self.matrix[i][j]

@@ -33,6 +33,7 @@ def main():
     card_deck = CardDeck()
     card_deck.add_cards()
     shuffled_cards = card_deck.shuffle(card_deck.cards_xpics_x910)
+    card_deck.add_to_matrix(shuffled_cards)
     #text
     text_font = Text()
     button_row = Button("row    'shift+r'",325,50,'gray','black',4,screen,text_font.font)
@@ -93,12 +94,12 @@ def main():
                     
             
         #display cards
-        card_deck.display(352.4214876,38,shuffled_cards,screen)
+        #card_deck.display(352.4214876,38,shuffled_cards,screen)
+        card_deck.display_matrix(352.4214876,38,screen)
         card_deck.reset8()
         text_display.reset()
         if len(card_deck.flip_dictionary) == 2:
-                        time.sleep(3)
-                        card_deck.check_cards()
+            card_deck.check_cards()
         tmpj = 0
         #draw
         #row control (add sounds later)
