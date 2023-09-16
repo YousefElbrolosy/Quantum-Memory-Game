@@ -16,13 +16,9 @@ default_text_color = (255,255,255)
 def main():
     #initialise game 
     circuit_grid_model_3 = CircuitGridModel(3,19)
-    tmp_m_3 = circuit_grid_model_3
     circuit_grid_3 = CircuitGrid(0,518,circuit_grid_model_3)
-    tmp_3 = circuit_grid_3
     circuit_grid_model_2 = CircuitGridModel(2,19)  
-    tmp_m_2 = circuit_grid_model_2
     circuit_grid_2 = CircuitGrid(0,575,circuit_grid_model_2)
-    tmp_2 = circuit_grid_2
     # should be made ito a button
     row_flag = True
     #should be unpressable unless row is selected
@@ -33,7 +29,7 @@ def main():
     #shuffle cards
     card_deck = CardDeck()
     card_deck.add_cards()
-    shuffled_cards = card_deck.shuffle(card_deck.cards_xpics_x910)
+    card_deck.shuffle(card_deck.cards_xpics_x910)
     #text
     text_font = Text()
     button_row = Button("row    'shift+r'",325,50,'gray','black',4,screen,text_font.font)
@@ -107,11 +103,8 @@ def main():
         if len(card_deck.flip_dictionary) == 2:
             #time.sleep(1)
             card_deck.check_cards()
-        print("now no of cards are",len(card_deck.matrix[0]))
-        print("now no of cards are",len(card_deck.matrix[1]))
-        print("now no of cards are",len(card_deck.matrix[2]))
-        print("now no of cards are",len(card_deck.matrix[3]))
-        tmpj = 0
+        if card_deck.score == 0:
+            tmpj = 0
         #draw
         #row control (add sounds later)
         #this can be written using a for loop but I prefer not to

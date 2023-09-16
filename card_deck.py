@@ -1,6 +1,5 @@
 import pygame
 import random
-import time
 from card import Card
 #possibility of limitin only two cards of the same face to be present (harder) 2 eights instead of 4 eights
 # possibility of choosing a different range
@@ -10,10 +9,10 @@ class CardDeck():
     matrix = [[],[],[],[]]
     border_dictionary = {}
     flip_dictionary = {}
-    flipped_list = []
     checked = False
     tmpi = 0
     tmpj = 0
+    score = 0
     
     def __init__(self):
         pass
@@ -39,7 +38,6 @@ class CardDeck():
         for i in range(len(cards)):
             cards.insert(random.randint(0,31),cards.pop())
         self.add_to_matrix(cards)   
-        return cards
     def add_to_matrix(self,cards):
         j = 0
         k = 0
@@ -108,7 +106,6 @@ class CardDeck():
     def flip(self,i,j):
         self.matrix[i][j].flip()
         self.flip_dictionary.update({(i,j):self.matrix[i][j]})
-        self.flipped_list.append(self.matrix[i][j])
 
     def un_flip(self):
         for key,val in list(self.flip_dictionary.items()):
@@ -125,7 +122,6 @@ class CardDeck():
                 #if display depends on card then deleting a matrix element wont affect grid
                 del self.flip_dictionary[(i,j)]
                 del(self.matrix[i][j])
-                print(len(self.matrix))
-                print(len(self.matrix[0]))
+                self.score+=1
         else:
             self.un_flip()
