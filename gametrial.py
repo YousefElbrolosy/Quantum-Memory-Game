@@ -29,11 +29,11 @@ def main():
     col_flag = False
     #############
     exit = False
+    cheatflag = False
     #shuffle cards
     card_deck = CardDeck()
     card_deck.add_cards()
     shuffled_cards = card_deck.shuffle(card_deck.cards_xpics_x910)
-    card_deck.add_to_matrix(shuffled_cards)
     #text
     text_font = Text()
     button_row = Button("row    'shift+r'",325,50,'gray','black',4,screen,text_font.font)
@@ -86,8 +86,10 @@ def main():
                     circuit_grid_3 = CircuitGrid(0,518,circuit_grid_model_3)
                     circuit_grid_model_2 = CircuitGridModel(2,19)  
                     circuit_grid_2 = CircuitGrid(0,575,circuit_grid_model_2)
-                elif event.key == pygame.K_q:
-                    card_deck.cheat(352.4214876,38,shuffled_cards,screen)
+                elif keys[pygame.K_q]:
+                    cheatflag = True
+                elif keys[pygame.K_r]:
+                    cheatflag = False
                     
                     
                     
@@ -95,12 +97,20 @@ def main():
             
         #display cards
         #card_deck.display(352.4214876,38,shuffled_cards,screen)
-        card_deck.display_matrix(352.4214876,38,screen)
+        if cheatflag:
+            card_deck.cheat(352.4214876,38,screen)
+        else:
+            card_deck.display_matrix(352.4214876,38,screen)
         card_deck.reset8()
         text_display.reset()
+        print(list(card_deck.flip_dictionary))
         if len(card_deck.flip_dictionary) == 2:
             #time.sleep(1)
             card_deck.check_cards()
+        print("now no of cards are",len(card_deck.matrix[0]))
+        print("now no of cards are",len(card_deck.matrix[1]))
+        print("now no of cards are",len(card_deck.matrix[2]))
+        print("now no of cards are",len(card_deck.matrix[3]))
         tmpj = 0
         #draw
         #row control (add sounds later)
