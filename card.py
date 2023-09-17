@@ -1,4 +1,3 @@
-import os
 import pygame
 pygame.init()
 class Card():  
@@ -22,7 +21,7 @@ class Card():
         self.border = True
         
         if self.flipped:
-            pygame.draw.rect(self.card_img, (0,255,255), [0, 0,82.6446281 , 120],5, 5)
+            pygame.draw.rect(self.card_img, (0,255,255), [0, 0,82.6446281 , 120],3, 5)
         else:
             pygame.draw.rect(self.back_img, (0,255,255), [0, 0,82.6446281 , 120],5, 5)
         #old
@@ -30,8 +29,9 @@ class Card():
     def remove_border(self):
         self.border = False
         if self.flipped:
-            self.set_card_img(self.tmp)
-        self.back_img = pygame.transform.scale(pygame.image.load('data/photos/yellow_back.png'),((82.6446281,120)))
+            self.card_img = self.tmp
+        else:
+            self.back_img = pygame.transform.scale(pygame.image.load('data/photos/yellow_back.png'),((82.6446281,120)))
     def flip(self):
         self.flipped = True
     def un_flip(self):

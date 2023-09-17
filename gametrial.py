@@ -19,11 +19,7 @@ def main():
     circuit_grid_3 = CircuitGrid(0,518,circuit_grid_model_3)
     circuit_grid_model_2 = CircuitGridModel(2,19)  
     circuit_grid_2 = CircuitGrid(0,575,circuit_grid_model_2)
-    # should be made ito a button
-    row_flag = True
-    #should be unpressable unless row is selected
-    col_flag = False
-    #############
+    
     exit = False
     cheatflag = False
     #shuffle cards
@@ -34,6 +30,11 @@ def main():
     text_font = Text()
     button_row = Button("row    'shift+r'",325,50,'gray','black',4,screen,text_font.font)
     button_column = Button("column 'shift+c'",325,50,'gray','black',4,screen,text_font.font)
+    # button
+    row_flag = True
+    #should be unpressable unless row is selected
+    col_flag = False
+    #############
     while not exit:
         screen.fill((0,0,0))
         screen.blit(bgImg,(0,0))
@@ -58,14 +59,13 @@ def main():
                 if col_flag and not row_flag:
                     circuit_grid_3.handle_input(event.key)
                 keys = pygame.key.get_pressed()
-                #prevents switching back to row
-                """
+                
                 if keys[pygame.K_r] and (keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]):
                     button_column.un_press()
                     button_row.press()
                     row_flag =True
                     col_flag = False
-                """    
+                    
                 if keys[pygame.K_c] and (keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]):
                     button_row.un_press()
                     button_column.press()
@@ -94,17 +94,17 @@ def main():
         #display cards
         #card_deck.display(352.4214876,38,shuffled_cards,screen)
         if cheatflag:
-            card_deck.cheat(352.4214876,38,screen)
+            card_deck.cheat_dict(352.4214876,38,screen)
         else:
-            card_deck.display_matrix(352.4214876,38,screen)
+            card_deck.display_dict(352.4214876,38,screen)
         card_deck.reset8()
         text_display.reset()
         print(list(card_deck.flip_dictionary))
         if len(card_deck.flip_dictionary) == 2:
             #time.sleep(1)
             card_deck.check_cards()
-        if card_deck.score == 0:
-            tmpj = 0
+        
+        tmpj = 0
         #draw
         #row control (add sounds later)
         #this can be written using a for loop but I prefer not to
