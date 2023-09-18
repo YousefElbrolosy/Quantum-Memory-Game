@@ -89,12 +89,12 @@ class CardDeck():
     def flip(self,i,j):
         self.matrix_dictionary[(i,j)].flip()
         self.flip_dictionary.update({(i,j):self.matrix_dictionary[(i,j)]})
-
+        
     def un_flip(self):
         for key,val in list(self.flip_dictionary.items()):
             val.un_flip()
             del self.flip_dictionary[key]
-
+        
     def check_cards(self):
         self.checked = True
         print(list(self.flip_dictionary.values())[0].img_number)
@@ -109,3 +109,4 @@ class CardDeck():
                 self.score+=1
         else:
             self.un_flip()
+        
