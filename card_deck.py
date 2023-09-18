@@ -17,6 +17,7 @@ class CardDeck():
     border_dictionary = {}
     flip_dictionary = {}
     checked = False
+    no_border = False
     tmpi = 0
     tmpj = 0
     score = 0
@@ -73,8 +74,12 @@ class CardDeck():
 
     
     def add_border(self,i,j):
-        self.matrix_dictionary[(i,j)].set_border()
-        self.border_dictionary.update({(i,j):self.matrix_dictionary[(i,j)]})
+        if self.matrix_dictionary.get((i,j)) != None:
+            self.matrix_dictionary[(i,j)].set_border()
+            self.border_dictionary.update({(i,j):self.matrix_dictionary[(i,j)]})
+            self.no_border = False
+        else: 
+            self.no_border = True
 
     def reset8(self):
         if len(self.border_dictionary) > 1:
