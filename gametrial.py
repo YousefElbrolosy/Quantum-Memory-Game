@@ -126,11 +126,7 @@ def main():
                         text_display.color_list_2[i] = (0,255,255)      
                         card_deck.add_border(i,tmpj)
                         tmpi = i
-                        break_flag = True
-                        break
-                if break_flag:
-                    break_flag = False
-                    break
+                        
 
             """
             if row_states[0] == "|00>":
@@ -168,14 +164,15 @@ def main():
                 for k in range(len(col_states)):
                     if col_states[k] == text_display.state_list_3[j]:
                         text_display.color_list_2[tmpi] = (0,255,255)
+                        #if not card_deck.no_border:
                         text_display.color_list_3[j] = (0,255,255)
                         card_deck.add_border(tmpi,j)
                         tmpj = j
-                        break_flag = True
-                        break
-                if break_flag:
-                    break_flag = False
-                    break
+                        #break_flag = True
+                        #break
+                #if break_flag:
+                    #break_flag = False
+                    #break
             """
             if col_states[0] == "|000>":
                 tmpj = 0
