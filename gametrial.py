@@ -5,6 +5,7 @@ from quantum import Quantum_control
 from card_deck import CardDeck
 from text_display import Text
 from button import Button
+import time
 pygame.init()
 #my aspect ratio is 1366 by 768
 screen = pygame.display.set_mode((1366,768))
@@ -73,7 +74,8 @@ def main():
                     button_column.press()
                     col_flag = True
                     row_flag = False
-                
+
+                pygame.time.set_timer(pygame.K_RETURN,1000) 
                 if event.key == pygame.K_RETURN and button_column.pressed:
                     if not card_deck.no_border:
                         card_deck.flip(tmpi,tmpj)
@@ -86,13 +88,15 @@ def main():
                         circuit_grid_3 = CircuitGrid(0,518,circuit_grid_model_3)
                         circuit_grid_model_2 = CircuitGridModel(2,19)  
                         circuit_grid_2 = CircuitGrid(0,575,circuit_grid_model_2)
+                        
+                            
                 elif keys[pygame.K_q]:
                     cheatflag = True
                 elif keys[pygame.K_r]:
                     cheatflag = False
                     
                     
-                    
+                  
                     
             
         #display cards
@@ -101,14 +105,12 @@ def main():
             card_deck.cheat_dict(352.4214876,38,screen)
         else:
             card_deck.display_dict(352.4214876,38,screen)
+            
+
         card_deck.reset8()
         text_display.reset()
         print(list(card_deck.flip_dictionary))
-        
-        if len(card_deck.flip_dictionary) == 2:
-            #time.sleep(1)
-            card_deck.check_cards()
-        
+
         tmpj = 0
         #draw
         #row control (add sounds later)
@@ -120,26 +122,26 @@ def main():
             if bra_ket_2 == "|00>":
                 tmpi = 0
                 if not card_deck.no_border:
-                    text_display.color_list_2[tmpi] = (0,255,255)
                     text_display.color_list_3[tmpj] = (0,255,255)
+                text_display.color_list_2[tmpi] = (0,255,255)      
                 card_deck.add_border(tmpi,tmpj)
             elif bra_ket_2 == "|01>":
                 tmpi = 1
                 if not card_deck.no_border:
-                    text_display.color_list_2[tmpi] = (0,255,255)
                     text_display.color_list_3[tmpj] = (0,255,255)
+                text_display.color_list_2[tmpi] = (0,255,255)
                 card_deck.add_border(tmpi,tmpj)
             elif bra_ket_2 == "|10>":
                 tmpi = 2
                 if not card_deck.no_border:
-                    text_display.color_list_2[tmpi] = (0,255,255)
                     text_display.color_list_3[tmpj] = (0,255,255)
+                text_display.color_list_2[tmpi] = (0,255,255)
                 card_deck.add_border(tmpi,tmpj)
             elif bra_ket_2 == "|11>":
                 tmpi = 3
                 if not card_deck.no_border:
-                    text_display.color_list_2[tmpi] = (0,255,255)
                     text_display.color_list_3[tmpj] = (0,255,255)
+                text_display.color_list_2[tmpi] = (0,255,255)
                 card_deck.add_border(tmpi,tmpj)
         elif col_flag == True and row_flag == False:
             circuit_grid_3.draw(screen)
@@ -147,54 +149,58 @@ def main():
             bra_ket_3 = quantum_control_3.select_column()
             if bra_ket_3 == "|000>":
                 tmpj = 0
+                text_display.color_list_2[tmpi] = (0,255,255)
                 if not card_deck.no_border:
-                    text_display.color_list_2[tmpi] = (0,255,255)
                     text_display.color_list_3[tmpj] = (0,255,255)
                 card_deck.add_border(tmpi,tmpj)
             elif bra_ket_3 == "|001>":
                 tmpj = 1
+                text_display.color_list_2[tmpi] = (0,255,255)
                 if not card_deck.no_border:
-                    text_display.color_list_2[tmpi] = (0,255,255)
                     text_display.color_list_3[tmpj] = (0,255,255)
                 card_deck.add_border(tmpi,tmpj)
             elif bra_ket_3 == "|010>":
                 tmpj = 2
+                text_display.color_list_2[tmpi] = (0,255,255)
                 if not card_deck.no_border:
-                    text_display.color_list_2[tmpi] = (0,255,255)
                     text_display.color_list_3[tmpj] = (0,255,255)
                 card_deck.add_border(tmpi,tmpj)
             elif bra_ket_3 == "|011>":
                 tmpj = 3
-                if not card_deck.no_border:
-                    text_display.color_list_2[tmpi] = (0,255,255)
+                text_display.color_list_2[tmpi] = (0,255,255)
+                if not card_deck.no_border: 
                     text_display.color_list_3[tmpj] = (0,255,255)
                 card_deck.add_border(tmpi,tmpj)
             elif bra_ket_3 == "|100>":
                 tmpj = 4
-                if not card_deck.no_border:
-                    text_display.color_list_2[tmpi] = (0,255,255)
+                text_display.color_list_2[tmpi] = (0,255,255)
+                if not card_deck.no_border:  
                     text_display.color_list_3[tmpj] = (0,255,255)
                 card_deck.add_border(tmpi,tmpj)
             elif bra_ket_3 == "|101>":
                 tmpj = 5
-                if not card_deck.no_border:
-                    text_display.color_list_2[tmpi] = (0,255,255)
+                text_display.color_list_2[tmpi] = (0,255,255)
+                if not card_deck.no_border:       
                     text_display.color_list_3[tmpj] = (0,255,255)
                 card_deck.add_border(tmpi,tmpj)
             elif bra_ket_3 == "|110>":
                 tmpj = 6
+                text_display.color_list_2[tmpi] = (0,255,255)
                 if not card_deck.no_border:
-                    text_display.color_list_2[tmpi] = (0,255,255)
                     text_display.color_list_3[tmpj] = (0,255,255)
                 card_deck.add_border(tmpi,tmpj)
             elif bra_ket_3 == "|111>":
                 tmpj = 7
+                text_display.color_list_2[tmpi] = (0,255,255)
                 if not card_deck.no_border:
-                    text_display.color_list_2[tmpi] = (0,255,255)
                     text_display.color_list_3[tmpj] = (0,255,255)
                 card_deck.add_border(tmpi,tmpj)
         
-        
+        if len(card_deck.flip_dictionary) == 2:
+                    # note that it is event.type not event.key
+                    if event.type == pygame.K_RETURN : 
+                        card_deck.check_cards()  
+                    
         text_display.display_grid(screen)
         pygame.display.flip()
 

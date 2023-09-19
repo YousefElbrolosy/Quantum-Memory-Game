@@ -62,8 +62,9 @@ class CardDeck():
                 break
             
     def display_dict(self,posX,posY,screen):
+        
         for key,val in self.matrix_dictionary.items():
-            if val.flipped:
+            if val.flipped: 
                 screen.blit(val.get_card_img(),(posX+val.posX,posY+val.posY))
             else:
                 screen.blit(val.get_back_img(),(posX+val.posX,posY+val.posY))
@@ -90,10 +91,12 @@ class CardDeck():
         self.matrix_dictionary[(i,j)].flip()
         self.flip_dictionary.update({(i,j):self.matrix_dictionary[(i,j)]})
         
+        
     def un_flip(self):
         for key,val in list(self.flip_dictionary.items()):
             val.un_flip()
             del self.flip_dictionary[key]
+        
         
     def check_cards(self):
         self.checked = True
@@ -103,6 +106,7 @@ class CardDeck():
             for (i,j), value in list(self.flip_dictionary.items()):
                 #here it is important to display using a matrix because
                 #if display depends on card then deleting a matrix element wont affect grid
+                
                 del self.flip_dictionary[(i,j)]
                 #del(self.matrix[i][j])
                 del self.matrix_dictionary[(i,j)]
