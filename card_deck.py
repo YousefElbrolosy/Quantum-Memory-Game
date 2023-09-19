@@ -100,8 +100,7 @@ class CardDeck():
         
     def check_cards(self):
         self.checked = True
-        print(list(self.flip_dictionary.values())[0].img_number)
-        print(list(self.flip_dictionary.values())[1].img_number)
+    
         if list(self.flip_dictionary.values())[0].img_number == list(self.flip_dictionary.values())[1].img_number:
             for (i,j), value in list(self.flip_dictionary.items()):
                 #here it is important to display using a matrix because
