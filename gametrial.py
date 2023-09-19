@@ -5,7 +5,6 @@ from quantum import Quantum_control
 from card_deck import CardDeck
 from text_display import Text
 from button import Button
-import time
 pygame.init()
 #my aspect ratio is 1366 by 768
 screen = pygame.display.set_mode((1366,768))
