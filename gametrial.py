@@ -21,6 +21,8 @@ def main():
     break_flag = False
     exit = False
     cheatflag = False
+    superposition_flag_2 = False
+    superposition_flag_3 = False
     #shuffle cards
     card_deck = CardDeck()
     card_deck.add_cards()
@@ -106,7 +108,7 @@ def main():
             card_deck.display_dict(352.4214876,38,screen)
             
 
-        card_deck.reset8()
+        card_deck.reset8(row_flag,col_flag, superposition_flag_2, superposition_flag_3)
         text_display.reset()
 
         tmpj = 0
@@ -117,7 +119,7 @@ def main():
             circuit_grid_2.draw(screen)
             quantum_control_2 = Quantum_control(circuit_grid_2)
             row_states = quantum_control_2.select_row() 
-            
+            superposition_flag_2 = quantum_control_2.superpositon_flag_2
             for i in range(len(text_display.state_list_2)):
                 for j in range(len(row_states)):
                     if row_states[j] == text_display.state_list_2[i]:
@@ -159,7 +161,7 @@ def main():
             circuit_grid_3.draw(screen)
             quantum_control_3 = Quantum_control(circuit_grid_3)
             col_states = quantum_control_3.select_column()
-            
+            superposition_flag_3 = quantum_control_3.superpositon_flag_3
             for j in range(len(text_display.state_list_3)):
                 for k in range(len(col_states)):
                     if col_states[k] == text_display.state_list_3[j]:
@@ -224,6 +226,7 @@ def main():
                 card_deck.add_border(tmpi,tmpj)
             
             """    
+        print(list(card_deck.border_dictionary))
         if len(card_deck.flip_dictionary) == 2:
                     # note that it is event.type not event.key
                     if event.type == pygame.K_RETURN : 

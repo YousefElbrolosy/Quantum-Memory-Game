@@ -2,9 +2,10 @@ import qiskit
 from controls.circuit_grid import CircuitGrid
 class Quantum_control():
     
-    
     def __init__(self,circuit_grid):
         self.circuit_grid = circuit_grid
+        self.superpositon_flag_2 = False
+        self.superpositon_flag_3 = False
     def select_row(self):
         row_states = []
         simulator = qiskit.BasicAer.get_backend("statevector_simulator")
@@ -22,6 +23,10 @@ class Quantum_control():
                     row_states.append("|01>")
                 elif basis_state == 0:
                     row_states.append("|00>")
+                if prob == 1:
+                    self.superpositon_flag_2 = False
+                else:
+                    self.superpositon_flag_2 = True
         return row_states
     def select_column(self):
         col_states = []
@@ -50,6 +55,11 @@ class Quantum_control():
                     col_states.append("|110>")
                 elif basis_state == 7:
                     col_states.append("|111>")
+                if prob == 1:
+                    self.superpositon_flag_3 = False
+                else:
+                    self.superpositon_flag_3 = True
+            
         return col_states
 
 

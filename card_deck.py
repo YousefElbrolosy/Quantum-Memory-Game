@@ -82,10 +82,24 @@ class CardDeck():
         else: 
             self.no_border = True
 
-    def reset8(self):
+    def reset8(self,row_flag, col_flag, superposition_flag_2, superposition_flag_3):
         if len(self.border_dictionary) > 1:
-            for key,value in self.border_dictionary.items():
-                value.remove_border()
+            if (row_flag and not superposition_flag_2) or (col_flag and not superposition_flag_3):
+                for key,value in list(self.border_dictionary.items()):
+                    value.remove_border()
+                    del self.border_dictionary[key]
+        """if len(self.border_dictionary) == 2:
+            if (not superposition_flag_2 or not superposition_flag_3):
+                for key,value in list(self.border_dictionary.items()):
+                    value.remove_border()
+                    del self.border_dictionary[key]
+        elif (len(self.border_dictionary) > 2):
+            if(col_flag and superposition_flag_2):
+                for key,value in list(self.border_dictionary.items()):
+                    if len(list(self.border_dictionary.items))>2:
+                        value.remove_border()
+                        del self.border_dictionary[key] 
+        """
                 
     def flip(self,i,j):
         self.matrix_dictionary[(i,j)].flip()
