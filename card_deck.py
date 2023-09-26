@@ -81,14 +81,17 @@ class CardDeck():
             self.no_border = False
         else: 
             self.no_border = True
-
+    """
     def reset8(self,row_flag, col_flag, superposition_flag_2, superposition_flag_3):
         if len(self.border_dictionary) > 1:
             if (row_flag and not superposition_flag_2) or (col_flag and not superposition_flag_3):
                 for key,value in list(self.border_dictionary.items()):
                     value.remove_border()
                     del self.border_dictionary[key]
-        """if len(self.border_dictionary) == 2:
+        
+       
+    
+        if len(self.border_dictionary) == 2:
             if (not superposition_flag_2 or not superposition_flag_3):
                 for key,value in list(self.border_dictionary.items()):
                     value.remove_border()
@@ -99,8 +102,51 @@ class CardDeck():
                     if len(list(self.border_dictionary.items))>2:
                         value.remove_border()
                         del self.border_dictionary[key] 
-        """
-                
+    """
+    """
+    def reset7(self,row_flag, col_flag, superposition_flag_2, superposition_flag_3):
+        if len(self.border_dictionary) > 1 and not (superposition_flag_2) and row_flag:
+            for key,value in list(self.border_dictionary.items()):
+                    value.remove_border()
+                    del self.border_dictionary[key]
+        if len(self.border_dictionary) > 2 and superposition_flag_2 and row_flag:
+            for key,value in list(self.border_dictionary.items()):
+                    #if len(self.border_dictionary) > 2:
+                    value.remove_border()
+                    del self.border_dictionary[key]
+        if len(self.border_dictionary) > 1 and not (superposition_flag_3 or superposition_flag_2) and col_flag:
+            for key,value in list(self.border_dictionary.items()):
+                    value.remove_border()
+                    del self.border_dictionary[key]
+        if len(self.border_dictionary) > 2 and (superposition_flag_3 or superposition_flag_2) and col_flag:
+            for key,value in list(self.border_dictionary.items()):
+                    value.remove_border()
+                    del self.border_dictionary[key]
+    """
+    def reset6(self,row_flag, col_flag, superposition_flag_2, superposition_flag_3):
+        if(row_flag):
+            if len(self.border_dictionary) > 1:
+                if not superposition_flag_2:
+                    for key,value in list(self.border_dictionary.items()):
+                        value.remove_border()
+                        del self.border_dictionary[key]
+                else:
+                    if len(self.border_dictionary) > 2:
+                        for key,value in list(self.border_dictionary.items()):
+                            value.remove_border()
+                            del self.border_dictionary[key]
+        elif(col_flag):
+            if len(self.border_dictionary) > 1:
+                if not superposition_flag_2:
+                    if not superposition_flag_3:
+                        for key,value in list(self.border_dictionary.items()):
+                            value.remove_border()
+                            del self.border_dictionary[key]
+                else:
+                    if len(self.border_dictionary) > 2:
+                        for key,value in list(self.border_dictionary.items()):
+                            value.remove_border()
+                            del self.border_dictionary[key]
     def flip(self,i,j):
         self.matrix_dictionary[(i,j)].flip()
         self.flip_dictionary.update({(i,j):self.matrix_dictionary[(i,j)]})

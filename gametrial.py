@@ -81,6 +81,7 @@ def main():
                     if not card_deck.no_border:
                         card_deck.flip(tmpi,tmpj)
                         #button_enter.press()
+                        
                         button_row.press()
                         button_column.un_press()
                         row_flag = True
@@ -108,7 +109,7 @@ def main():
             card_deck.display_dict(352.4214876,38,screen)
             
 
-        card_deck.reset8(row_flag,col_flag, superposition_flag_2, superposition_flag_3)
+        card_deck.reset6(row_flag,col_flag, superposition_flag_2, superposition_flag_3)
         text_display.reset()
 
         tmpj = 0
@@ -163,13 +164,22 @@ def main():
             col_states = quantum_control_3.select_column()
             superposition_flag_3 = quantum_control_3.superpositon_flag_3
             for j in range(len(text_display.state_list_3)):
-                for k in range(len(col_states)):
-                    if col_states[k] == text_display.state_list_3[j]:
-                        text_display.color_list_2[tmpi] = (0,255,255)
-                        #if not card_deck.no_border:
-                        text_display.color_list_3[j] = (0,255,255)
-                        card_deck.add_border(tmpi,j)
-                        tmpj = j
+                for row_state in (row_states):
+                    if row_state == "|00>":
+                        i = 0
+                    elif row_state == "|01>":
+                        i = 1
+                    elif row_state == "|10>":
+                        i = 2
+                    elif row_state == "|11>":
+                        i = 3
+                    for k in range(len(col_states)):
+                        if col_states[k] == text_display.state_list_3[j]:
+                            text_display.color_list_2[i] = (0,255,255)
+                            #if not card_deck.no_border:
+                            text_display.color_list_3[j] = (0,255,255)
+                            card_deck.add_border(i,j)
+                            tmpj = j
                         #break_flag = True
                         #break
                 #if break_flag:
