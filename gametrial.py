@@ -65,10 +65,11 @@ def main():
                 keys = pygame.key.get_pressed()
                 
                 if keys[pygame.K_r] and (keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]):
-                    button_column.un_press()
-                    button_row.press()
-                    row_flag =True
-                    col_flag = False
+                    if col_flag == False:
+                        button_column.un_press()
+                        button_row.press()
+                        row_flag =True
+                        col_flag = False
                     
                 if keys[pygame.K_c] and (keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]):
                     button_row.un_press()
