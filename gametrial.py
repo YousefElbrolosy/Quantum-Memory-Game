@@ -44,8 +44,10 @@ def main():
         
         text_display = Text()
 
-        button_row.add_button(1025,10)
-        button_column.add_button(1025,60)
+        #button_row.add_button(1025,10)
+        button_column.add_button(1025,10)
+        #button_column.add_button(1025,60)
+
         #button_enter.add_button(10,10)
         #button_enter.un_press()
         global tmpi
@@ -63,14 +65,14 @@ def main():
                 if col_flag and not row_flag:
                     circuit_grid_3.handle_input(event.key)
                 keys = pygame.key.get_pressed()
-                
+                """
                 if keys[pygame.K_r] and (keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]):
                     if col_flag == False:
                         button_column.un_press()
                         button_row.press()
                         row_flag =True
                         col_flag = False
-                    
+                """    
                 if keys[pygame.K_c] and (keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]):
                     button_row.un_press()
                     button_column.press()
