@@ -1,6 +1,8 @@
 import pygame
 import random
+from quantum import Quantum_control
 from card import Card
+from numpy.random import choice
 #possibility of limitin only two cards of the same face to be present (harder) 2 eights instead of 4 eights
 # possibility of choosing a different range (with pics)
 # possibility of limiting number of grid
@@ -43,9 +45,14 @@ class CardDeck():
             self.cards_xpics_x910.append(Card(pygame.transform.scale(pygame.image.load('playing_cards/'+str(i)+'_of_spades.png'),(82.6446281,120)),str(i)))
 
     def shuffle(self,cards):
+        #my method + small modification
         for i in range(len(cards)):
-            cards.insert(random.randint(0,31),cards.pop())
-        self.add_to_matrix(cards)   
+           # cards.insert(random.randint(0,31),cards.pop())
+            element = cards.pop(random.randint(0,31))
+            cards.append(element)
+        
+
+        self.add_to_matrix(cards) 
     def add_to_matrix(self,cards):
         j = 0
         k = 0
@@ -147,7 +154,72 @@ class CardDeck():
                         for key,value in list(self.border_dictionary.items()):
                             value.remove_border()
                             del self.border_dictionary[key]
-    def flip(self,i,j):
+    def flip(self,i,j,superposition_flag_2,superposition_flag_3, super_prob_2, super_prob_3):
+        """
+        if len(self.border_dictionary) > 2:
+            if superposition_flag_2 or superposition_flag_3:
+                if superposition_flag_2 and not superposition_flag_3:
+                    measurement_list = choice(list(self.matrix_dictionary), 1, super_prob_2)
+        ################## method
+        from numpy.random import choice
+        
+        sampleList = [100, 200, 300, 400, 500]
+        randomNumberList = choice(
+        sampleList, 5, p=[0.05, 0.1, 0.15, 0.20, 0.5])
+        
+        print(randomNumberList)
+        ##################
+        problem is:
+        ___________
+        this is all the indicies with border
+        ------------------------------------
+
+        |
+        |
+
+        [(0, 0), (3, 0), (0, 1), (3, 1), (0, 6), (3, 6), (0, 7), (3, 7)] 
+
+        this is the probabilities of column elements in "1" row
+        -------------------------------------------------------
+
+        |
+        |
+
+        [(0, (0.4999999999999999+0j)), (1, (0.4999999999999999+0j)), (2, 0j), (3, 0j), (4, 0j), (5, 0j), (6, (0.4999999999999999+0j)), (7, (0.4999999999999999+0j))]
+
+        this is probabilities of row elements in 1 column
+        -------------------------------------------------
+
+        |
+        |
+
+        [(0, (0.7071067811865475+0j)), (1, 0j), (2, 0j), (3, (0.7071067811865475+0j))]
+
+
+        I need to make something that combines the probabilities of row states and col states into 5 qubit probabilities
+
+        or 
+
+        choose a col_state from the super_prob_3 
+        then choose a row_state from the super_prob_2
+        
+        therefore,
+
+        [(0, 0), (3, 0), (0, 1), (3, 1), (0, 6), (3, 6), (0, 7), (3, 7)]
+        probabilities = [[0.5,0.5],[0,25,0,15,0.35,0.25]] --> first list is probabilities of selection of row (they are 2 because there are only 2 in superposition would be 4 if all rows are in super position and consequently in the border dictionary it would be 4 lists coressponding to 8 columns)
+                                                          --> second list is probabilities of selection of column
+    
+        task: is organising border dictionary to be that way
+        --> [[(0,0),(0,1),(0,6),(0,7)],
+             [(3,0),(3,1),(3,6),(3,7)]]
+        """
+        if len(self.border_dictionary) > 2:
+            if superposition_flag_2 or superposition_flag_3:
+                if superposition_flag_2 and not superposition_flag_3:
+                    measurement_list = choice(list(self.matrix_dictionary), 1, super_prob_2)    
+
+
+        #else:
         self.matrix_dictionary[(i,j)].flip()
         self.flip_dictionary.update({(i,j):self.matrix_dictionary[(i,j)]})
         
@@ -172,4 +244,7 @@ class CardDeck():
                 self.score+=1
         else:
             self.un_flip()
+
+        
+
         
