@@ -16,9 +16,9 @@ class Quantum_control():
         state_vector = simulator.run(transpiled_circuit, shots = 100).result().get_statevector()
         print(list(enumerate(state_vector)))
         for basis_state, amp in enumerate(state_vector):
-            prob = amp**2
-            self.prob_2.append(prob) 
+            prob = amp**2 
             if prob > 0:
+                self.prob_2.append(prob)
                 if basis_state == 3:
                     row_states.append("|11>")
                 elif basis_state == 2:
@@ -42,8 +42,8 @@ class Quantum_control():
         #[(0, (1+0j)), (1, 0j), (2, 0j), (3, 0j), (4, 0j), (5, 0j), (6, 0j), (7, 0j)]
         for basis_state, amp in enumerate(state_vector):
             prob = amp**2
-            self.prob_3.append(prob)
             if prob > 0:
+                self.prob_3.append(prob)
                 if basis_state == 0:
                     col_states.append("|000>")
                 elif basis_state == 1:

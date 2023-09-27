@@ -212,11 +212,7 @@ class CardDeck():
         task: is organising border dictionary to be that way
         --> [[(0,0),(0,1),(0,6),(0,7)],
              [(3,0),(3,1),(3,6),(3,7)]]
-        """
-        if len(self.border_dictionary) > 2:
-            if superposition_flag_2 or superposition_flag_3:
-                if superposition_flag_2 and not superposition_flag_3:
-                    measurement_list = choice(list(self.matrix_dictionary), 1, super_prob_2)    
+        """  
 
 
         #else:
