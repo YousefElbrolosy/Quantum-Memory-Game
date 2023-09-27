@@ -118,7 +118,6 @@ def main():
         tmpj = 0
         #draw
         #row control (add sounds later)
-        #this can be written using a for loop but I prefer not to
         if row_flag == True and col_flag == False:
             circuit_grid_2.draw(screen)
             quantum_control_2 = Quantum_control(circuit_grid_2)
@@ -240,7 +239,7 @@ def main():
             
             """    
         print(list(card_deck.border_dictionary))
-        #lots of bugs in border selection after deletion
+        
         if len(card_deck.flip_dictionary) == 2:
                     # note that it is event.type not event.key
                     if event.type == pygame.K_RETURN : 

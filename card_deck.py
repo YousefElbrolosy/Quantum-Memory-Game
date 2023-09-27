@@ -131,7 +131,7 @@ class CardDeck():
                         value.remove_border()
                         del self.border_dictionary[key]
                 else:
-                    if len(self.border_dictionary) > 2:
+                    if len(self.border_dictionary) >= 2:
                         for key,value in list(self.border_dictionary.items()):
                             value.remove_border()
                             del self.border_dictionary[key]
@@ -143,7 +143,7 @@ class CardDeck():
                             value.remove_border()
                             del self.border_dictionary[key]
                 else:
-                    if len(self.border_dictionary) > 2:
+                    if len(self.border_dictionary) >= 2:
                         for key,value in list(self.border_dictionary.items()):
                             value.remove_border()
                             del self.border_dictionary[key]
