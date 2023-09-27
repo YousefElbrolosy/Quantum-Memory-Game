@@ -213,7 +213,7 @@ class CardDeck():
         --> [[(0,0),(0,1),(0,6),(0,7)],
              [(3,0),(3,1),(3,6),(3,7)]]
         """  
-
+        #note the order of both prob and elements in border dict
 
         #else:
         self.matrix_dictionary[(i,j)].flip()
