@@ -2,6 +2,7 @@ import pygame
 import random
 from quantum import Quantum_control
 from card import Card
+import operator
 from numpy.random import choice
 #possibility of limitin only two cards of the same face to be present (harder) 2 eights instead of 4 eights
 # possibility of choosing a different range (with pics)
@@ -155,6 +156,29 @@ class CardDeck():
                             value.remove_border()
                             del self.border_dictionary[key]
     def flip(self,i,j,superposition_flag_2,superposition_flag_3, super_prob_2, super_prob_3):
+        matrix = self.border_dictionary_2D()
+        
+        # problem is I need to know which key so that I can do the same for the columns of that row
+        print("brolo1")
+        print(super_prob_2)
+        print(super_prob_3)
+        print("matrix is")
+        print(matrix)
+        #row_measurement = random.choices(matrix,super_prob_2, 1)
+        if len(super_prob_3) != len(matrix[0]):
+            print("error cant select")
+        row_measurement = random.choices(matrix,weights= super_prob_2, k = 1)
+        col_measurement = random.choices(list(row_measurement[0].keys()), weights = super_prob_3, k = 1)
+        print("brolo")
+        print(row_measurement)
+        print(col_measurement)
+        #print(list(col_measurement[0].items())[0][0])
+        #flip_key = list(col_measurement[0].items())[0][0]
+        flip_key = col_measurement[0]
+        print(flip_key)
+        self.matrix_dictionary[flip_key].flip()
+        self.flip_dictionary.update({flip_key:self.matrix_dictionary[flip_key]})
+        #this selects one at random (for entanglement selects two)
         """
         if len(self.border_dictionary) > 2:
             if superposition_flag_2 or superposition_flag_3:
@@ -216,16 +240,15 @@ class CardDeck():
         #note the order of both prob and elements in border dict
 
         #else:
-        self.matrix_dictionary[(i,j)].flip()
-        self.flip_dictionary.update({(i,j):self.matrix_dictionary[(i,j)]})
+        #self.matrix_dictionary[(i,j)].flip()
+        #self.flip_dictionary.update({(i,j):self.matrix_dictionary[(i,j)]})
         
         
     def un_flip(self):
         for key,val in list(self.flip_dictionary.items()):
             val.un_flip()
             del self.flip_dictionary[key]
-        
-        
+            
     def check_cards(self):
         self.checked = True
     
@@ -240,6 +263,29 @@ class CardDeck():
                 self.score+=1
         else:
             self.un_flip()
+    
+    def border_dictionary_2D(self):
+        d = self.border_dictionary
+        z = sorted(d, key= operator.itemgetter(0))
+
+        """
+        print("hi")
+        print(z)
+        print("hello")
+        """
+        tmp = z[0][0]
+        matrix = [{}]
+        k = 0
+        for (i,j) in z:
+            if i == tmp:
+                matrix[k].update({(i,j):self.border_dictionary[(i,j)]})
+            else:
+                matrix.append({})
+                k+=1
+                matrix[k].update({(i,j):self.border_dictionary[(i,j)]})
+                tmp = i
+        return matrix
+
 
         
 

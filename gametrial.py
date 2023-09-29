@@ -243,9 +243,10 @@ def main():
             
             """    
         print(list(card_deck.border_dictionary))
+        #print(sorted(x, key = lambda x: x[0]))
         
         if len(card_deck.flip_dictionary) == 2:
-                    # note that it is event.type not event.key
+                    # note that it is evennt.type not event.key
                     if event.type == pygame.K_RETURN : 
                         card_deck.check_cards()  
                     

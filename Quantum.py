@@ -14,7 +14,7 @@ class Quantum_control():
         circuit = self.circuit_grid.circuit_grid_model.compute_circuit()
         transpiled_circuit = qiskit.transpile(circuit,simulator)
         state_vector = simulator.run(transpiled_circuit, shots = 100).result().get_statevector()
-        print(list(enumerate(state_vector)))
+        #print(list(enumerate(state_vector)))
         for basis_state, amp in enumerate(state_vector):
             prob = amp**2 
             if prob > 0:
