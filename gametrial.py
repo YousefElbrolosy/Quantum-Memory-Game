@@ -62,11 +62,12 @@ def main():
             if event.type == pygame.QUIT:
                 exit = True
             elif event.type == pygame.KEYDOWN:
-                if row_flag and not col_flag:
-                    circuit_grid_2.handle_input(event.key)
-                if col_flag and not row_flag:
-                    circuit_grid_3.handle_input(event.key)
                 keys = pygame.key.get_pressed()
+                if row_flag and not col_flag and len(card_deck.flip_dictionary) < 2:
+                    circuit_grid_2.handle_input(event.key)
+                if col_flag and not row_flag and len(card_deck.flip_dictionary) < 2:
+                    circuit_grid_3.handle_input(event.key)
+                
                 """
                 if keys[pygame.K_r] and (keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]):
                     if col_flag == False:
@@ -75,7 +76,7 @@ def main():
                         row_flag =True
                         col_flag = False
                 """    
-                if keys[pygame.K_c] and (keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]):
+                if keys[pygame.K_c] and (keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]) and len(card_deck.flip_dictionary) < 2:
                     button_row.un_press()
                     button_column.press()
                     col_flag = True
