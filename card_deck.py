@@ -19,6 +19,7 @@ class CardDeck():
     matrix_dictionary = {}
     deleted_dictionary = {}
     border_dictionary = {}
+    tmp_border_dictionary = {}
     flipped = False
     flip_dictionary = {}
     checked = False
@@ -88,9 +89,10 @@ class CardDeck():
         if self.matrix_dictionary.get((i,j)) != None:
             self.matrix_dictionary[(i,j)].set_border()
             self.border_dictionary.update({(i,j):self.matrix_dictionary[(i,j)]})
+            self.tmp_border_dictionary.update({(i,j):self.matrix_dictionary[(i,j)]})
             self.no_border = False
         else: 
-            self.border_dictionary.update({(i,j):self.deleted_dictionary[(i,j)]})
+            self.tmp_border_dictionary.update({(i,j):self.deleted_dictionary[(i,j)]})
             self.no_border = True    
         
             #self.supposed_border_dictionary.update({(i,j):self.matrix_dictionary[(i,j)]})
@@ -145,33 +147,35 @@ class CardDeck():
                     for key,value in list(self.border_dictionary.items()):
                         value.remove_border()
                         del self.border_dictionary[key]
+                        del self.tmp_border_dictionary[key]
                     
                 else:
                     if len(self.border_dictionary) >= 2:
                         for key,value in list(self.border_dictionary.items()):
                             value.remove_border()
                             del self.border_dictionary[key]
+                            del self.tmp_border_dictionary[key]
                         
         elif(col_flag):
             if len(self.border_dictionary) > 1:
-                if not superposition_flag_2:
-                    if not superposition_flag_3:
-                        for key,value in list(self.border_dictionary.items()):
-                            value.remove_border()
-                            del self.border_dictionary[key]
+                if not superposition_flag_3:
+                    for key,value in list(self.border_dictionary.items()):
+                        value.remove_border()
+                        del self.border_dictionary[key]
+                        del self.tmp_border_dictionary[key]
                         
                 else:
                     if len(self.border_dictionary) >= 2:
                         for key,value in list(self.border_dictionary.items()):
                             value.remove_border()
                             del self.border_dictionary[key]
+                            del self.tmp_border_dictionary[key]
                         
     def flip(self,superposition_flag_2,superposition_flag_3, super_prob_2, super_prob_3):
         matrix = self.border_dictionary_2D()
         row_measurement = random.choices(matrix,weights= super_prob_2, k = 1)
         col_measurement = random.choices(list(row_measurement[0].keys()), weights = super_prob_3, k = 1)
         flip_key = col_measurement[0]
-        print(flip_key)
         if(self.matrix_dictionary.get(flip_key) != None):
             self.matrix_dictionary[flip_key].flip()
             self.flip_dictionary.update({flip_key:self.matrix_dictionary[flip_key]})
@@ -268,7 +272,7 @@ class CardDeck():
     
     def border_dictionary_2D(self):
         
-        z = sorted(self.border_dictionary, key= operator.itemgetter(0))
+        z = sorted(self.tmp_border_dictionary, key= operator.itemgetter(0))
 
         tmp = z[0][0]
         print(tmp)
@@ -276,13 +280,15 @@ class CardDeck():
         k = 0
         for (i,j) in z:
             if i == tmp:
-                matrix[k].update({(i,j):self.border_dictionary[(i,j)]})
+                matrix[k].update({(i,j):self.tmp_border_dictionary[(i,j)]})
             else:
                 matrix.append({})
                 k+=1
-                matrix[k].update({(i,j):self.border_dictionary[(i,j)]})
+                matrix[k].update({(i,j):self.tmp_border_dictionary[(i,j)]})
                 tmp = i
         return matrix
+
+    #def oscillate(self,superposition_flag_2,superposition_flag_3):
 
 
         

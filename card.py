@@ -7,7 +7,7 @@ class Card():
         self.img_number = img_number
         self.posX = 0
         self.posY = 0
-        self.back_img = pygame.transform.scale(pygame.image.load('data/photos/yellow_back.png'),((82.6446281,120)))
+        self.back_img = pygame.transform.scale(pygame.image.load('data/photos/yellow_back.png').convert_alpha(),((82.6446281,120)))
         self.tmp = card_img
         self.border = False
         self.flipped = False
@@ -28,5 +28,7 @@ class Card():
     def flip(self):
         self.flipped = True
     def un_flip(self):
-        
         self.flipped = False
+    #def oscillate(self):
+    #    self.back_img.set_alpha(255)
+
