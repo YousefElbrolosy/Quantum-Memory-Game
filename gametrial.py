@@ -84,17 +84,17 @@ def main():
                 pygame.time.set_timer(pygame.K_RETURN,1000) 
                 if event.key == pygame.K_RETURN and button_column.pressed:
                     if not card_deck.no_border:
-                        card_deck.flip(tmpi,tmpj,superposition_flag_2, superposition_flag_3,super_prob_2, super_prob_3)
+                        card_deck.flip(superposition_flag_2, superposition_flag_3,super_prob_2, super_prob_3)
                         #button_enter.press()
-                        
-                        button_row.press()
-                        button_column.un_press()
-                        row_flag = True
-                        col_flag = False
-                        circuit_grid_model_3 = CircuitGridModel(3,19)
-                        circuit_grid_3 = CircuitGrid(0,518,circuit_grid_model_3)
-                        circuit_grid_model_2 = CircuitGridModel(2,19)  
-                        circuit_grid_2 = CircuitGrid(0,575,circuit_grid_model_2)
+                        if card_deck.flipped:
+                            button_row.press()
+                            button_column.un_press()
+                            row_flag = True
+                            col_flag = False
+                            circuit_grid_model_3 = CircuitGridModel(3,19)
+                            circuit_grid_3 = CircuitGrid(0,518,circuit_grid_model_3)
+                            circuit_grid_model_2 = CircuitGridModel(2,19)  
+                            circuit_grid_2 = CircuitGrid(0,575,circuit_grid_model_2)
                         
                             
                 elif keys[pygame.K_q]:
