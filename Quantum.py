@@ -1,4 +1,5 @@
 import qiskit
+import numpy as np
 from controls.circuit_grid import CircuitGrid
 class Quantum_control():
     
@@ -14,7 +15,7 @@ class Quantum_control():
         circuit = self.circuit_grid.circuit_grid_model.compute_circuit()
         transpiled_circuit = qiskit.transpile(circuit,simulator)
         state_vector = simulator.run(transpiled_circuit, shots = 100).result().get_statevector()
-        #print(list(enumerate(state_vector)))
+        #print("row state_vector is", list(enumerate(state_vector)))
         for basis_state, amp in enumerate(state_vector):
             prob = amp**2 
             if prob > 0:
@@ -38,7 +39,7 @@ class Quantum_control():
         circuit = self.circuit_grid.circuit_grid_model.compute_circuit()
         transpiled_circuit = qiskit.transpile(circuit,simulator)
         state_vector = simulator.run(transpiled_circuit, shots = 100).result().get_statevector()
-        #print(list(enumerate(state_vector)))
+        #print("column state_vector is", list(enumerate(state_vector)))
         #[(0, (1+0j)), (1, 0j), (2, 0j), (3, 0j), (4, 0j), (5, 0j), (6, 0j), (7, 0j)]
         for basis_state, amp in enumerate(state_vector):
             prob = amp**2
@@ -67,5 +68,38 @@ class Quantum_control():
             
         return col_states
 
+    def main():
+        ket0 = [[0.4999999999999999+0j],[0j],[0j] , [0.4999999999999999+0j], [0j] , [ 0.4999999999999999+0j] , [0.4999999999999999+0j] ,[0j]]
+        bra0 = [0.4999999999999999+0j,0j,0j , 0.4999999999999999+0j, 0j, 0.4999999999999999+0j , 0.4999999999999999+0j ,0j]
+        density_matrix = np.outer(bra0,ket0)
+        print(density_matrix)
+        for i in range(8):
+            for j in range(8):
+                if i != j and density_matrix[i][j] != 0:
+                    entangled = True
+                    break
 
-                
+        # Determine if the state is entangled
+        if entangled:
+            print("The state is entangled.")
+        else:
+            print("The state is separable.")
+                # Print the density matrix
+        
+        # Assuming you have the density matrix calculated and stored in 'density_matrix'
+
+        # Initialize a list to store entangled states
+        entangled_states = []
+
+        # Iterate through the density matrix to find non-zero off-diagonal elements
+        for i in range(8):
+            for j in range(8):
+                if i != j and density_matrix[i][j] != 0:
+                    entangled_states.append((i, j))
+
+        # Print the list of entangled states
+        print("Entangled states:")
+        for state_pair in entangled_states:
+            print(f"|{state_pair[0]}> is entangled with |{state_pair[1]}>")
+    if __name__ == '__main__':
+        main()            
