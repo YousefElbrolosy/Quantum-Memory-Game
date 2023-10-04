@@ -1,6 +1,8 @@
 import pygame
 class Text():
     font = pygame.font.Font('data/fonts/pong.ttf',40)
+    font_title = pygame.font.Font('data/fonts/pong.ttf',128)
+    font_title_border = pygame.font.Font('data/fonts/pong.ttf',130)
     font_size_2 = pygame.font.Font('data/fonts/pong.ttf',32)
     text2X = 250
     text2Y = 90
