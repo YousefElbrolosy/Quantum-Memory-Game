@@ -17,22 +17,23 @@ class StartScreen():
     exit = False
     def __init__(self):
         self.transition = False
+        self.transition_to_options = False
     def start_screen(self):
         
         text_font = Text()
         screen.fill((0,0,0))
         screen.blit(bgImg_start,(0,0))
-        button_text = text_font.font_title.render("WELCOME TO",True,'orange')
-        button_text_2 = text_font.font_title.render("QUANTUM MEMORY",True,'orange')
-        button_text_border = text_font.font_title_border.render("WELCOME TO",True,'black')
-        button_text_border_2 = text_font.font_title_border.render("QUANTUM MEMORY",True,'black')
-        screen.blit(button_text_border,(375,150))
-        screen.blit(button_text_border_2,(250,280))
-        screen.blit(button_text,(375,150))
-        screen.blit(button_text_2,(250,280))
+        text = text_font.font_title.render("WELCOME TO",True,'orange')
+        text_2 = text_font.font_title.render("QUANTUM MEMORY",True,'orange')
+        text_border = text_font.font_title_border.render("WELCOME TO",True,'black')
+        text_border_2 = text_font.font_title_border.render("QUANTUM MEMORY",True,'black')
+        screen.blit(text_border,(375,150))
+        screen.blit(text_border_2,(250,280))
+        screen.blit(text,(375,150))
+        screen.blit(text_2,(250,280))
 
         button_enter = Button("Start 'Enter'",250,75,'gray','black',4,screen,text_font.font)
-        button_options = Button(" Options 'O'",250,75,'gray','black',4,screen,text_font.font)
+        button_options = Button("Settings 'S'",250,75,'gray','black',4,screen,text_font.font)
         button_enter.un_press()
         button_enter.add_button((1366/2)-(325/2)-100,(768/3)+300)
         button_options.un_press()
@@ -45,8 +46,65 @@ class StartScreen():
                 if event.key == pygame.K_RETURN:
                     self.transition = True
                     button_enter.press()
+                if event.key == pygame.K_s:
+                    self.transition_to_options = True
+                    self.transition = False
+                    self.settings_screen()
+                    
         pygame.display.flip()
-                
+
+    def settings_screen(self):
+        screen.fill((0,0,0))
+        screen.blit(bgImg_start,(0,0))
+        text_font = Text()
+        game_controls_txt = text_font.font_subtitle.render("Game Controls",True,'orange')
+        game_controls_border = text_font.font_subtitle_border.render("Game Controls",True,'black')
+        wasd_text = text_font.small_font.render("responsible for", True, (0,255,255))
+        wasd_text_2 = text_font.small_font.render("moving the cursor -->", True, (0,255,255))
+        wasd_text_border = text_font.small_font_border.render("responsible for", True, (0,0,0))
+        wasd_text_2_border = text_font.small_font_border.render("moving the cursor -->", True, (0,0,0))
+        h_text = text_font.small_font.render("Hadamard Gate: puts the qubit into", True, (0,255,255))
+        h_text_2 = text_font.small_font.render("an equal superpositon of |0> and |1>", True, (0,255,255))
+        h_text_border = text_font.small_font_border.render("Hadamard Gate: puts the qubit into", True, (0,0,0))
+        h_text_border_2 = text_font.small_font_border.render("an equal superpositon of |0> and |1>", True, (0,0,0))
+        x_text = text_font.small_font.render("the Not Gate: flips the state of the", True, (0,255,255))
+        x_text_2 = text_font.small_font.render("qubit from |0> to |1> and vice versa", True, (0,255,255))
+        x_text_border = text_font.small_font_border.render("the Not Gate: flips the state of the", True, (0,0,0))
+        x_text_border_2 = text_font.small_font_border.render("qubit from |0> to |1> and vice versa", True, (0,0,0))
+        
+        screen.blit(wasd_text_border,(802,170))
+        screen.blit(wasd_text_2_border,(802,200))
+        screen.blit(wasd_text,(805,170))
+        screen.blit(wasd_text_2,(805,200))
+        screen.blit(h_text_border,(722,295))
+        screen.blit(h_text_border_2,(722,325))
+        screen.blit(h_text,(725,295))
+        screen.blit(h_text_2,(725,325))
+        screen.blit(x_text_border,(722,400))
+        screen.blit(x_text_border_2,(722,430))
+        screen.blit(x_text,(725,400))
+        screen.blit(x_text_2,(725,430))
+        screen.blit(game_controls_border,(775,50))
+        screen.blit(game_controls_txt,(775,50))
+        h_gate = pygame.image.load('utils/data/gate_images/h_gate.png')
+        x_gate = pygame.image.load('utils/data/gate_images/x_gate.png')
+        id_gate = pygame.image.load('utils/data/gate_images/iden_gate.png')
+        cursor = pygame.transform.scale(pygame.image.load('utils/data/images/circuit-grid-cursor.png'),(33,33))
+        wasd = pygame.transform.scale(pygame.image.load('data/photos/wasd5.png'),(200,200))
+        screen.blit(wasd,(585,100))
+        screen.blit(h_gate,(655,300))
+        screen.blit(x_gate,(655,405))
+        #screen.blit(id_gate,(655,450))
+        screen.blit(cursor,(1175,195))
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.exit = True
+            elif event.type == pygame.KEYDOWN:
+                #back button
+                if event.key == pygame.K_b:
+                    self.transition_to_options = False
+                    
 
 def main():
     #initialise game 
@@ -81,9 +139,11 @@ def main():
         screen.fill((0,0,0))
         screen.blit(bgImg,(0,0))
         screen.blit(bgImg,(683,0))
-        if not first_scene.transition:
+        exit = first_scene.exit
+        if not first_scene.transition and not first_scene.transition_to_options:
             first_scene.start_screen()
-            exit = first_scene.exit
+        if first_scene.transition_to_options and not first_scene.transition:
+            first_scene.settings_screen()
         if first_scene.transition:      
             text_display = Text()
 

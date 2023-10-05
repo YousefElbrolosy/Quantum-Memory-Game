@@ -20,7 +20,7 @@ class Button():
                                                             #edge_width
         pygame.draw.rect(self.screen,self.color,button_rect , 0 ,5)
         pygame.draw.rect(self.screen,self.border_color,button_rect , self.border_width ,5)
-        self.screen.blit(button_text,(xpos+7,ypos+(self.height/2)-15))
+        self.screen.blit(button_text,(xpos+10,ypos+(self.height/2)-15))
 
     def press(self):
         self.pressed = True
