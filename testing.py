@@ -4,6 +4,7 @@ import operator
 import card_deck
 import random
 import numpy as np
+import sympy as sp
 pygame.init()
 screen = pygame.display.set_mode((500,500))
 fps = 60
@@ -83,7 +84,13 @@ def main():
         print("Entangled states:")
         for state_pair in entangled_states:
             print(f"|{state_pair[0]}> is entangled with |{state_pair[1]}>")
-
+    x = -4+0j  
+    if isinstance(x,complex):
+        if np.imag(x) == 0:    
+            prob = np.real(x**2)
+        else:
+            prob = np.abs(x)
+    print(prob)
     entanglement_check([(0, (0.4999999999999999+0j)), (1, 0j), (2, 0j), (3, (0.4999999999999999+0j)), (4, 0j), (5, (0.4999999999999999+0j)), (6, (0.4999999999999999+0j)), (7, 0j)])
     """
     |0> is entangled with |3>

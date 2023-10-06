@@ -17,7 +17,10 @@ class Quantum_control():
         state_vector = simulator.run(transpiled_circuit, shots = 100).result().get_statevector()
         #print("row state_vector is", list(enumerate(state_vector)))
         for basis_state, amp in enumerate(state_vector):
-            prob = amp**2 
+            if np.imag(amp) == 0:    
+                prob = np.real(amp**2)
+            else:
+                prob = np.abs(amp)
             if prob > 0:
                 self.prob_2.append(prob)
                 if basis_state == 3:
@@ -32,6 +35,7 @@ class Quantum_control():
                     self.superpositon_flag_2 = False
                 else:
                     self.superpositon_flag_2 = True
+        #print(self.prob_2)
         return row_states
     def select_column(self):
         col_states = []
@@ -42,7 +46,7 @@ class Quantum_control():
         #print("column state_vector is", list(enumerate(state_vector)))
         #[(0, (1+0j)), (1, 0j), (2, 0j), (3, 0j), (4, 0j), (5, 0j), (6, 0j), (7, 0j)]
         for basis_state, amp in enumerate(state_vector):
-            prob = amp**2
+            prob = np.abs(amp)
             if prob > 0:
                 self.prob_3.append(prob)
                 if basis_state == 0:
