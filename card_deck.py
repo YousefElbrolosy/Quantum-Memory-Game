@@ -165,7 +165,7 @@ class CardDeck():
                             value.remove_border()
                             del self.border_dictionary[key]
                         
-    def flip(self,superposition_flag_2,superposition_flag_3, super_prob_2, super_prob_3):
+    def flip(self, super_prob_2, super_prob_3):
         matrix = self.border_dictionary_2D()
         row_measurement = random.choices(matrix,weights= super_prob_2, k = 1)
         col_measurement = random.choices(list(row_measurement[0].keys()), weights = super_prob_3, k = 1)
@@ -177,7 +177,6 @@ class CardDeck():
         else:
             self.flipped = False
             
-        #this selects one at random (for entanglement selects two)
         """
         if len(self.border_dictionary) > 2:
             if superposition_flag_2 or superposition_flag_3:
@@ -282,9 +281,19 @@ class CardDeck():
                 tmp = i
         return matrix
 
-    #def oscillate(self,superposition_flag_2,superposition_flag_3):
+    #def oscillate(self,prob_list_2,prob_list_3):
+        matrix = self.border_dictionary_2D()
+        """
+        --> [[(0,0),(0,1),(0,6),(0,7)],
+             [(3,0),(3,1),(3,6),(3,7)]]
+
+             [
+              [(0,0),(3,0)],
+              [(0,1),(3,1)],
+              [(0,6),(3,6)],
+              [(0,7),(3,7)]
+              ]
+            each row 
+        """
 
 
-        
-
-        

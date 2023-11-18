@@ -186,7 +186,7 @@ def main():
                     pygame.time.set_timer(pygame.K_RETURN,1000) 
                     if event.key == pygame.K_RETURN and button_column.pressed:
                         if not card_deck.no_border:
-                            card_deck.flip(superposition_flag_2, superposition_flag_3,super_prob_2, super_prob_3)
+                            card_deck.flip(super_prob_2, super_prob_3)
                             #button_enter.press()
                             if card_deck.flipped:
                                 button_row.press()
@@ -227,6 +227,8 @@ def main():
                 quantum_control_2 = Quantum_control(circuit_grid_2)
                 row_states = quantum_control_2.select_row() 
                 superposition_flag_2 = quantum_control_2.superpositon_flag_2
+                #if superposition_flag_2:
+                #    card_deck.oscillate()
                 super_prob_2 = quantum_control_2.prob_2
                 for i in range(len(text_display.state_list_2)):
                     for j in range(len(row_states)):
@@ -270,6 +272,8 @@ def main():
                 quantum_control_3 = Quantum_control(circuit_grid_3)
                 col_states = quantum_control_3.select_column()
                 superposition_flag_3 = quantum_control_3.superpositon_flag_3
+                #if superposition_flag_3:
+                #    card_deck.oscillate()
                 super_prob_3 = quantum_control_3.prob_3
                 for j in range(len(text_display.state_list_3)):
                     for row_state in (row_states):
