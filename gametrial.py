@@ -13,6 +13,9 @@ clock = pygame.time.Clock()
 bgImg = pygame.image.load('data/photos/space.jpg')
 bgImg_start = pygame.transform.scale(pygame.image.load('data/photos/Space-Background-Image-2.jpg'),(1366,768))
 default_text_color = (255,255,255)
+play_with_error_flag = False
+
+button_chosen = 0
 class StartScreen():
     exit = False
     def __init__(self):
@@ -32,21 +35,46 @@ class StartScreen():
         screen.blit(text,(375,150))
         screen.blit(text_2,(250,280))
 
-        button_enter = Button("Start 'Enter'",250,75,'gray','black',4,screen,text_font.font)
-        button_options = Button("Settings 'S'",250,75,'gray','black',4,screen,text_font.font)
-        button_enter.un_press()
-        button_enter.add_button((1366/2)-(325/2)-100,(768/3)+300)
-        button_options.un_press()
-        button_options.add_button((1366/2)-(325/2)+175,(768/3)+300)
+        button_easy = Button("Play without error",375,75,'gray','black',4,screen,text_font.font)
+
+        button_enter = Button("play with error",325,75,'gray','black',4,screen,text_font.font)
+        button_options = Button("How to play 'S'",300,75,'gray','black',4,screen,text_font.font)
+        global button_chosen
+
+        if button_chosen == 0:
+            button_easy.press()
+            button_enter.un_press()
+            button_options.un_press()
+        if button_chosen == 1:
+            button_easy.un_press()
+            button_enter.press()
+            button_options.un_press()
+        if button_chosen == 2:
+            button_easy.un_press()
+            button_enter.un_press()
+            button_options.press()
+        button_easy.add_button((1366/2)-400,(768/3)+175)
+        
+        button_enter.add_button((1366/2),(768/3)+175)
+        
+        button_options.add_button(((1366/2))-150,(768/3)+300)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.exit = True
             elif event.type == pygame.KEYDOWN:
                 keys = pygame.key.get_pressed()
-                if event.key == pygame.K_RETURN:
+                if event.key == pygame.K_RIGHT and button_chosen !=2 :
+                    button_chosen = button_chosen + 1
+                if event.key == pygame.K_LEFT and button_chosen !=0 :
+                    button_chosen-=1
+
+                if event.key == pygame.K_RETURN and button_chosen == 0:
+                    self.transition = True
+                    button_enter.press()    
+                if event.key == pygame.K_RETURN and button_chosen == 1 :
                     self.transition = True
                     button_enter.press()
-                if event.key == pygame.K_s:
+                if event.key == pygame.K_RETURN and button_chosen == 2 :
                     self.transition_to_options = True
                     self.transition = False
                     self.settings_screen()
@@ -364,5 +392,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-#testing code
