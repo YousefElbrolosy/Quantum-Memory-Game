@@ -220,7 +220,7 @@ def main():
                     pygame.time.set_timer(pygame.K_RETURN,1000) 
                     if event.key == pygame.K_RETURN and button_column.pressed:
                         if not card_deck.no_border:
-                            card_deck.flip(super_prob_2, super_prob_3)
+                            card_deck.flip(super_prob_2, super_prob_3,transition_to_noise)
                             #button_enter.press()
                             if card_deck.flipped:
                                 button_row.press()

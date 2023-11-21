@@ -165,17 +165,28 @@ class CardDeck():
                             value.remove_border()
                             del self.border_dictionary[key]
                         
-    def flip(self, super_prob_2, super_prob_3):
-        matrix = self.border_dictionary_2D()
-        row_measurement = random.choices(matrix,weights= super_prob_2, k = 1)
-        col_measurement = random.choices(list(row_measurement[0].keys()), weights = super_prob_3, k = 1)
-        flip_key = col_measurement[0]
-        if(self.matrix_dictionary.get(flip_key) != None):
-            self.matrix_dictionary[flip_key].flip()
-            self.flip_dictionary.update({flip_key:self.matrix_dictionary[flip_key]})
-            self.flipped = True
-        else:
-            self.flipped = False
+    def flip(self, super_prob_2, super_prob_3, noise):
+        dice =  random.randint(0,2)
+        if not noise or dice == 0:
+            matrix = self.border_dictionary_2D()
+            row_measurement = random.choices(matrix,weights= super_prob_2, k = 1)
+            col_measurement = random.choices(list(row_measurement[0].keys()), weights = super_prob_3, k = 1)
+            flip_key = col_measurement[0]
+            
+            if(self.matrix_dictionary.get(flip_key) != None):
+                self.matrix_dictionary[flip_key].flip()
+                self.flip_dictionary.update({flip_key:self.matrix_dictionary[flip_key]})
+                self.flipped = True
+            else:
+                self.flipped = False
+        elif noise:
+            flip_key = (random.randint(0,3),random.randint(0,8))
+            if(self.matrix_dictionary.get(flip_key) != None):
+                self.matrix_dictionary[flip_key].flip()
+                self.flip_dictionary.update({flip_key:self.matrix_dictionary[flip_key]})
+                self.flipped = True
+            else:
+                self.flipped = False
             
         """
         if len(self.border_dictionary) > 2:
@@ -268,7 +279,7 @@ class CardDeck():
         z = sorted(self.border_dictionary, key= operator.itemgetter(0))
 
         tmp = z[0][0]
-        print(tmp)
+        #print(tmp)
         matrix = [{}]
         k = 0
         for (i,j) in z:
