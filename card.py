@@ -20,9 +20,9 @@ class Card():
         self.card_img = img
     def get_back_img(self):
         return self.back_img
-    def set_border(self):
+    def set_border(self,color):
         self.border = True
-        pygame.draw.rect(self.back_img, (0,255,255), [0, 0,82.6446281 , 120],5, 5)
+        pygame.draw.rect(self.back_img, color, [0, 0,82.6446281 , 120],5, 5)
         #old
         #pygame.draw.rect(self.back_img, (0,255,255), [0, 0,82.6446281 , 120], 5)
     def remove_border(self):

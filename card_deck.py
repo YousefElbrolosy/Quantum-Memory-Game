@@ -84,9 +84,9 @@ class CardDeck():
             screen.blit(val.get_card_img(),(posX+val.posX,posY+val.posY))
 
     
-    def add_border(self,i,j):
+    def add_border(self,i,j,color):
         if self.matrix_dictionary.get((i,j)) != None:
-            self.matrix_dictionary[(i,j)].set_border()
+            self.matrix_dictionary[(i,j)].set_border(color)
             self.border_dictionary.update({(i,j):self.matrix_dictionary[(i,j)]})
             self.no_border = False
         else: 

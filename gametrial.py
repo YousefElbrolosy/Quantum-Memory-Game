@@ -13,7 +13,7 @@ clock = pygame.time.Clock()
 bgImg = pygame.image.load('data/photos/space.jpg')
 bgImg_start = pygame.transform.scale(pygame.image.load('data/photos/Space-Background-Image-2.jpg'),(1366,768))
 default_text_color = (255,255,255)
-play_with_error_flag = False
+transition_to_noise = False
 
 button_chosen = 0
 class StartScreen():
@@ -21,8 +21,10 @@ class StartScreen():
     def __init__(self):
         self.transition = False
         self.transition_to_options = False
-    def start_screen(self):
         
+    def start_screen(self):
+        global transition_to_noise
+
         text_font = Text()
         screen.fill((0,0,0))
         screen.blit(bgImg_start,(0,0))
@@ -35,27 +37,28 @@ class StartScreen():
         screen.blit(text,(375,150))
         screen.blit(text_2,(250,280))
 
-        button_easy = Button("Play without error",375,75,'gray','black',4,screen,text_font.font)
+        button_easy = Button("Play without noise",375,75,'gray','black',4,screen,text_font.font)
 
-        button_enter = Button("play with error",325,75,'gray','black',4,screen,text_font.font)
+        button_enter_noise = Button("play with noise",325,75,'gray','black',4,screen,text_font.font)
         button_options = Button("How to play 'S'",300,75,'gray','black',4,screen,text_font.font)
         global button_chosen
 
         if button_chosen == 0:
             button_easy.press()
-            button_enter.un_press()
+            button_enter_noise.un_press()
             button_options.un_press()
         if button_chosen == 1:
             button_easy.un_press()
-            button_enter.press()
+            button_enter_noise.press()
             button_options.un_press()
         if button_chosen == 2:
             button_easy.un_press()
-            button_enter.un_press()
+            button_enter_noise.un_press()
             button_options.press()
+
         button_easy.add_button((1366/2)-400,(768/3)+175)
         
-        button_enter.add_button((1366/2),(768/3)+175)
+        button_enter_noise.add_button((1366/2),(768/3)+175)
         
         button_options.add_button(((1366/2))-150,(768/3)+300)
         for event in pygame.event.get():
@@ -68,12 +71,15 @@ class StartScreen():
                 if event.key == pygame.K_LEFT and button_chosen !=0 :
                     button_chosen-=1
 
+                   
                 if event.key == pygame.K_RETURN and button_chosen == 0:
                     self.transition = True
-                    button_enter.press()    
-                if event.key == pygame.K_RETURN and button_chosen == 1 :
+                    transition_to_noise = False
+                    button_easy.press()
+                if event.key == pygame.K_RETURN and button_chosen == 1:
                     self.transition = True
-                    button_enter.press()
+                    transition_to_noise = True
+                    button_enter_noise.press() 
                 if event.key == pygame.K_RETURN and button_chosen == 2 :
                     self.transition_to_options = True
                     self.transition = False
@@ -261,10 +267,19 @@ def main():
                 for i in range(len(text_display.state_list_2)):
                     for j in range(len(row_states)):
                         if row_states[j] == text_display.state_list_2[i]:
-                            if not card_deck.no_border:
+                            if not card_deck.no_border and not transition_to_noise:
                                 text_display.color_list_3[tmpj] = (0,255,255)
-                            text_display.color_list_2[i] = (0,255,255)      
-                            card_deck.add_border(i,tmpj)
+                            elif not card_deck.no_border and transition_to_noise:
+                                text_display.color_list_3[tmpj] = (255,0,0)
+                            
+                            if transition_to_noise:
+                                text_display.color_list_2[i] = (255,0,0) 
+                            else:
+                                text_display.color_list_2[i] = (0,255,255) 
+                            if transition_to_noise:         
+                                card_deck.add_border(i,tmpj,(255,0,0))
+                            else:        
+                                card_deck.add_border(i,tmpj,(0,255,255))
                             tmpi = i
                             
 
@@ -315,11 +330,19 @@ def main():
                             i = 3
                         for k in range(len(col_states)):
                             if col_states[k] == text_display.state_list_3[j]:
-                                text_display.color_list_2[i] = (0,255,255)
-                                #if not card_deck.no_border:
-                                text_display.color_list_3[j] = (0,255,255)
-                                card_deck.add_border(i,j)
+                                if transition_to_noise:
+                                    text_display.color_list_2[i] = (255,0,0)
+                                    #if not card_deck.no_border:
+                                    text_display.color_list_3[j] = (255,0,0)
+                                    card_deck.add_border(i,j,(255,0,0))
+                                else:    
+                                    text_display.color_list_2[i] = (0,255,255)
+                                    #if not card_deck.no_border:
+                                    text_display.color_list_3[j] = (0,255,255)
+                                    card_deck.add_border(i,j,(0,255,255))
+                                
                                 tmpj = j
+                                
                             #break_flag = True
                             #break
                     #if break_flag:
