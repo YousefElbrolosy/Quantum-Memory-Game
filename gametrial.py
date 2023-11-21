@@ -37,10 +37,10 @@ class StartScreen():
         screen.blit(text,(375,150))
         screen.blit(text_2,(250,280))
 
-        button_easy = Button("Play without noise",375,75,'gray','black',4,screen,text_font.font)
+        button_easy = Button("Play without noise",375,75,'gray','black','black',4,screen,text_font.font)
 
-        button_enter_noise = Button("play with noise",325,75,'gray','black',4,screen,text_font.font)
-        button_options = Button("How to play 'S'",300,75,'gray','black',4,screen,text_font.font)
+        button_enter_noise = Button("play with noise",325,75,'gray','black','black',4,screen,text_font.font)
+        button_options = Button("How to play 'S'",300,75,'gray','black','black',4,screen,text_font.font)
         global button_chosen
 
         if button_chosen == 0:
@@ -151,16 +151,23 @@ def main():
     cheatflag = False
     superposition_flag_2 = False
     superposition_flag_3 = False
+    global revert_to_no_noise
+    revert_to_no_noise = False
     super_prob_2 = []
     super_prob_3 = []
+    global error_mitigate_bg_color
+    global error_mitigate_text_color
+    error_mitigate_bg_color = (50,50,50)
+    error_mitigate_text_color = (80,80,80)
     #shuffle cards
     card_deck = CardDeck()
     card_deck.add_cards()
     card_deck.shuffle(card_deck.cards_xpics_x910)
     #text
     text_font = Text()
-    button_row = Button("row    'shift+r'",325,50,'gray','black',4,screen,text_font.font)
-    button_column = Button("column 'shift+c'",325,50,'gray','black',4,screen,text_font.font)
+    button_row = Button("row    'shift+r'",333,50,'gray','black','black',4,screen,text_font.font)
+    button_column = Button("column 'shift+c'",333,50,'gray','black','black',4,screen,text_font.font)
+    button_mitigate_noise = Button("ERROR MITIGATION",333,50,error_mitigate_bg_color,'black',error_mitigate_text_color,4,screen,text_font.font)
     #button_enter = Button("select 'enter'",325,50,'gray','black',4,screen,text_font.font)
     # button
     row_flag = True
@@ -173,6 +180,8 @@ def main():
         screen.fill((0,0,0))
         screen.blit(bgImg,(0,0))
         screen.blit(bgImg,(683,0))
+        game_controls_txt = text_font.small_font_border.render("Score: "+str(card_deck.score),True,'orange')
+        screen.blit(game_controls_txt,(10,10))
         exit = first_scene.exit
         if not first_scene.transition and not first_scene.transition_to_options:
             first_scene.start_screen()
@@ -184,11 +193,23 @@ def main():
             #button_row.add_button(1025,10)
             button_column.add_button(1025,10)
             #button_column.add_button(1025,60)
+            if transition_to_noise:
+                button_mitigate_noise.add_button(1025,70)
 
+            button_mitigate_noise.un_press()
+
+            if card_deck.score >= 10:
+                button_mitigate_noise.press()
+                button_mitigate_noise.set_txt_color((0,100,100)) 
+                button_mitigate_noise.set_color('gray')
+                button_mitigate_noise.set_border_color((0,150,150))
+                revert_to_no_noise = True
             #button_enter.add_button(10,10)
             #button_enter.un_press()
             global tmpi
             global tmpj
+            global state_vector_2
+            global state_vector_3
             if row_flag:
                 button_column.un_press()
             
@@ -218,7 +239,9 @@ def main():
                         row_flag = False
 
                     pygame.time.set_timer(pygame.K_RETURN,1000) 
+                    
                     if event.key == pygame.K_RETURN and button_column.pressed:
+                        
                         if not card_deck.no_border:
                             card_deck.flip(super_prob_2, super_prob_3,transition_to_noise)
                             #button_enter.press()
@@ -264,19 +287,20 @@ def main():
                 #if superposition_flag_2:
                 #    card_deck.oscillate()
                 super_prob_2 = quantum_control_2.prob_2
+                state_vector_2 = quantum_control_2.state_vector_2
                 for i in range(len(text_display.state_list_2)):
                     for j in range(len(row_states)):
                         if row_states[j] == text_display.state_list_2[i]:
-                            if not card_deck.no_border and not transition_to_noise:
+                            if not card_deck.no_border and not transition_to_noise or revert_to_no_noise:
                                 text_display.color_list_3[tmpj] = (0,255,255)
-                            elif not card_deck.no_border and transition_to_noise:
+                            elif not card_deck.no_border and transition_to_noise and not revert_to_no_noise:
                                 text_display.color_list_3[tmpj] = (255,0,0)
                             
-                            if transition_to_noise:
+                            if transition_to_noise and not revert_to_no_noise:
                                 text_display.color_list_2[i] = (255,0,0) 
                             else:
                                 text_display.color_list_2[i] = (0,255,255) 
-                            if transition_to_noise:         
+                            if transition_to_noise and not revert_to_no_noise:         
                                 card_deck.add_border(i,tmpj,(255,0,0))
                             else:        
                                 card_deck.add_border(i,tmpj,(0,255,255))
@@ -318,6 +342,7 @@ def main():
                 #if superposition_flag_3:
                 #    card_deck.oscillate()
                 super_prob_3 = quantum_control_3.prob_3
+                state_vector_3 = quantum_control_2.state_vector_3
                 for j in range(len(text_display.state_list_3)):
                     for row_state in (row_states):
                         if row_state == "|00>":
@@ -330,7 +355,7 @@ def main():
                             i = 3
                         for k in range(len(col_states)):
                             if col_states[k] == text_display.state_list_3[j]:
-                                if transition_to_noise:
+                                if transition_to_noise and not revert_to_no_noise:
                                     text_display.color_list_2[i] = (255,0,0)
                                     #if not card_deck.no_border:
                                     text_display.color_list_3[j] = (255,0,0)
@@ -401,11 +426,12 @@ def main():
                 """    
             #print(list(card_deck.border_dictionary))
             #print(sorted(x, key = lambda x: x[0]))
-            
+
             if len(card_deck.flip_dictionary) == 2:
-                        # note that it is evennt.type not event.key
-                        if event.type == pygame.K_RETURN : 
-                            card_deck.check_cards()  
+                # note that it is evennt.type not event.key
+                if event.type == pygame.K_RETURN : 
+                    card_deck.check_cards(state_vector_2,state_vector_3)  
+            
                         
             text_display.display_grid(screen)
             pygame.display.flip()

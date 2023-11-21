@@ -1,10 +1,11 @@
 import pygame
 class Button():
-    def __init__(self,text,width,height,color,border_color,border_width,screen,font) -> None:
+    def __init__(self,text,width,height,color,border_color,text_color,border_width,screen,font) -> None:
         self.text = text
         self.width = width
         self.height = height
         self.color = color
+        self.text_color = text_color
         self.original_color = color
         self.border_color = border_color
         self.border_width = border_width
@@ -15,7 +16,7 @@ class Button():
         self.font = font
 
     def add_button(self,xpos,ypos):
-        button_text = self.font.render(self.text,True,'black')
+        button_text = self.font.render(self.text,True,self.text_color)
         button_rect = pygame.rect.Rect((xpos,ypos),(self.width,self.height))
                                                             #edge_width
         pygame.draw.rect(self.screen,self.color,button_rect , 0 ,5)
@@ -29,6 +30,13 @@ class Button():
         self.border_width = self.original_border_width
         
         self.enabled = False
+
+    def set_color(self,color):
+        self.color = color
+    def set_txt_color(self,color):
+        self.text_color = color
+    def set_border_color(self,color):
+        self.border_color = color
 
     def un_press(self):
         self.pressed = False

@@ -1,5 +1,7 @@
 import pygame
 import random
+import sympy as sp
+from sympy import Eq, solve_linear_system, Matrix
 from quantum import Quantum_control
 from card import Card
 import operator
@@ -166,8 +168,8 @@ class CardDeck():
                             del self.border_dictionary[key]
                         
     def flip(self, super_prob_2, super_prob_3, noise):
-        dice =  random.randint(0,2)
-        if not noise or dice == 0:
+        dice = random.randint(0,3)
+        if not noise or dice == 0 or dice == 1:
             matrix = self.border_dictionary_2D()
             row_measurement = random.choices(matrix,weights= super_prob_2, k = 1)
             col_measurement = random.choices(list(row_measurement[0].keys()), weights = super_prob_3, k = 1)
@@ -179,7 +181,7 @@ class CardDeck():
                 self.flipped = True
             else:
                 self.flipped = False
-        elif noise:
+        elif noise or dice == 2:
             flip_key = (random.randint(0,3),random.randint(0,8))
             if(self.matrix_dictionary.get(flip_key) != None):
                 self.matrix_dictionary[flip_key].flip()
@@ -258,10 +260,14 @@ class CardDeck():
             val.un_flip()
             del self.flip_dictionary[key]
             
-    def check_cards(self):
+    def check_cards(self,state_vector_2,state_vector_3):
         self.checked = True
-    
+        print(state_vector_2)
+        print(state_vector_3)
         if list(self.flip_dictionary.values())[0].img_number == list(self.flip_dictionary.values())[1].img_number:
+            if self.entanglement_witness(state_vector_2,state_vector_3):
+                self.score += 5
+            self.score+=1
             for (i,j), value in list(self.flip_dictionary.items()):
                 #here it is important to display using a matrix because
                 #if display depends on card then deleting a matrix element wont affect grid
@@ -270,7 +276,11 @@ class CardDeck():
                 #del(self.matrix[i][j])
                 self.deleted_dictionary.update({(i,j):self.matrix_dictionary[(i,j)]})
                 del self.matrix_dictionary[(i,j)]
-                self.score+=1
+                
+            
+                
+                #self.score+=5
+                
         else:
             self.un_flip()
     
@@ -291,6 +301,7 @@ class CardDeck():
                 matrix[k].update({(i,j):self.border_dictionary[(i,j)]})
                 tmp = i
         return matrix
+        
 
     #def oscillate(self,prob_list_2,prob_list_3):
         matrix = self.border_dictionary_2D()
@@ -307,4 +318,29 @@ class CardDeck():
             each row 
         """
 
+    def entanglement_witness(self,state_vector_2,state_vector_3):
+        
+        x0,x1,y0,y1 = sp.symbols('x0 x1 y0 y1')
+        eq1 = Eq(x0*y0, state_vector_2[0])
+        eq2 = Eq(x0*y1, state_vector_2[1])
+        eq3 = Eq(x1*y0, state_vector_2[2])
+        eq4 = Eq(x1*y1, state_vector_2[3])
 
+        result_2 = sp.solve([eq1,eq2,eq3,eq4],(x0,x1,y0,y1))
+
+        x0,x1,y0,y1,z0,z1 = sp.symbols('x0 x1 y0 y1 z0 z1')
+        eq1 = Eq(x0*y0*z0, state_vector_3[0])
+        eq2 = Eq(x0*y0*z1, state_vector_3[1])
+        eq3 = Eq(x0*y1*z0, state_vector_3[2])
+        eq4 = Eq(x0*y1*z1, state_vector_3[3])
+        eq5 = Eq(x1*y0*z0, state_vector_3[4])
+        eq6 = Eq(x1*y0*z1, state_vector_3[5])
+        eq7 = Eq(x1*y1*z0, state_vector_3[6])
+        eq8 = Eq(x1*y1*z1, state_vector_3[7])
+
+        result_3 = sp.solve([eq1,eq2,eq3,eq4,eq5,eq6,eq7,eq8],(x0,x1,y0,y1,z0,z1))
+
+        if len(result_2) == 0 or len(result_3) == 0:
+            return True
+        else:
+            return False

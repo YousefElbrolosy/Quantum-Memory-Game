@@ -5,16 +5,21 @@ import card_deck
 import random
 import numpy as np
 import sympy as sp
+from sympy.interactive import printing
+printing.init_printing(use_latex = True)
+from sympy import Eq, solve_linear_system, Matrix
+from numpy import linalg
 pygame.init()
 screen = pygame.display.set_mode((500,500))
 fps = 60
 timer = pygame.time.Clock()
 font = pygame.font.Font('data/fonts/pong.ttf',48)
 exit = False
-button_1 = Button("row",100,100,'gray','black',4,screen,font)
-button_2 = Button("column",200,100,'gray','black',4,screen,font)
+#button_1 = Button("row",100,100,'gray','black',4,screen,font)
+#button_2 = Button("column",200,100,'gray','black',4,screen,font)
 
 def main():
+    
     def choosing_superpos():
         x = [(0, 0), (3, 0), (0, 1), (3, 1), (0, 6), (3, 6), (0, 7), (3, 7)]
         #[[(0,0),(0,1),(0,6),(0,7)],
@@ -84,14 +89,18 @@ def main():
         print("Entangled states:")
         for state_pair in entangled_states:
             print(f"|{state_pair[0]}> is entangled with |{state_pair[1]}>")
-    x = -4+0j  
-    if isinstance(x,complex):
-        if np.imag(x) == 0:    
-            prob = np.real(x**2)
-        else:
-            prob = np.abs(x)
-    print(prob)
-    entanglement_check([(0, (0.4999999999999999+0j)), (1, 0j), (2, 0j), (3, (0.4999999999999999+0j)), (4, 0j), (5, (0.4999999999999999+0j)), (6, (0.4999999999999999+0j)), (7, 0j)])
+    
+    #x = -4+0j  
+    #if isinstance(x,complex):
+    #    if np.imag(x) == 0:    
+    #        prob = np.real(x**2)
+    #    else:
+    #        prob = np.abs(x)
+    #print(prob)
+    #entanglement_check([(0, (0.4999999999999999+0j)), (1, 0j), (2, 0j), (3, (0.4999999999999999+0j)), (4, 0j), (5, (0.4999999999999999+0j)), (6, (0.4999999999999999+0j)), (7, 0j)])
+    
+
+
     """
     |0> is entangled with |3>
     |0> is entangled with |5>
@@ -112,6 +121,42 @@ def main():
     [0.  +0.j 0.  +0.j 0.  +0.j 0.  +0.j 0.  +0.j 0.  +0.j 0.  +0.j "0.  +0.j"]
     ]
     """
+
+
+    def entanglement_witness():
+        #prob_1 = [((1/2)+0j),0,0,(1/2)]
+        state_vector_2 = [(0.7071067811865475+0j), 0j, 0j, (0.7071067811865475+0j)]
+        state_vector_3 = [(0.4999999999999999+0j), (0.4999999999999999+0j), 0j, 0j, 0j, 0j, (0.4999999999999999+0j), (0.4999999999999999+0j)]
+        x0,x1,y0,y1 = sp.symbols('x0 x1 y0 y1')
+        eq1 = Eq(x0*y0, state_vector_2[0])
+        eq2 = Eq(x0*y1, state_vector_2[1])
+        eq3 = Eq(x1*y0, state_vector_2[2])
+        eq4 = Eq(x1*y1, state_vector_2[3])
+
+        result_2 = sp.solve([eq1,eq2,eq3,eq4],(x0,x1,y0,y1))
+
+        x0,x1,y0,y1,z0,z1 = sp.symbols('x0 x1 y0 y1 z0 z1')
+        eq1 = Eq(x0*y0*z0, state_vector_3[0])
+        eq2 = Eq(x0*y0*z1, state_vector_3[1])
+        eq3 = Eq(x0*y1*z0, state_vector_3[2])
+        eq4 = Eq(x0*y1*z1, state_vector_3[3])
+        eq5 = Eq(x1*y0*z0, state_vector_3[4])
+        eq6 = Eq(x1*y0*z1, state_vector_3[5])
+        eq7 = Eq(x1*y1*z0, state_vector_3[6])
+        eq8 = Eq(x1*y1*z1, state_vector_3[7])
+
+        result_3 = sp.solve([eq1,eq2,eq3,eq4,eq5,eq6,eq7,eq8],(x0,x1,y0,y1,z0,z1))
+        
+        a,b = sp.symbols('a b')
+        eq5 = sp.Eq(a+b,5)
+        eq6 = sp.Eq(a**2+b**2, 17)
+        result2 = sp.solve([eq5,eq6],(a,b))
+        print(result_2)
+        print(result_3)
+        print("-------------------")
+        print(result2)
+
+    entanglement_witness()
 if __name__ == '__main__':
     main()
 """          

@@ -9,6 +9,8 @@ class Quantum_control():
         self.superpositon_flag_3 = False
         self.prob_2 = []
         self.prob_3 = []
+        self.state_vector_2 = []
+        self.state_vector_3 = []
     def select_row(self):
         row_states = []
         simulator = qiskit.BasicAer.get_backend("statevector_simulator")
@@ -35,7 +37,10 @@ class Quantum_control():
                     self.superpositon_flag_2 = False
                 else:
                     self.superpositon_flag_2 = True
-        #print(self.prob_2)
+        #print(self.all_prob_2)
+
+        self.state_vector_2 = list(state_vector)
+        #print("state_vector_2 now is: " + str(self.state_vector_2))
         return row_states
     def select_column(self):
         col_states = []
@@ -69,7 +74,8 @@ class Quantum_control():
                     self.superpositon_flag_3 = False
                 else:
                     self.superpositon_flag_3 = True
-            
+            self.state_vector_3 = list(state_vector)
+            #print("state_vector_3 now is:" + str(self.state_vector_3))
         return col_states
 
     def main():
