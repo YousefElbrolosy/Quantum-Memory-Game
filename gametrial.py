@@ -21,6 +21,7 @@ class StartScreen():
     def __init__(self):
         self.transition = False
         self.transition_to_options = False
+        self.transition_to_end = False
         
     def start_screen(self):
         global transition_to_noise
@@ -138,8 +139,24 @@ class StartScreen():
                 #back button
                 if event.key == pygame.K_b:
                     self.transition_to_options = False
-                    
 
+    def end_screen(self):
+        screen.fill((0,0,0))
+        screen.blit(bgImg_start,(0,0))
+        text_font = Text()
+        congratulations = text_font.font_subtitle.render("Congratulations: YOU NOW HAVE A QUANTUM MEMORY",True,'orange')
+        congratulations_border = text_font.font_subtitle_border.render("Congratulations: YOU NOW HAVE A QUANTUM MEMORY",True,'black') 
+        screen.blit(congratulations_border,(250,150))
+        screen.blit(congratulations,(250,150))
+        
+        score = text_font.font_subtitle.render("Your Score is:" + str(card_deck.score),True,'orange')
+        score_border = text_font.font_subtitle_border.render("Your Score is:" + str(card_deck.score),True,'black')       
+        screen.blit(score_border,(250,250))
+        screen.blit(score,(250,250))
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.exit = True
+        pygame.display.flip()
 def main():
     #initialise game 
     circuit_grid_model_3 = CircuitGridModel(3,19)
@@ -161,6 +178,7 @@ def main():
     error_mitigate_bg_color = (50,50,50)
     error_mitigate_text_color = (80,80,80)
     #shuffle cards
+    global card_deck
     card_deck = CardDeck()
     card_deck.add_cards()
     card_deck.shuffle(card_deck.cards_xpics_x910)
@@ -178,24 +196,25 @@ def main():
     first_scene = StartScreen()
     
     while not exit:
-        screen.fill((0,0,0))
-        screen.blit(bgImg,(0,0))
-        screen.blit(bgImg,(683,0))
-        score = text_font.small_font_border.render("Score: "+str(card_deck.score),True,'orange')
-        screen.blit(score,(10,10))
+        
         exit = first_scene.exit
-        if not first_scene.transition and not first_scene.transition_to_options:
+        if not first_scene.transition and not first_scene.transition_to_options and not first_scene.transition_to_end:
             first_scene.start_screen()
-        if first_scene.transition_to_options and not first_scene.transition:
+        elif first_scene.transition_to_options and not first_scene.transition:
             first_scene.settings_screen()
-        if first_scene.transition:      
+        
+        elif first_scene.transition:
+            screen.fill((0,0,0))
+            screen.blit(bgImg,(0,0))
+            screen.blit(bgImg,(683,0))
+            score = text_font.small_font_border.render("Score: "+str(card_deck.score),True,'orange')
+            screen.blit(score,(10,10))      
             text_display = Text()
-
-            #button_row.add_button(1025,10)
-            button_column.add_button(1025,10)
+            button_row.add_button(1025,10)
+            button_column.add_button(1025,60)
             #button_column.add_button(1025,60)
             if transition_to_noise:
-                button_mitigate_noise.add_button(1025,70)
+                button_mitigate_noise.add_button(1025,110)
 
             button_mitigate_noise.un_press()
 
@@ -229,14 +248,14 @@ def main():
                     if col_flag and not row_flag and len(card_deck.flip_dictionary) < 2:
                         circuit_grid_3.handle_input(event.key)
                     
-                    """
+                    
                     if keys[pygame.K_r] and (keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]):
-                        if col_flag == False:
+                        if col_flag == True:
                             button_column.un_press()
                             button_row.press()
                             row_flag =True
                             col_flag = False
-                    """    
+                        
                     if keys[pygame.K_c] and (keys[pygame.K_LSHIFT] or keys[pygame.K_RSHIFT]) and len(card_deck.flip_dictionary) < 2:
                         button_row.un_press()
                         button_column.press()
@@ -453,10 +472,16 @@ def main():
                 if event.type == pygame.K_RETURN :
                     card_deck.check_cards(tmp_1_state_vector_2,tmp_1_state_vector_3,tmp_2_state_vector_2,tmp_2_state_vector_3) 
             
-                        
+            
+            if card_deck.check_win():
+                first_scene.transition = False
+                first_scene.transition_to_end = True
+                
             text_display.display_grid(screen)
             pygame.display.flip()
 
+        elif first_scene.transition_to_end and not first_scene.transition:
+            first_scene.end_screen()
             #set framerate
         clock.tick(60)
 

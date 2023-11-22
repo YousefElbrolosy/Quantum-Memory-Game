@@ -366,3 +366,10 @@ class CardDeck():
             return True
         else:
             return False
+
+
+    def check_win(self):
+        if len(self.matrix_dictionary) == 0:
+            return True
+        else:
+            False
