@@ -74,8 +74,8 @@ class Quantum_control():
                     self.superpositon_flag_3 = False
                 else:
                     self.superpositon_flag_3 = True
-            self.state_vector_3 = list(state_vector)
-            #print("state_vector_3 now is:" + str(self.state_vector_3))
+        self.state_vector_3 = list(state_vector)
+        #print("state_vector_3 now is:" + str(self.state_vector_3))
         return col_states
 
     def main():

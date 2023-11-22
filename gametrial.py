@@ -157,6 +157,7 @@ def main():
     super_prob_3 = []
     global error_mitigate_bg_color
     global error_mitigate_text_color
+    
     error_mitigate_bg_color = (50,50,50)
     error_mitigate_text_color = (80,80,80)
     #shuffle cards
@@ -180,8 +181,8 @@ def main():
         screen.fill((0,0,0))
         screen.blit(bgImg,(0,0))
         screen.blit(bgImg,(683,0))
-        game_controls_txt = text_font.small_font_border.render("Score: "+str(card_deck.score),True,'orange')
-        screen.blit(game_controls_txt,(10,10))
+        score = text_font.small_font_border.render("Score: "+str(card_deck.score),True,'orange')
+        screen.blit(score,(10,10))
         exit = first_scene.exit
         if not first_scene.transition and not first_scene.transition_to_options:
             first_scene.start_screen()
@@ -208,8 +209,10 @@ def main():
             #button_enter.un_press()
             global tmpi
             global tmpj
-            global state_vector_2
-            global state_vector_3
+            global tmp_state_vector_2
+            global tmp_state_vector_3
+            
+
             if row_flag:
                 button_column.un_press()
             
@@ -241,10 +244,19 @@ def main():
                     pygame.time.set_timer(pygame.K_RETURN,1000) 
                     
                     if event.key == pygame.K_RETURN and button_column.pressed:
+                        #print(state_vector_2,state_vector_3)
+                        #print("---")
                         
+                        
+
                         if not card_deck.no_border:
                             card_deck.flip(super_prob_2, super_prob_3,transition_to_noise)
                             #button_enter.press()
+                            if len(card_deck.flip_dictionary) == 2:
+                        # note that it is evennt.type not event.key
+                                tmp_state_vector_2 = state_vector_2
+                                tmp_state_vector_3 = state_vector_3
+                                #print(state_vector_2,state_vector_3)
                             if card_deck.flipped:
                                 button_row.press()
                                 button_column.un_press()
@@ -275,6 +287,8 @@ def main():
 
             card_deck.reset6(row_flag,col_flag, superposition_flag_2, superposition_flag_3)
             text_display.reset()
+
+             
 
             tmpj = 0
             #draw
@@ -342,7 +356,7 @@ def main():
                 #if superposition_flag_3:
                 #    card_deck.oscillate()
                 super_prob_3 = quantum_control_3.prob_3
-                state_vector_3 = quantum_control_2.state_vector_3
+                state_vector_3 = quantum_control_3.state_vector_3
                 for j in range(len(text_display.state_list_3)):
                     for row_state in (row_states):
                         if row_state == "|00>":
@@ -426,11 +440,11 @@ def main():
                 """    
             #print(list(card_deck.border_dictionary))
             #print(sorted(x, key = lambda x: x[0]))
-
+            
             if len(card_deck.flip_dictionary) == 2:
                 # note that it is evennt.type not event.key
-                if event.type == pygame.K_RETURN : 
-                    card_deck.check_cards(state_vector_2,state_vector_3)  
+                if event.type == pygame.K_RETURN :
+                    card_deck.check_cards(tmp_state_vector_2,tmp_state_vector_3) 
             
                         
             text_display.display_grid(screen)

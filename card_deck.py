@@ -262,12 +262,11 @@ class CardDeck():
             
     def check_cards(self,state_vector_2,state_vector_3):
         self.checked = True
-        print(state_vector_2)
-        print(state_vector_3)
         if list(self.flip_dictionary.values())[0].img_number == list(self.flip_dictionary.values())[1].img_number:
             if self.entanglement_witness(state_vector_2,state_vector_3):
                 self.score += 5
-            self.score+=1
+            else:
+                self.score+=1
             for (i,j), value in list(self.flip_dictionary.items()):
                 #here it is important to display using a matrix because
                 #if display depends on card then deleting a matrix element wont affect grid
