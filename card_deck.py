@@ -372,4 +372,4 @@ class CardDeck():
         if len(self.matrix_dictionary) == 0:
             return True
         else:
-            False
+            return False
