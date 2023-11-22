@@ -209,8 +209,10 @@ def main():
             #button_enter.un_press()
             global tmpi
             global tmpj
-            global tmp_state_vector_2
-            global tmp_state_vector_3
+            global tmp_2_state_vector_2
+            global tmp_2_state_vector_3
+            global tmp_1_state_vector_2
+            global tmp_1_state_vector_3
             
 
             if row_flag:
@@ -250,12 +252,17 @@ def main():
                         
 
                         if not card_deck.no_border:
-                            card_deck.flip(super_prob_2, super_prob_3,transition_to_noise)
+                            card_deck.flip(super_prob_2, super_prob_3,transition_to_noise, revert_to_no_noise)
                             #button_enter.press()
+                            if len(card_deck.flip_dictionary) == 1:
+                        # note that it is evennt.type not event.key
+                                tmp_1_state_vector_2 = state_vector_2
+                                tmp_1_state_vector_3 = state_vector_3
+                                #print(state_vector_2,state_vector_3)
                             if len(card_deck.flip_dictionary) == 2:
                         # note that it is evennt.type not event.key
-                                tmp_state_vector_2 = state_vector_2
-                                tmp_state_vector_3 = state_vector_3
+                                tmp_2_state_vector_2 = state_vector_2
+                                tmp_2_state_vector_3 = state_vector_3
                                 #print(state_vector_2,state_vector_3)
                             if card_deck.flipped:
                                 button_row.press()
@@ -444,7 +451,7 @@ def main():
             if len(card_deck.flip_dictionary) == 2:
                 # note that it is evennt.type not event.key
                 if event.type == pygame.K_RETURN :
-                    card_deck.check_cards(tmp_state_vector_2,tmp_state_vector_3) 
+                    card_deck.check_cards(tmp_1_state_vector_2,tmp_1_state_vector_3,tmp_2_state_vector_2,tmp_2_state_vector_3) 
             
                         
             text_display.display_grid(screen)

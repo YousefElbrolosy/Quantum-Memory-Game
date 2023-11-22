@@ -167,9 +167,9 @@ class CardDeck():
                             value.remove_border()
                             del self.border_dictionary[key]
                         
-    def flip(self, super_prob_2, super_prob_3, noise):
+    def flip(self, super_prob_2, super_prob_3, noise, revert):
         dice = random.randint(0,3)
-        if not noise or dice == 0 or dice == 1:
+        if not noise or dice == 0 or dice == 1 or revert:
             matrix = self.border_dictionary_2D()
             row_measurement = random.choices(matrix,weights= super_prob_2, k = 1)
             col_measurement = random.choices(list(row_measurement[0].keys()), weights = super_prob_3, k = 1)
@@ -180,14 +180,17 @@ class CardDeck():
                 self.flip_dictionary.update({flip_key:self.matrix_dictionary[flip_key]})
                 self.flipped = True
             else:
+                print(flip_key)
                 self.flipped = False
-        elif noise or dice == 2:
+        elif noise and not revert or dice == 2 :
             flip_key = (random.randint(0,3),random.randint(0,8))
             if(self.matrix_dictionary.get(flip_key) != None):
                 self.matrix_dictionary[flip_key].flip()
                 self.flip_dictionary.update({flip_key:self.matrix_dictionary[flip_key]})
                 self.flipped = True
             else:
+                
+                print("error"+str(flip_key))
                 self.flipped = False
             
         """
@@ -260,10 +263,10 @@ class CardDeck():
             val.un_flip()
             del self.flip_dictionary[key]
             
-    def check_cards(self,state_vector_2,state_vector_3):
+    def check_cards(self,flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3):
         self.checked = True
         if list(self.flip_dictionary.values())[0].img_number == list(self.flip_dictionary.values())[1].img_number:
-            if self.entanglement_witness(state_vector_2,state_vector_3):
+            if self.entanglement_witness(flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3):
                 self.score += 5
             else:
                 self.score+=1
@@ -317,29 +320,49 @@ class CardDeck():
             each row 
         """
 
-    def entanglement_witness(self,state_vector_2,state_vector_3):
+    def entanglement_witness(self,flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3):
         
         x0,x1,y0,y1 = sp.symbols('x0 x1 y0 y1')
-        eq1 = Eq(x0*y0, state_vector_2[0])
-        eq2 = Eq(x0*y1, state_vector_2[1])
-        eq3 = Eq(x1*y0, state_vector_2[2])
-        eq4 = Eq(x1*y1, state_vector_2[3])
+        eq1 = Eq(x0*y0, flip_1_state_vector_2[0])
+        eq2 = Eq(x0*y1, flip_1_state_vector_2[1])
+        eq3 = Eq(x1*y0, flip_1_state_vector_2[2])
+        eq4 = Eq(x1*y1, flip_1_state_vector_2[3])
 
-        result_2 = sp.solve([eq1,eq2,eq3,eq4],(x0,x1,y0,y1))
+        result_2_1 = sp.solve([eq1,eq2,eq3,eq4],(x0,x1,y0,y1))
 
         x0,x1,y0,y1,z0,z1 = sp.symbols('x0 x1 y0 y1 z0 z1')
-        eq1 = Eq(x0*y0*z0, state_vector_3[0])
-        eq2 = Eq(x0*y0*z1, state_vector_3[1])
-        eq3 = Eq(x0*y1*z0, state_vector_3[2])
-        eq4 = Eq(x0*y1*z1, state_vector_3[3])
-        eq5 = Eq(x1*y0*z0, state_vector_3[4])
-        eq6 = Eq(x1*y0*z1, state_vector_3[5])
-        eq7 = Eq(x1*y1*z0, state_vector_3[6])
-        eq8 = Eq(x1*y1*z1, state_vector_3[7])
+        eq1 = Eq(x0*y0*z0, flip_1_state_vector_3[0])
+        eq2 = Eq(x0*y0*z1, flip_1_state_vector_3[1])
+        eq3 = Eq(x0*y1*z0, flip_1_state_vector_3[2])
+        eq4 = Eq(x0*y1*z1, flip_1_state_vector_3[3])
+        eq5 = Eq(x1*y0*z0, flip_1_state_vector_3[4])
+        eq6 = Eq(x1*y0*z1, flip_1_state_vector_3[5])
+        eq7 = Eq(x1*y1*z0, flip_1_state_vector_3[6])
+        eq8 = Eq(x1*y1*z1, flip_1_state_vector_3[7])
 
-        result_3 = sp.solve([eq1,eq2,eq3,eq4,eq5,eq6,eq7,eq8],(x0,x1,y0,y1,z0,z1))
+        result_3_1 = sp.solve([eq1,eq2,eq3,eq4,eq5,eq6,eq7,eq8],(x0,x1,y0,y1,z0,z1))
 
-        if len(result_2) == 0 or len(result_3) == 0:
+        x0,x1,y0,y1 = sp.symbols('x0 x1 y0 y1')
+        eq1 = Eq(x0*y0, flip_2_state_vector_2[0])
+        eq2 = Eq(x0*y1, flip_2_state_vector_2[1])
+        eq3 = Eq(x1*y0, flip_2_state_vector_2[2])
+        eq4 = Eq(x1*y1, flip_2_state_vector_2[3])
+
+        result_2_2 = sp.solve([eq1,eq2,eq3,eq4],(x0,x1,y0,y1))
+
+        x0,x1,y0,y1,z0,z1 = sp.symbols('x0 x1 y0 y1 z0 z1')
+        eq1 = Eq(x0*y0*z0, flip_2_state_vector_3[0])
+        eq2 = Eq(x0*y0*z1, flip_2_state_vector_3[1])
+        eq3 = Eq(x0*y1*z0, flip_2_state_vector_3[2])
+        eq4 = Eq(x0*y1*z1, flip_2_state_vector_3[3])
+        eq5 = Eq(x1*y0*z0, flip_2_state_vector_3[4])
+        eq6 = Eq(x1*y0*z1, flip_2_state_vector_3[5])
+        eq7 = Eq(x1*y1*z0, flip_2_state_vector_3[6])
+        eq8 = Eq(x1*y1*z1, flip_2_state_vector_3[7])
+
+        result_3_2 = sp.solve([eq1,eq2,eq3,eq4,eq5,eq6,eq7,eq8],(x0,x1,y0,y1,z0,z1))
+
+        if len(result_2_1) == 0 or len(result_3_1) == 0 or len(result_2_2) == 0 or len(result_3_2) == 0:
             return True
         else:
             return False
