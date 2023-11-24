@@ -5,26 +5,36 @@ from quantum import Quantum_control
 from card_deck import CardDeck
 from text_display import Text
 from button import Button
+from pygame import mixer
+import time
 pygame.init()
 #my aspect ratio is 1366 by 768
+card_deck = CardDeck()
 screen = pygame.display.set_mode((1366,768))
 pygame.display.set_caption('Quantum Memory')
 clock = pygame.time.Clock()
 bgImg = pygame.image.load('utils/data/images/Space-Background-Images.jpg')
 bgImg_start = pygame.transform.scale(pygame.image.load('data/photos/Space-Background-Image-2.jpg'),(1366,768))
+select_sound = mixer.Sound('data/music/change_selection.wav')
+select_sound.set_volume(0.4)
+
+
+#Background sound
+
 default_text_color = (255,255,255)
 transition_to_noise = False
-
+high_score_zero = 0
 button_chosen = 0
 button_chosen_1 = 0
 class StartScreen():
     exit = False
+    global select_sound
     def __init__(self):
         self.transition_to_start = True
         self.transition = False
         self.transition_to_options = False
         self.transition_to_end = False
-        
+        self.restart = False
     def start_screen(self):
         global transition_to_noise
 
@@ -42,61 +52,96 @@ class StartScreen():
 
         button_easy = Button("Play without noise",375,75,'gray','black','black',4,screen,text_font.font)
 
-        button_enter_noise = Button("play with noise",325,75,'gray','black','black',4,screen,text_font.font)
-        button_options = Button("How to play 'S'",300,75,'gray','black','black',4,screen,text_font.font)
+        button_enter_noise = Button("play with noise",375,75,'gray','black','black',4,screen,text_font.font)
+        button_options = Button("How to play",375,75,'gray','black','black',4,screen,text_font.font)
+        button_exit = Button("exit",375,75,'gray','black','black',4,screen,text_font.font)
         global button_chosen
 
         if button_chosen == 0:
             button_easy.press()
             button_enter_noise.un_press()
             button_options.un_press()
+            button_exit.un_press()
         if button_chosen == 1:
             button_easy.un_press()
             button_enter_noise.press()
             button_options.un_press()
+            button_exit.un_press()
         if button_chosen == 2:
             button_easy.un_press()
             button_enter_noise.un_press()
             button_options.press()
+            button_exit.un_press()
+        if button_chosen == 3:
+            button_easy.un_press()
+            button_enter_noise.un_press()
+            button_options.un_press()
+            button_exit.press()
 
         button_easy.add_button((1366/2)-400,(768/3)+175)
         
         button_enter_noise.add_button((1366/2),(768/3)+175)
         
-        button_options.add_button(((1366/2))-150,(768/3)+300)
+        button_options.add_button(((1366/2))-400,(768/3)+300)
+
+        button_exit.add_button((1366/2),(768/3)+300)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.exit = True
             elif event.type == pygame.KEYDOWN:
                 keys = pygame.key.get_pressed()
-                if event.key == pygame.K_RIGHT and button_chosen !=2 :
+                if event.key == pygame.K_RIGHT and button_chosen !=3 :
                     button_chosen = button_chosen + 1
+                    select_sound.play()
+                   
                 if event.key == pygame.K_LEFT and button_chosen !=0 :
                     button_chosen-=1
-
-                   
-                if event.key == pygame.K_RETURN and button_chosen == 0:
-                    self.transition = True
-                    transition_to_noise = False
-                    self.transition_to_start = False
-                    button_easy.press()
-                if event.key == pygame.K_RETURN and button_chosen == 1:
-                    self.transition = True
-                    transition_to_noise = True
-                    self.transition_to_start = False
-                    button_enter_noise.press() 
-                if event.key == pygame.K_RETURN and button_chosen == 2 :
-                    self.transition_to_options = True
-                    self.transition = False
-                    self.transition_to_start = False
-                    self.settings_screen()
+                    select_sound.play()
                     
+                if event.key == pygame.K_UP and button_chosen == 2 :
+                    button_chosen = 0
+                    select_sound.play()
+                    
+                if event.key == pygame.K_UP and button_chosen == 3 :
+                    button_chosen = 1
+                    select_sound.play()
+                    
+                if event.key == pygame.K_DOWN and button_chosen == 0 :
+                    button_chosen = 2
+                    select_sound.play()
+                   
+                if event.key == pygame.K_DOWN and button_chosen == 1 :
+                    button_chosen = 3
+                    select_sound.play()
+                    
+                if event.key == pygame.K_RETURN:
+                    select_sound.play()
+                    if event.key == pygame.K_RETURN and button_chosen == 0:
+                        self.transition = True
+                        transition_to_noise = False
+                        self.transition_to_start = False
+                        button_easy.press()
+                    if event.key == pygame.K_RETURN and button_chosen == 1:
+                        self.transition = True
+                        transition_to_noise = True
+                        self.transition_to_start = False
+                        button_enter_noise.press() 
+                    if event.key == pygame.K_RETURN and button_chosen == 2 :
+                        self.transition_to_options = True
+                        self.transition = False
+                        self.transition_to_start = False
+                        self.settings_screen()
+                    if event.key == pygame.K_RETURN and button_chosen == 3:
+                        time.sleep(0.2)
+                        self.exit = True
         pygame.display.flip()
 
     def settings_screen(self):
         screen.fill((0,0,0))
         screen.blit(bgImg_start,(0,0))
         text_font = Text()
+        button_back = Button("     back 'b'",375,75,'gray','black','black',4,screen,text_font.font)
+        button_back.add_button(((1366/2) - (375/2)),((768/2)+175))
         game_controls_txt = text_font.font_subtitle.render("Game Controls",True,'orange')
         game_controls_border = text_font.font_subtitle_border.render("Game Controls",True,'black')
         wasd_text = text_font.small_font.render("responsible for", True, (0,255,255))
@@ -143,9 +188,11 @@ class StartScreen():
             elif event.type == pygame.KEYDOWN:
                 #back button
                 if event.key == pygame.K_b:
+                    select_sound.play()
                     self.transition_to_options = False
 
     def end_screen(self):
+        global card_deck
         screen.fill((0,0,0))
         screen.blit(bgImg_start,(0,0))
         text_font = Text()
@@ -172,7 +219,7 @@ class StartScreen():
 
         button_quit = Button("quit",325,75,'gray','black','black',4,screen,text_font.font)
         global button_chosen
-
+        global high_score_zero
         if button_chosen == 0:
             button_restart.press()
             button_quit.un_press()
@@ -193,25 +240,32 @@ class StartScreen():
                 keys = pygame.key.get_pressed()
                 if event.key == pygame.K_RIGHT and button_chosen !=2 :
                     button_chosen = button_chosen + 1
+                    select_sound.play()
+                    
                 if event.key == pygame.K_LEFT and button_chosen !=0 :
                     button_chosen-=1
-
+                    select_sound.play()
+                    
                    
                 if event.key == pygame.K_RETURN and button_chosen == 0:
                     button_restart.press()
+                    high_score_zero = card_deck.score
                     self.transition = False
                     self.transition_to_start = True
                     self.transition_to_end = False
                     self.transition_to_options = False
-                    
+                    self.restart = True
                 if event.key == pygame.K_RETURN and button_chosen == 1:
-                    button_quit.press() 
+                    button_quit.press()
+                    time.sleep(0.2) 
                     self.exit = True
 
 
         pygame.display.flip()
 def main():
     #initialise game 
+    mixer.music.load('data/music/bfm.aiff')
+    mixer.music.play(-1)
     circuit_grid_model_3 = CircuitGridModel(3,19)
     circuit_grid_3 = CircuitGrid(0,518,circuit_grid_model_3)
     circuit_grid_model_2 = CircuitGridModel(2,19)  
@@ -232,13 +286,13 @@ def main():
     error_mitigate_text_color = (80,80,80)
     #shuffle cards
     global card_deck
-    card_deck = CardDeck()
     card_deck.add_cards()
     card_deck.shuffle(card_deck.cards_xpics_x910)
     #text
     text_font = Text()
     button_row = Button("row    'shift+r'",333,50,'gray','black','black',4,screen,text_font.font)
     button_column = Button("column 'shift+c'",333,50,'gray','black','black',4,screen,text_font.font)
+    button_flip = Button("flip   'enter'",333,50,'gray','black','black',4,screen,text_font.font)
     button_mitigate_noise = Button("ERROR MITIGATION",333,50,error_mitigate_bg_color,'black',error_mitigate_text_color,4,screen,text_font.font)
     #button_enter = Button("select 'enter'",325,50,'gray','black',4,screen,text_font.font)
     # button
@@ -262,12 +316,14 @@ def main():
             
             score = text_font.small_font_border.render("Score: "+str(card_deck.score),True,'orange')
             screen.blit(score,(10,10))      
+            high_score = text_font.small_font_border.render("High Score: "+str(high_score_zero),True,'orange')
+            screen.blit(high_score,(10,60))  
             text_display = Text()
             button_row.add_button(1025,10)
-            button_column.add_button(1025,60)
-            #button_column.add_button(1025,60)
+            button_column.add_button(1025,65)
+            button_flip.add_button(1025,120)
             if transition_to_noise:
-                button_mitigate_noise.add_button(1025,110)
+                button_mitigate_noise.add_button(1025,175)
 
             button_mitigate_noise.un_press()
 
@@ -288,7 +344,9 @@ def main():
             
 
             if row_flag:
+                
                 button_column.un_press()
+                button_flip.un_press()
             
             #update game
             for event in pygame.event.get():
@@ -321,8 +379,8 @@ def main():
                         #print(state_vector_2,state_vector_3)
                         #print("---")
                         
-                        
-
+                        button_flip.press()
+                        time.sleep(0.025)
                         if not card_deck.no_border:
                             card_deck.flip(super_prob_2, super_prob_3,transition_to_noise, revert_to_no_noise)
                             #button_enter.press()
@@ -339,6 +397,7 @@ def main():
                             if card_deck.flipped:
                                 button_row.press()
                                 button_column.un_press()
+                                
                                 row_flag = True
                                 col_flag = False
                                 circuit_grid_model_3 = CircuitGridModel(3,19)
@@ -536,6 +595,10 @@ def main():
         elif first_scene.transition_to_end and not first_scene.transition:
             first_scene.end_screen()
             #set framerate
+            if first_scene.restart:
+                card_deck.restart()
+                main()
+
         clock.tick(60)
 
 if __name__ == '__main__':

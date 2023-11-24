@@ -61,7 +61,7 @@ class CardDeck():
     def add_to_matrix(self,cards):
         j = 0
         k = 0
-        for i in range(len(cards)-30):
+        for i in range(len(cards)):
             self.matrix[j].append(cards[i])
             self.matrix_dictionary.update({(j,k):self.matrix[j][k]})
             cards[i].posX += k*82.6446281
@@ -373,7 +373,23 @@ class CardDeck():
             return True
         else:
             return False
+        
 
+    def restart(self):
+        self.cards = []
+        self.cards_xpics_x910 = []
+        self.matrix = [[],[],[],[]]
+        self.matrix_dictionary = {}
+        self.deleted_dictionary = {}
+        self.border_dictionary = {}
+        self.flipped = False
+        self.flip_dictionary = {}
+        self.checked = False
+        self.no_border = False
+        self.tmpi = 0
+        self.tmpj = 0
+        self.score = 0
+    
 
     def check_win(self):
         if len(self.matrix_dictionary) == 0:
