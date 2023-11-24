@@ -265,6 +265,7 @@ class StartScreen():
 def main():
     #initialise game 
     mixer.music.load('data/music/bfm.aiff')
+    mixer.music.set_volume(0.75)
     mixer.music.play(-1)
     circuit_grid_model_3 = CircuitGridModel(3,19)
     circuit_grid_3 = CircuitGrid(0,518,circuit_grid_model_3)
@@ -283,7 +284,9 @@ def main():
     global error_mitigate_text_color
     
     error_mitigate_bg_color = (50,50,50)
+    tmp_color = error_mitigate_bg_color
     error_mitigate_text_color = (80,80,80)
+    tmp_text_color = (80,80,80)
     #shuffle cards
     global card_deck
     card_deck.add_cards()
@@ -292,7 +295,13 @@ def main():
     text_font = Text()
     button_row = Button("row    'shift+r'",333,50,'gray','black','black',4,screen,text_font.font)
     button_column = Button("column 'shift+c'",333,50,'gray','black','black',4,screen,text_font.font)
-    button_flip = Button("flip   'enter'",333,50,'gray','black','black',4,screen,text_font.font)
+    button_h = Button("HADAMARD  'H'",333,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
+    button_x = Button("X gate    'x'",333,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
+    button_cnot = Button("CONTROL GATE+'C'",333,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
+    button_y = Button("Y GATE    'Y'",333,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
+    button_z = Button("Z gate    'Z'",333,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
+    button_rotate = Button("ROTATE '>' OR '<'",333,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
+    button_flip = Button("flip 'enter'",230,50,'gray','black','black',4,screen,text_font.font)
     button_mitigate_noise = Button("ERROR MITIGATION",333,50,error_mitigate_bg_color,'black',error_mitigate_text_color,4,screen,text_font.font)
     #button_enter = Button("select 'enter'",325,50,'gray','black',4,screen,text_font.font)
     # button
@@ -321,10 +330,21 @@ def main():
             text_display = Text()
             button_row.add_button(1025,10)
             button_column.add_button(1025,65)
-            button_flip.add_button(1025,120)
+            button_flip.add_button(5,100)
+            button_h.add_button(1025,120)
+            button_x.add_button(1025,175)
+            button_y.add_button(1025,230)
+            button_z.add_button(1025,285)
+            button_cnot.add_button(1025,340)
+            button_rotate.add_button(1025,395)
             if transition_to_noise:
-                button_mitigate_noise.add_button(1025,175)
-
+                button_mitigate_noise.add_button(1025,450)
+            button_h.un_press()
+            button_x.un_press()
+            button_y.un_press()
+            button_z.un_press()
+            button_cnot.un_press()
+            button_rotate.un_press()
             button_mitigate_noise.un_press()
 
             if card_deck.score >= 15:

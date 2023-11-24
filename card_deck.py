@@ -5,6 +5,7 @@ from sympy import Eq, solve_linear_system, Matrix
 from quantum import Quantum_control
 from card import Card
 import operator
+from pygame import mixer
 from numpy.random import choice
 #possibility of limitin only two cards of the same face to be present (harder) 2 eights instead of 4 eights
 # possibility of choosing a different range (with pics)
@@ -28,6 +29,9 @@ class CardDeck():
     tmpi = 0
     tmpj = 0
     score = 0
+    correct = mixer.Sound('data/music/correct_3.wav')
+    correct.set_volume(1.25)
+    wrong = mixer.Sound('data/music/wrong.mp3')
     
     def __init__(self):
         pass
@@ -266,10 +270,11 @@ class CardDeck():
     def check_cards(self,flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3,error):
         self.checked = True
         if list(self.flip_dictionary.values())[0].img_number == list(self.flip_dictionary.values())[1].img_number:
+            self.correct.play()
             if self.entanglement_witness(flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3) and not error:
                 self.score += 5
             elif self.entanglement_witness(flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3) and error:
-                self.score+=10
+                self.score+=20
             else:
                 if not error and not self.entanglement_witness(flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3):
                     self.score +=1
@@ -291,6 +296,7 @@ class CardDeck():
                 #self.score+=5
                 
         else:
+            self.wrong.play()
             self.un_flip()
     
     def border_dictionary_2D(self):
