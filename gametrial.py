@@ -10,15 +10,17 @@ pygame.init()
 screen = pygame.display.set_mode((1366,768))
 pygame.display.set_caption('Quantum Memory')
 clock = pygame.time.Clock()
-bgImg = pygame.image.load('data/photos/space.jpg')
+bgImg = pygame.image.load('utils/data/images/Space-Background-Images.jpg')
 bgImg_start = pygame.transform.scale(pygame.image.load('data/photos/Space-Background-Image-2.jpg'),(1366,768))
 default_text_color = (255,255,255)
 transition_to_noise = False
 
 button_chosen = 0
+button_chosen_1 = 0
 class StartScreen():
     exit = False
     def __init__(self):
+        self.transition_to_start = True
         self.transition = False
         self.transition_to_options = False
         self.transition_to_end = False
@@ -76,14 +78,17 @@ class StartScreen():
                 if event.key == pygame.K_RETURN and button_chosen == 0:
                     self.transition = True
                     transition_to_noise = False
+                    self.transition_to_start = False
                     button_easy.press()
                 if event.key == pygame.K_RETURN and button_chosen == 1:
                     self.transition = True
                     transition_to_noise = True
+                    self.transition_to_start = False
                     button_enter_noise.press() 
                 if event.key == pygame.K_RETURN and button_chosen == 2 :
                     self.transition_to_options = True
                     self.transition = False
+                    self.transition_to_start = False
                     self.settings_screen()
                     
         pygame.display.flip()
@@ -144,18 +149,66 @@ class StartScreen():
         screen.fill((0,0,0))
         screen.blit(bgImg_start,(0,0))
         text_font = Text()
-        congratulations = text_font.font_subtitle.render("Congratulations: YOU NOW HAVE A QUANTUM MEMORY",True,'orange')
-        congratulations_border = text_font.font_subtitle_border.render("Congratulations: YOU NOW HAVE A QUANTUM MEMORY",True,'black') 
-        screen.blit(congratulations_border,(250,150))
-        screen.blit(congratulations,(250,150))
+        congratulations = text_font.font_title.render("CONGRATULATIONS",True,'orange')
+        you_have = text_font.font_title.render("YOU NOW HAVE A",True,'orange')
+        quantum_memory = text_font.font_title.render("QUANTUM MEMORY",True,'orange')
+        congratulations_border = text_font.font_title_border.render("CONGRATULATIONS",True,'black')
+        you_have_border = text_font.font_title_border.render("YOU NOW HAVE A",True,'black')
+        quantum_memory_border = text_font.font_title.render("QUANTUM MEMORY",True,'black')
+        screen.blit(congratulations_border,(200,125))
+        screen.blit(you_have_border,(225,255))
+        screen.blit(quantum_memory_border,(255,385))
+        screen.blit(congratulations,(200,125))
+        screen.blit(you_have,(225,255))
+        screen.blit(quantum_memory,(250,385))
+
         
-        score = text_font.font_subtitle.render("Your Score is:" + str(card_deck.score),True,'orange')
+        score = text_font.font_subtitle.render("Your Score is:" + str(card_deck.score),True,(0,255,255))
         score_border = text_font.font_subtitle_border.render("Your Score is:" + str(card_deck.score),True,'black')       
-        screen.blit(score_border,(250,250))
-        screen.blit(score,(250,250))
+        screen.blit(score_border,(253,500))
+        screen.blit(score,(250,500))
+
+        button_restart = Button("restart",375,75,'gray','black','black',4,screen,text_font.font)
+
+        button_quit = Button("quit",325,75,'gray','black','black',4,screen,text_font.font)
+        global button_chosen
+
+        if button_chosen == 0:
+            button_restart.press()
+            button_quit.un_press()
+            
+        if button_chosen == 1:
+            button_restart.un_press()
+            button_quit.press()
+        
+
+        button_restart.add_button((1366/2)-400,(768/2)+175)
+        
+        button_quit.add_button((1366/2),(768/2)+175)
+        
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.exit = True
+            elif event.type == pygame.KEYDOWN:
+                keys = pygame.key.get_pressed()
+                if event.key == pygame.K_RIGHT and button_chosen !=2 :
+                    button_chosen = button_chosen + 1
+                if event.key == pygame.K_LEFT and button_chosen !=0 :
+                    button_chosen-=1
+
+                   
+                if event.key == pygame.K_RETURN and button_chosen == 0:
+                    button_restart.press()
+                    self.transition = False
+                    self.transition_to_start = True
+                    self.transition_to_end = False
+                    self.transition_to_options = False
+                    
+                if event.key == pygame.K_RETURN and button_chosen == 1:
+                    button_quit.press() 
+                    self.exit = True
+
+
         pygame.display.flip()
 def main():
     #initialise game 
@@ -198,15 +251,15 @@ def main():
     while not exit:
         
         exit = first_scene.exit
-        if not first_scene.transition and not first_scene.transition_to_options and not first_scene.transition_to_end:
+        if first_scene.start_screen and not first_scene.transition and not first_scene.transition_to_options and not first_scene.transition_to_end:
             first_scene.start_screen()
         elif first_scene.transition_to_options and not first_scene.transition:
             first_scene.settings_screen()
         
         elif first_scene.transition:
             screen.fill((0,0,0))
-            screen.blit(bgImg,(0,0))
-            screen.blit(bgImg,(683,0))
+            screen.blit(pygame.transform.scale(bgImg,(1366,768)),(0,0))
+            
             score = text_font.small_font_border.render("Score: "+str(card_deck.score),True,'orange')
             screen.blit(score,(10,10))      
             text_display = Text()
@@ -218,7 +271,7 @@ def main():
 
             button_mitigate_noise.un_press()
 
-            if card_deck.score >= 10:
+            if card_deck.score >= 15:
                 button_mitigate_noise.press()
                 button_mitigate_noise.set_txt_color((0,100,100)) 
                 button_mitigate_noise.set_color('gray')
@@ -470,7 +523,7 @@ def main():
             if len(card_deck.flip_dictionary) == 2:
                 # note that it is evennt.type not event.key
                 if event.type == pygame.K_RETURN :
-                    card_deck.check_cards(tmp_1_state_vector_2,tmp_1_state_vector_3,tmp_2_state_vector_2,tmp_2_state_vector_3) 
+                    card_deck.check_cards(tmp_1_state_vector_2,tmp_1_state_vector_3,tmp_2_state_vector_2,tmp_2_state_vector_3,transition_to_noise) 
             
             
             if card_deck.check_win():

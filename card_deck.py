@@ -61,7 +61,7 @@ class CardDeck():
     def add_to_matrix(self,cards):
         j = 0
         k = 0
-        for i in range(len(cards)):
+        for i in range(len(cards)-30):
             self.matrix[j].append(cards[i])
             self.matrix_dictionary.update({(j,k):self.matrix[j][k]})
             cards[i].posX += k*82.6446281
@@ -168,8 +168,8 @@ class CardDeck():
                             del self.border_dictionary[key]
                         
     def flip(self, super_prob_2, super_prob_3, noise, revert):
-        dice = random.randint(0,3)
-        if not noise or dice == 0 or dice == 1 or revert:
+        dice = random.randint(0,4)
+        if not noise or dice == 0 or dice == 1 or dice == 2 or revert:
             matrix = self.border_dictionary_2D()
             row_measurement = random.choices(matrix,weights= super_prob_2, k = 1)
             col_measurement = random.choices(list(row_measurement[0].keys()), weights = super_prob_3, k = 1)
@@ -182,7 +182,7 @@ class CardDeck():
             else:
                 print(flip_key)
                 self.flipped = False
-        elif noise and not revert or dice == 2 :
+        elif noise and not revert or dice == 3 :
             flip_key = (random.randint(0,3),random.randint(0,8))
             if(self.matrix_dictionary.get(flip_key) != None):
                 self.matrix_dictionary[flip_key].flip()
@@ -263,13 +263,20 @@ class CardDeck():
             val.un_flip()
             del self.flip_dictionary[key]
             
-    def check_cards(self,flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3):
+    def check_cards(self,flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3,error):
         self.checked = True
         if list(self.flip_dictionary.values())[0].img_number == list(self.flip_dictionary.values())[1].img_number:
-            if self.entanglement_witness(flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3):
+            if self.entanglement_witness(flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3) and not error:
                 self.score += 5
+            elif self.entanglement_witness(flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3) and error:
+                self.score+=10
             else:
-                self.score+=1
+                if not error and not self.entanglement_witness(flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3):
+                    self.score +=1
+                else:
+                    if error and not self.entanglement_witness(flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3):
+                        self.score+=5
+
             for (i,j), value in list(self.flip_dictionary.items()):
                 #here it is important to display using a matrix because
                 #if display depends on card then deleting a matrix element wont affect grid
