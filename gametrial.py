@@ -304,6 +304,7 @@ def main():
     text_font = Text()
     button_row = Button("row    'shift+r'",333,50,'gray','black','black',4,screen,text_font.font)
     button_column = Button("column 'shift+c'",333,50,'gray','black','black',4,screen,text_font.font)
+    button_back_1 = Button("back 'b'",230,50,'gray','black','black',4,screen,text_font.font)
     button_h = Button("HADAMARD  'H'",333,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
     button_x = Button("X gate    'x'",333,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
     button_cnot = Button("CONTROL GATE+'C'",333,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
@@ -349,11 +350,13 @@ def main():
             text_display = Text()
             button_row.add_button(1025,10)
             button_column.add_button(1025,65)
+            
             button_flip.add_button(5,10)
-            button_w.add_button(5,260)
-            button_s.add_button(5,315)
-            button_d.add_button(5,370)
-            button_a.add_button(5,425)
+            button_w.add_button(5,240)
+            button_s.add_button(5,295)
+            button_d.add_button(5,350)
+            button_a.add_button(5,405)
+            button_back_1.add_button(5,460)
             button_h.add_button(1025,120)
             button_x.add_button(1025,175)
             button_y.add_button(1025,230)
@@ -373,6 +376,7 @@ def main():
             button_cnot.un_press()
             button_rotate.un_press()
             button_mitigate_noise.un_press()
+            button_back_1.un_press()
 
             if card_deck.score >= 15:
                 button_mitigate_noise.press()
@@ -419,6 +423,11 @@ def main():
                         button_column.press()
                         col_flag = True
                         row_flag = False
+
+                    if keys[pygame.K_b]:
+                        select_sound.play()
+                        first_scene.transition_to_start = True
+                        first_scene.transition = False
 
                     pygame.time.set_timer(pygame.K_RETURN,1000) 
                     

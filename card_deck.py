@@ -278,7 +278,7 @@ class CardDeck():
             if self.entanglement_witness(flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3) and not error:
                 self.score += 5
             elif self.entanglement_witness(flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3) and error:
-                self.score+=20
+                self.score += 20
             else:
                 if not error and not self.entanglement_witness(flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3):
                     self.score +=1
