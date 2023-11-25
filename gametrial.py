@@ -8,6 +8,9 @@ from button import Button
 from pygame import mixer
 import time
 pygame.init()
+mixer.music.load('data/music/gameplay.wav')
+mixer.music.set_volume(0.88)
+mixer.music.play(-1)
 #my aspect ratio is 1366 by 768
 card_deck = CardDeck()
 screen = pygame.display.set_mode((1366,768))
@@ -16,7 +19,7 @@ clock = pygame.time.Clock()
 bgImg = pygame.image.load('utils/data/images/Space-Background-Images.jpg')
 bgImg_start = pygame.transform.scale(pygame.image.load('data/photos/Space-Background-Image-2.jpg'),(1366,768))
 select_sound = mixer.Sound('data/music/change_selection.wav')
-select_sound.set_volume(0.4)
+select_sound.set_volume(0.1)
 
 
 #Background sound
@@ -24,6 +27,7 @@ select_sound.set_volume(0.4)
 default_text_color = (255,255,255)
 transition_to_noise = False
 high_score_zero = 0
+best_attempt = 0
 button_chosen = 0
 button_chosen_1 = 0
 class StartScreen():
@@ -41,8 +45,8 @@ class StartScreen():
         text_font = Text()
         screen.fill((0,0,0))
         screen.blit(bgImg_start,(0,0))
-        text = text_font.font_title.render("WELCOME TO",True,'orange')
-        text_2 = text_font.font_title.render("QUANTUM MEMORY",True,'orange')
+        text = text_font.font_title.render("WELCOME TO",True,'gold')
+        text_2 = text_font.font_title.render("QUANTUM MEMORY",True,'gold')
         text_border = text_font.font_title_border.render("WELCOME TO",True,'black')
         text_border_2 = text_font.font_title_border.render("QUANTUM MEMORY",True,'black')
         screen.blit(text_border,(375,150))
@@ -121,6 +125,9 @@ class StartScreen():
                         transition_to_noise = False
                         self.transition_to_start = False
                         button_easy.press()
+                        mixer.music.set_volume(0.5)
+                        
+                        
                     if event.key == pygame.K_RETURN and button_chosen == 1:
                         self.transition = True
                         transition_to_noise = True
@@ -142,12 +149,10 @@ class StartScreen():
         text_font = Text()
         button_back = Button("     back 'b'",375,75,'gray','black','black',4,screen,text_font.font)
         button_back.add_button(((1366/2) - (375/2)),((768/2)+175))
-        game_controls_txt = text_font.font_subtitle.render("Game Controls",True,'orange')
+        game_controls_txt = text_font.font_subtitle.render("Game Controls",True,'gold')
         game_controls_border = text_font.font_subtitle_border.render("Game Controls",True,'black')
-        wasd_text = text_font.small_font.render("responsible for", True, (0,255,255))
-        wasd_text_2 = text_font.small_font.render("moving the cursor -->", True, (0,255,255))
-        wasd_text_border = text_font.small_font_border.render("responsible for", True, (0,0,0))
-        wasd_text_2_border = text_font.small_font_border.render("moving the cursor -->", True, (0,0,0))
+        wasd_text = text_font.small_font.render("Cursor Movement", True, (0,255,255))
+        wasd_text_border = text_font.small_font_border.render("Cursor Movement", True, (0,0,0))
         h_text = text_font.small_font.render("Hadamard Gate: puts the qubit into", True, (0,255,255))
         h_text_2 = text_font.small_font.render("an equal superpositon of |0> and |1>", True, (0,255,255))
         h_text_border = text_font.small_font_border.render("Hadamard Gate: puts the qubit into", True, (0,0,0))
@@ -158,9 +163,7 @@ class StartScreen():
         x_text_border_2 = text_font.small_font_border.render("qubit from |0> to |1> and vice versa", True, (0,0,0))
         
         screen.blit(wasd_text_border,(802,170))
-        screen.blit(wasd_text_2_border,(802,200))
         screen.blit(wasd_text,(805,170))
-        screen.blit(wasd_text_2,(805,200))
         screen.blit(h_text_border,(722,295))
         screen.blit(h_text_border_2,(722,325))
         screen.blit(h_text,(725,295))
@@ -196,9 +199,9 @@ class StartScreen():
         screen.fill((0,0,0))
         screen.blit(bgImg_start,(0,0))
         text_font = Text()
-        congratulations = text_font.font_title.render("CONGRATULATIONS",True,'orange')
-        you_have = text_font.font_title.render("YOU NOW HAVE A",True,'orange')
-        quantum_memory = text_font.font_title.render("QUANTUM MEMORY",True,'orange')
+        congratulations = text_font.font_title.render("CONGRATULATIONS",True,'gold')
+        you_have = text_font.font_title.render("YOU NOW HAVE A",True,'gold')
+        quantum_memory = text_font.font_title.render("QUANTUM MEMORY",True,'gold')
         congratulations_border = text_font.font_title_border.render("CONGRATULATIONS",True,'black')
         you_have_border = text_font.font_title_border.render("YOU NOW HAVE A",True,'black')
         quantum_memory_border = text_font.font_title.render("QUANTUM MEMORY",True,'black')
@@ -214,12 +217,17 @@ class StartScreen():
         score_border = text_font.font_subtitle_border.render("Your Score is:" + str(card_deck.score),True,'black')       
         screen.blit(score_border,(253,500))
         screen.blit(score,(250,500))
+        attempts = text_font.font_subtitle.render("number of attempts: " + str(card_deck.attempts),True,(0,255,255))
+        attempts_border = text_font.font_subtitle_border.render("number of attempts: " + str(card_deck.score),True,'black')       
+        screen.blit(attempts_border,(253,550))
+        screen.blit(attempts,(250,550))
 
         button_restart = Button("restart",375,75,'gray','black','black',4,screen,text_font.font)
 
         button_quit = Button("quit",325,75,'gray','black','black',4,screen,text_font.font)
         global button_chosen
         global high_score_zero
+        global best_attempt
         if button_chosen == 0:
             button_restart.press()
             button_quit.un_press()
@@ -229,16 +237,16 @@ class StartScreen():
             button_quit.press()
         
 
-        button_restart.add_button((1366/2)-400,(768/2)+175)
+        button_restart.add_button((1366/2)-400,(768/2)+250)
         
-        button_quit.add_button((1366/2),(768/2)+175)
+        button_quit.add_button((1366/2),(768/2)+250)
         
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.exit = True
             elif event.type == pygame.KEYDOWN:
                 keys = pygame.key.get_pressed()
-                if event.key == pygame.K_RIGHT and button_chosen !=2 :
+                if event.key == pygame.K_RIGHT and button_chosen !=1 :
                     button_chosen = button_chosen + 1
                     select_sound.play()
                     
@@ -250,6 +258,7 @@ class StartScreen():
                 if event.key == pygame.K_RETURN and button_chosen == 0:
                     button_restart.press()
                     high_score_zero = card_deck.score
+                    best_attempt = card_deck.attempts
                     self.transition = False
                     self.transition_to_start = True
                     self.transition_to_end = False
@@ -264,9 +273,7 @@ class StartScreen():
         pygame.display.flip()
 def main():
     #initialise game 
-    mixer.music.load('data/music/bfm.aiff')
-    mixer.music.set_volume(0.75)
-    mixer.music.play(-1)
+    
     circuit_grid_model_3 = CircuitGridModel(3,19)
     circuit_grid_3 = CircuitGrid(0,518,circuit_grid_model_3)
     circuit_grid_model_2 = CircuitGridModel(2,19)  
@@ -302,6 +309,10 @@ def main():
     button_z = Button("Z gate    'Z'",333,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
     button_rotate = Button("ROTATE '>' OR '<'",333,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
     button_flip = Button("flip 'enter'",230,50,'gray','black','black',4,screen,text_font.font)
+    button_w = Button("UP  'W'",230,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
+    button_a = Button("LEFT  'A'",230,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
+    button_s = Button("DOWN 'S'",230,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
+    button_d = Button("RIGHT 'D'",230,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
     button_mitigate_noise = Button("ERROR MITIGATION",333,50,error_mitigate_bg_color,'black',error_mitigate_text_color,4,screen,text_font.font)
     #button_enter = Button("select 'enter'",325,50,'gray','black',4,screen,text_font.font)
     # button
@@ -323,14 +334,24 @@ def main():
             screen.fill((0,0,0))
             screen.blit(pygame.transform.scale(bgImg,(1366,768)),(0,0))
             
-            score = text_font.small_font_border.render("Score: "+str(card_deck.score),True,'orange')
-            screen.blit(score,(10,10))      
-            high_score = text_font.small_font_border.render("High Score: "+str(high_score_zero),True,'orange')
-            screen.blit(high_score,(10,60))  
+            score = text_font.small_font_border.render("Score: "+str(card_deck.score),True,'dark gray')
+            screen.blit(score,(10,80))      
+            high_score = text_font.small_font_border.render("High Score: "+str(high_score_zero),True,'dark gray')
+            best_attempt_text = text_font.small_font_border.render("BEST Number",True,'dark gray')
+            best_attempt_text_2 = text_font.small_font_border.render("OF attempts",True,'dark gray')
+            best_attempt_text_3 = text_font.small_font_border.render(":"+str(best_attempt),True,'dark gray')
+            screen.blit(high_score,(10,130))  
+            screen.blit(best_attempt_text,(10,180))
+            screen.blit(best_attempt_text_2,(10,210))
+            screen.blit(best_attempt_text_3,(200,195))
             text_display = Text()
             button_row.add_button(1025,10)
             button_column.add_button(1025,65)
-            button_flip.add_button(5,100)
+            button_flip.add_button(5,10)
+            button_w.add_button(5,260)
+            button_s.add_button(5,315)
+            button_d.add_button(5,370)
+            button_a.add_button(5,425)
             button_h.add_button(1025,120)
             button_x.add_button(1025,175)
             button_y.add_button(1025,230)
@@ -343,6 +364,10 @@ def main():
             button_x.un_press()
             button_y.un_press()
             button_z.un_press()
+            button_w.un_press()
+            button_a.un_press()
+            button_s.un_press()
+            button_d.un_press()
             button_cnot.un_press()
             button_rotate.un_press()
             button_mitigate_noise.un_press()

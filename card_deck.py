@@ -29,9 +29,11 @@ class CardDeck():
     tmpi = 0
     tmpj = 0
     score = 0
+    attempts = 0
     correct = mixer.Sound('data/music/correct_3.wav')
     correct.set_volume(1.25)
     wrong = mixer.Sound('data/music/wrong.mp3')
+
     
     def __init__(self):
         pass
@@ -269,6 +271,7 @@ class CardDeck():
             
     def check_cards(self,flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3,error):
         self.checked = True
+        self.attempts+=1
         if list(self.flip_dictionary.values())[0].img_number == list(self.flip_dictionary.values())[1].img_number:
             self.correct.play()
             if self.entanglement_witness(flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3) and not error:
@@ -395,10 +398,12 @@ class CardDeck():
         self.tmpi = 0
         self.tmpj = 0
         self.score = 0
-    
+        self.attempts = 0    
 
     def check_win(self):
         if len(self.matrix_dictionary) == 0:
+            mixer.music.load('data/music/win_music.wav')
+            mixer.music.play(-1)
             return True
         else:
             return False
