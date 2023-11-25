@@ -31,8 +31,9 @@ class CardDeck():
     score = 0
     attempts = 0
     correct = mixer.Sound('data/music/correct_3.wav')
-    correct.set_volume(1.25)
+    correct.set_volume(0.75)
     wrong = mixer.Sound('data/music/wrong.mp3')
+    wrong.set_volume(0.5)
 
     
     def __init__(self):
