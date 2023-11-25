@@ -59,16 +59,16 @@ class CardDeck():
     def shuffle(self,cards):
         #my method + small modification
         for i in range(len(cards)):
-           # cards.insert(random.randint(0,31),cards.pop())
-            element = cards.pop(random.randint(0,31))
-            cards.append(element)
+            cards.insert(random.randint(0,31),cards.pop())
+            #element = cards.pop(random.randint(0,31))
+            #cards.append(element)
         
 
         self.add_to_matrix(cards) 
     def add_to_matrix(self,cards):
         j = 0
         k = 0
-        for i in range(len(cards)-30):
+        for i in range(len(cards)):
             self.matrix[j].append(cards[i])
             self.matrix_dictionary.update({(j,k):self.matrix[j][k]})
             cards[i].posX += k*82.6446281
