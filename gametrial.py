@@ -654,3 +654,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+#check why enter button sometimes fixates on choosing empty
+#make sound when choosing empty?
