@@ -17,6 +17,7 @@ screen = pygame.display.set_mode((1366,768))
 pygame.display.set_caption('Quantum Memory')
 clock = pygame.time.Clock()
 bgImg = pygame.image.load('utils/data/images/Space-Background-Images.jpg')
+bgImg_1 = pygame.image.load('utils/data/images/Space-Background-Images.jpg')
 bgImg_start = pygame.transform.scale(pygame.image.load('data/photos/Space-Background-Image-2.jpg'),(1366,768))
 select_sound = mixer.Sound('data/music/change_selection.wav')
 select_sound.set_volume(0.1)
@@ -215,7 +216,7 @@ class StartScreen():
 
         
         score = text_font.font_subtitle.render("Your Score is:" + str(card_deck.score),True,(0,255,255))
-        score_border = text_font.font_subtitle_border.render("Your Score is:" + str(card_deck.score),True,'black')       
+        score_border = text_font.font_subtitle_border.render("Your Score is: " + str(card_deck.score),True,'black')       
         screen.blit(score_border,(253,500))
         screen.blit(score,(250,500))
         attempts = text_font.font_subtitle.render("number of attempts: " + str(card_deck.attempts),True,(0,255,255))
@@ -333,7 +334,7 @@ def main():
         
         elif first_scene.transition:
             screen.fill((0,0,0))
-            screen.blit(pygame.transform.scale(bgImg,(1366,768)),(0,0))
+            screen.blit(pygame.transform.scale(bgImg_1,(1366,768)),(0,0))
             
             score = text_font.small_font_border.render("Score: "+str(card_deck.score),True,'dark gray')
             screen.blit(score,(10,80))      
@@ -634,6 +635,8 @@ def main():
             if card_deck.check_win():
                 first_scene.transition = False
                 first_scene.transition_to_end = True
+                mixer.music.load('data/music/win_music.wav')
+                mixer.music.play(-1)
                 
             text_display.display_grid(screen)
             pygame.display.flip()
@@ -642,6 +645,8 @@ def main():
             first_scene.end_screen()
             #set framerate
             if first_scene.restart:
+                mixer.music.load('data/music/gameplay.wav')
+                mixer.music.play(-1)
                 card_deck.restart()
                 main()
 

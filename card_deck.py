@@ -68,7 +68,7 @@ class CardDeck():
     def add_to_matrix(self,cards):
         j = 0
         k = 0
-        for i in range(len(cards)):
+        for i in range(len(cards)-30):
             self.matrix[j].append(cards[i])
             self.matrix_dictionary.update({(j,k):self.matrix[j][k]})
             cards[i].posX += k*82.6446281
@@ -403,8 +403,7 @@ class CardDeck():
 
     def check_win(self):
         if len(self.matrix_dictionary) == 0:
-            mixer.music.load('data/music/win_music.wav')
-            mixer.music.play(-1)
+            
             return True
         else:
             return False
