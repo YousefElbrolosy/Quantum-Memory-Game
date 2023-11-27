@@ -228,7 +228,7 @@ class StartScreen():
         screen.blit(score_border,(253,500))
         screen.blit(score,(250,500))
         attempts = text_font.font_subtitle.render("number of attempts: " + str(card_deck.attempts),True,(0,255,255))
-        attempts_border = text_font.font_subtitle_border.render("number of attempts: " + str(card_deck.score),True,'black')       
+        attempts_border = text_font.font_subtitle_border.render("number of attempts: " + str(card_deck.attempts),True,'black')       
         screen.blit(attempts_border,(253,550))
         screen.blit(attempts,(250,550))
 
