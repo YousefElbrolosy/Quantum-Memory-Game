@@ -334,10 +334,29 @@ def main():
     card_deck.add_cards()
     card_deck.shuffle(card_deck.cards_xpics_x910)
     #text
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     text_font = Text()
     button_row = Button("row    'shift+r'",333,50,'gray','black','black',4,screen,text_font.font)
     button_column = Button("column 'shift+c'",333,50,'gray','black','black',4,screen,text_font.font)
-    options = Button("settings 's'",230,50,'gray','black','black',4,screen,text_font.font)
+    options = Button("settings 'o'",230,50,'gray','black','black',4,screen,text_font.font)
     button_h = Button("HADAMARD  'H'",333,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
     button_x = Button("X gate    'x'",333,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
     button_cnot = Button("CONTROL GATE+'C'",333,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
@@ -460,7 +479,7 @@ def main():
                         col_flag = True
                         row_flag = False
 
-                    if keys[pygame.K_s]:
+                    if keys[pygame.K_o]:
                         select_sound.play()
                         first_scene.transition_to_options = True
                         if not transition_to_noise:
