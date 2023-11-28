@@ -275,10 +275,10 @@ class CardDeck():
         self.attempts+=1
         if list(self.flip_dictionary.values())[0].img_number == list(self.flip_dictionary.values())[1].img_number:
             self.correct.play()
-            if self.entanglement_witness(flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3) and not error:
-                self.score += 5
-            elif self.entanglement_witness(flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3) and error:
-                self.score += 20
+            if self.entanglement_witness(flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3):
+                self.score += 10
+            #elif self.entanglement_witness(flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3) and error:
+            #    self.score += 10
             else:
                 if not error and not self.entanglement_witness(flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3):
                     self.score +=1

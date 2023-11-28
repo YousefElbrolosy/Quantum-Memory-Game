@@ -58,7 +58,7 @@ class StartScreen():
         button_easy = Button("Play without noise",375,75,'gray','black','black',4,screen,text_font.font)
 
         button_enter_noise = Button("play with noise",375,75,'gray','black','black',4,screen,text_font.font)
-        button_options = Button("How to play",375,75,'gray','black','black',4,screen,text_font.font)
+        button_options = Button("settings",375,75,'gray','black','black',4,screen,text_font.font)
         button_exit = Button("exit",375,75,'gray','black','black',4,screen,text_font.font)
         global button_chosen
 
@@ -148,27 +148,30 @@ class StartScreen():
         screen.fill((0,0,0))
         screen.blit(pygame.transform.scale(bgImg,(1366,768)),(0,0))
         text_font = Text()
-        button_back = Button("     back 'b'",375,75,'gray','black','black',4,screen,text_font.font)
-        button_back.add_button(((1366/2) - (375/2)),((768/2)+225))
+        button_back_1 = Button("back",375,75,'gray','black','black',4,screen,text_font.font)
+        #button_back.add_button(((1366/2) - (375/2)),((768/2)+225))
+        button_exit_1 = Button("exit",375,75,'gray','black','black',4,screen,text_font.font)
+        
+
         game_controls_txt = text_font.font_title.render("How to Play",True,'gold')
         game_controls_border = text_font.font_title_border.render("How to PLAY",True,'black')
-        pygame.draw.rect(bgImg, 'gray', pygame.Rect(90, 400, 3750, 1100),550,50)
-        text_1 = text_font.font.render("1- CHOOSE THE ROW YOU WANT TO SELECT A CARD FROM BY APPLYING",True,'black')
-        text_1_1 = text_font.font.render("OPERATIONS ON THE WIRES REPERESENTING THE QUBITS",True,'black')
-        text_2 = text_font.font.render("2- CHOOSE THE COLUMN YOU WANT TO SELECT A CARD FROM",True,'black')
-        text_3 = text_font.font.render("3- FLIP THE CARD THAT YOU CHOSE",True,'black')
-        text_4 = text_font.font.render("4- REPEAT THE PROCESS TO FLIP THE SECOND CARD TO",True,'black')
-        text_4_1 = text_font.font.render("CHECK IF THEY MATCH!",True,'black')
-        text_5 = text_font.font.render("5- TRY TO REMEMBER PLACES OF CARDS THAT HAVE THE SAME NUMBER!",True,'black')
-        text_6 = text_font.font.render("6- IF YOU MATCHED TWO CARDS USING A CIRCUIT THAT GENERATED",True,'black')
-        text_6_1 = text_font.font.render("ENTANGLEMENT YOU EARN EXTRA POINTS!",True,'black')
-        text_7 = text_font.font.render("7- WHEN",True,'black')
-        text_7_1 = text_font.font.render("PLAYING WITH NOISE",True,(255,0,0))
+        pygame.draw.rect(bgImg, 'gray', pygame.Rect(90, 430, 3750, 1100),550,50)
+        text_1 = text_font.settings_font.render("1- CHOOSE THE ROW YOU WANT TO SELECT A CARD FROM BY APPLYING",True,'black')
+        text_1_1 = text_font.settings_font.render("OPERATIONS ON THE WIRES REPERESENTING THE QUBITS",True,'black')
+        text_2 = text_font.settings_font.render("2- CHOOSE THE COLUMN YOU WANT TO SELECT A CARD FROM",True,'black')
+        text_3 = text_font.settings_font.render("3- FLIP THE CARD THAT YOU CHOSE",True,'black')
+        text_4 = text_font.settings_font.render("4- REPEAT THE PROCESS TO FLIP THE SECOND CARD TO",True,'black')
+        text_4_1 = text_font.settings_font.render("CHECK IF THEY MATCH!",True,'black')
+        text_5 = text_font.settings_font.render("5- TRY TO REMEMBER PLACES OF CARDS THAT HAVE THE SAME NUMBER!",True,'black')
+        text_6 = text_font.settings_font.render("6- IF YOU MATCHED TWO CARDS USING A CIRCUIT THAT GENERATED",True,'black')
+        text_6_1 = text_font.settings_font.render("ENTANGLEMENT YOU EARN 10 EXTRA POINTS!",True,'black')
+        text_7 = text_font.settings_font.render("7- WHEN",True,'black')
+        text_7_1 = text_font.settings_font.render("   PLAYING WITH NOISE",True,(255,0,0))
         
-        text_7_2 = text_font.font.render("FLIPPING OF CARDS MAY BE INACCURATE.",True,'black')
-        text_7_3 = text_font.font.render("POINTS UNLOCK ",True,'black')
-        text_7_4 = text_font.font.render("ERROR MITIGATION",True,(0,128,128))
-        text_7_5 = text_font.font.render("WHICH REMOVES THE NOISE",True,'black')
+        text_7_2 = text_font.settings_font.render("FLIPPING OF CARDS MAY BE INACCURATE.",True,'black')
+        text_7_3 = text_font.settings_font.render("POINTS UNLOCK ",True,'black')
+        text_7_4 = text_font.settings_font.render("ERROR MITIGATION",True,(0,128,128))
+        text_7_5 = text_font.settings_font.render("WHICH REMOVES THE NOISE",True,'black')
         screen.blit(game_controls_border,((1366/2) - (375)+50,50))
         screen.blit(game_controls_txt,((1366/2) - (375)+50,50))
         screen.blit(text_1,(60,180))
@@ -186,12 +189,32 @@ class StartScreen():
         screen.blit(text_7_3,(60,540))
         screen.blit(text_7_4,(335,540))
         screen.blit(text_7_5,(670,540))
+        global button_chosen_1
+        if button_chosen_1 == 0:
+            button_back_1.press()
+            button_exit_1.un_press()
+        elif button_chosen_1 == 1:
+            button_back_1.un_press()
+            button_exit_1.press()
+
+        button_back_1.add_button(((1366/2))-400,(768/2)+225)
+
+        button_exit_1.add_button((1366/2),(768/2)+225)
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.exit = True
             elif event.type == pygame.KEYDOWN:
                 #back button
-                if event.key == pygame.K_b:
+                if event.key == pygame.K_RIGHT and button_chosen_1 !=1 :
+                    button_chosen_1 = button_chosen_1 + 1
+                    select_sound.play()
+                   
+                if event.key == pygame.K_LEFT and button_chosen_1 !=0 :
+                    button_chosen_1 -= 1
+                    select_sound.play()
+
+                if event.key == pygame.K_RETURN and button_chosen_1 == 0:    
                     select_sound.play()
                     self.transition_to_options = False
                     if back_from_noise:
@@ -201,6 +224,8 @@ class StartScreen():
                     if back_from_no_noise:
                         self.transition = True
                         transition_to_noise = False
+                elif event.key == pygame.K_RETURN and button_chosen_1 == 1:
+                    self.exit = True
                     
         pygame.display.flip()
 
@@ -312,7 +337,7 @@ def main():
     text_font = Text()
     button_row = Button("row    'shift+r'",333,50,'gray','black','black',4,screen,text_font.font)
     button_column = Button("column 'shift+c'",333,50,'gray','black','black',4,screen,text_font.font)
-    options = Button("how to play",230,50,'gray','black','black',4,screen,text_font.font)
+    options = Button("settings 's'",230,50,'gray','black','black',4,screen,text_font.font)
     button_h = Button("HADAMARD  'H'",333,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
     button_x = Button("X gate    'x'",333,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
     button_cnot = Button("CONTROL GATE+'C'",333,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
@@ -435,7 +460,7 @@ def main():
                         col_flag = True
                         row_flag = False
 
-                    if keys[pygame.K_b]:
+                    if keys[pygame.K_s]:
                         select_sound.play()
                         first_scene.transition_to_options = True
                         if not transition_to_noise:

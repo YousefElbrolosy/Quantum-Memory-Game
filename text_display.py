@@ -8,6 +8,7 @@ class Text():
     font_subtitle_border = pygame.font.Font('data/fonts/pong.ttf',65)
     font_title = pygame.font.Font('data/fonts/pong.ttf',128)
     font_title_border = pygame.font.Font('data/fonts/pong.ttf',130)
+    settings_font = pygame.font.Font('data/fonts/game_over.ttf',75)
     
     text2X = 250
     text2Y = 90
