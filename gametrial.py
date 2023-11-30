@@ -9,7 +9,7 @@ from pygame import mixer
 import time
 pygame.init()
 mixer.music.load('data/music/gameplay.wav')
-mixer.music.set_volume(0.88)
+mixer.music.set_volume(0.60)
 mixer.music.play(-1)
 #my aspect ratio is 1366 by 768
 card_deck = CardDeck()
@@ -126,7 +126,7 @@ class StartScreen():
                         transition_to_noise = False
                         self.transition_to_start = False
                         button_easy.press()
-                        mixer.music.set_volume(0.5)
+                        mixer.music.set_volume(0.3)
                         
                         
                     if event.key == pygame.K_RETURN and button_chosen == 1:
@@ -709,6 +709,7 @@ def main():
                 first_scene.transition = False
                 first_scene.transition_to_end = True
                 mixer.music.load('data/music/win_music.wav')
+                mixer.music.set_volume(0.2)
                 mixer.music.play(-1)
                 
             text_display.display_grid(screen)
@@ -719,6 +720,7 @@ def main():
             #set framerate
             if first_scene.restart:
                 mixer.music.load('data/music/gameplay.wav')
+                mixer.music.set_volume(0.60)
                 mixer.music.play(-1)
                 card_deck.restart()
                 main()

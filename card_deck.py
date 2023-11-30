@@ -69,7 +69,7 @@ class CardDeck():
     def add_to_matrix(self,cards):
         j = 0
         k = 0
-        for i in range(len(cards)):
+        for i in range(len(cards)-30):
             self.matrix[j].append(cards[i])
             self.matrix_dictionary.update({(j,k):self.matrix[j][k]})
             cards[i].posX += k*82.6446281
@@ -277,6 +277,7 @@ class CardDeck():
         self.attempts+=1
         if list(self.flip_dictionary.values())[0].img_number == list(self.flip_dictionary.values())[1].img_number:
             self.correct.play()
+            self.correct.set_volume(0.5)
             if self.entanglement_witness(flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3):
                 self.score += 10
             #elif self.entanglement_witness(flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3) and error:
