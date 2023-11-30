@@ -157,6 +157,10 @@ def main():
         print(result2)
 
     entanglement_witness()
+    dice = random.randint(0,8)
+    while dice!=8:
+        dice = random.randint(0,8)
+        print(dice)
 if __name__ == '__main__':
     main()
 """          

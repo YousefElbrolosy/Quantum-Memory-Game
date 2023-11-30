@@ -69,7 +69,7 @@ class CardDeck():
     def add_to_matrix(self,cards):
         j = 0
         k = 0
-        for i in range(len(cards)-30):
+        for i in range(len(cards)):
             self.matrix[j].append(cards[i])
             self.matrix_dictionary.update({(j,k):self.matrix[j][k]})
             cards[i].posX += k*82.6446281
@@ -177,7 +177,7 @@ class CardDeck():
                         
     def flip(self, super_prob_2, super_prob_3, noise, revert):
         dice = random.randint(0,4)
-        if not noise or dice == 0 or dice == 1 or dice == 2 or revert:
+        if not noise or dice == 0 or dice == 1 or dice == 2 or dice == 3 or revert:
             matrix = self.border_dictionary_2D()
             row_measurement = random.choices(matrix,weights= super_prob_2, k = 1)
             col_measurement = random.choices(list(row_measurement[0].keys()), weights = super_prob_3, k = 1)
@@ -191,7 +191,7 @@ class CardDeck():
                 self.fart.play()
                 print("error"+str(flip_key))
                 self.flipped = False
-        elif noise and not revert and dice == 3 :
+        elif noise and not revert and dice == 4 :
             flip_key = (random.randint(0,3),random.randint(0,8))
             if(self.matrix_dictionary.get(flip_key) != None):
                 self.matrix_dictionary[flip_key].flip()

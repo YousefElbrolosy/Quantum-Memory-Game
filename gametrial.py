@@ -20,7 +20,7 @@ bgImg = pygame.image.load('utils/data/images/Space-Background-Images.jpg')
 bgImg_1 = pygame.image.load('utils/data/images/Space-Background-Images.jpg')
 bgImg_start = pygame.transform.scale(pygame.image.load('data/photos/Space-Background-Image-2.jpg'),(1366,768))
 select_sound = mixer.Sound('data/music/change_selection.wav')
-select_sound.set_volume(0.1)
+select_sound.set_volume(0.05)
 
 
 #Background sound
@@ -168,7 +168,7 @@ class StartScreen():
         text_7 = text_font.settings_font.render("7- WHEN",True,'black')
         text_7_1 = text_font.settings_font.render("   PLAYING WITH NOISE",True,(255,0,0))
         
-        text_7_2 = text_font.settings_font.render("FLIPPING OF CARDS MAY BE INACCURATE.",True,'black')
+        text_7_2 = text_font.settings_font.render("FLIPPING OF CARDS IS INACCURATE 20% OF THE TIME.",True,'black')
         text_7_3 = text_font.settings_font.render("15 POINTS UNLOCK ",True,'black')
         text_7_4 = text_font.settings_font.render("   ERROR MITIGATION",True,(0,128,128))
         text_7_5 = text_font.settings_font.render("WHICH REMOVES THE NOISE",True,'black')
@@ -499,7 +499,7 @@ def main():
                         
                         button_flip.press()
                         time.sleep(0.025)
-                        if not card_deck.no_border:
+                        if not card_deck.no_border or len(card_deck.flip_dictionary) > 0 or len(card_deck.border_dictionary)>0:
                             card_deck.flip(super_prob_2, super_prob_3,transition_to_noise, revert_to_no_noise)
                             #button_enter.press()
                             if len(card_deck.flip_dictionary) == 1:
@@ -725,7 +725,7 @@ def main():
                 card_deck.restart()
                 main()
 
-        clock.tick(60)
+        clock.tick(30)
 
 if __name__ == '__main__':
     main()
