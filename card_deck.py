@@ -31,6 +31,7 @@ class CardDeck():
     score = 0
     attempts = 0
     correct = mixer.Sound('data/music/correct_3.wav')
+    fart = mixer.Sound('data/music/wrong_1.mp3')
     correct.set_volume(0.75)
     wrong = mixer.Sound('data/music/wrong.mp3')
     wrong.set_volume(0.5)
@@ -187,16 +188,17 @@ class CardDeck():
                 self.flip_dictionary.update({flip_key:self.matrix_dictionary[flip_key]})
                 self.flipped = True
             else:
-                print(flip_key)
+                self.fart.play()
+                print("error"+str(flip_key))
                 self.flipped = False
-        elif noise and not revert or dice == 3 :
+        elif noise and not revert and dice == 3 :
             flip_key = (random.randint(0,3),random.randint(0,8))
             if(self.matrix_dictionary.get(flip_key) != None):
                 self.matrix_dictionary[flip_key].flip()
                 self.flip_dictionary.update({flip_key:self.matrix_dictionary[flip_key]})
                 self.flipped = True
             else:
-                
+                self.fart.play()
                 print("error"+str(flip_key))
                 self.flipped = False
             

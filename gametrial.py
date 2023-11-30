@@ -523,7 +523,9 @@ def main():
                                 circuit_grid_model_2 = CircuitGridModel(2,19)  
                                 circuit_grid_2 = CircuitGrid(0,575,circuit_grid_model_2)
                             
-                                
+                        else:
+                            button_flip.un_press()     
+                            card_deck.flip(super_prob_2, super_prob_3,transition_to_noise, revert_to_no_noise)  
                     elif keys[pygame.K_q]:
                         cheatflag = True
                     elif keys[pygame.K_r]:
