@@ -169,8 +169,8 @@ class StartScreen():
         text_7_1 = text_font.settings_font.render("   PLAYING WITH NOISE",True,(255,0,0))
         
         text_7_2 = text_font.settings_font.render("FLIPPING OF CARDS MAY BE INACCURATE.",True,'black')
-        text_7_3 = text_font.settings_font.render("POINTS UNLOCK ",True,'black')
-        text_7_4 = text_font.settings_font.render("ERROR MITIGATION",True,(0,128,128))
+        text_7_3 = text_font.settings_font.render("15 POINTS UNLOCK ",True,'black')
+        text_7_4 = text_font.settings_font.render("   ERROR MITIGATION",True,(0,128,128))
         text_7_5 = text_font.settings_font.render("WHICH REMOVES THE NOISE",True,'black')
         screen.blit(game_controls_border,((1366/2) - (375)+50,50))
         screen.blit(game_controls_txt,((1366/2) - (375)+50,50))
@@ -248,7 +248,7 @@ class StartScreen():
         screen.blit(quantum_memory,(250,385))
 
         
-        score = text_font.font_subtitle.render("Your Score is:" + str(card_deck.score),True,(0,255,255))
+        score = text_font.font_subtitle.render("Your Score is: " + str(card_deck.score),True,(0,255,255))
         score_border = text_font.font_subtitle_border.render("Your Score is: " + str(card_deck.score),True,'black')       
         screen.blit(score_border,(253,500))
         screen.blit(score,(250,500))
@@ -356,18 +356,19 @@ def main():
     text_font = Text()
     button_row = Button("row    'shift+r'",333,50,'gray','black','black',4,screen,text_font.font)
     button_column = Button("column 'shift+c'",333,50,'gray','black','black',4,screen,text_font.font)
-    options = Button("settings 'o'",230,50,'gray','black','black',4,screen,text_font.font)
-    button_h = Button("HADAMARD  'H'",333,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
-    button_x = Button("X gate    'x'",333,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
-    button_cnot = Button("CONTROL GATE+'C'",333,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
-    button_y = Button("Y GATE    'Y'",333,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
-    button_z = Button("Z gate    'Z'",333,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
-    button_rotate = Button("ROTATE '>' OR '<'",333,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
+    options = Button("setting 'g'",230,50,'gray','black','black',4,screen,text_font.font)
+    button_delete = Button("delete backspace",333,50,tmp_color,'black','gray',4,screen,text_font.font)
+    button_h = Button("HADAMARD  'H'",333,50,tmp_color,'black','gray',4,screen,text_font.font)
+    button_x = Button("X gate    'x'",333,50,tmp_color,'black','gray',4,screen,text_font.font)
+    button_cnot = Button("CONTROL GATE+'C'",333,50,tmp_color,'black','gray',4,screen,text_font.font)
+    button_y = Button("'Y' GATE",162,50,tmp_color,'black','gray',4,screen,text_font.font)
+    button_z = Button("'Z' gate",162,50,tmp_color,'black','gray',4,screen,text_font.font)
+    button_rotate = Button("ROTATE '>' OR '<'",333,50,tmp_color,'black','gray',4,screen,text_font.font)
     button_flip = Button("flip 'enter'",230,50,'gray','black','black',4,screen,text_font.font)
-    button_w = Button("UP  'W'",230,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
-    button_a = Button("LEFT  'A'",230,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
-    button_s = Button("DOWN 'S'",230,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
-    button_d = Button("RIGHT 'D'",230,50,tmp_color,'black',tmp_text_color,4,screen,text_font.font)
+    button_w = Button("UP  'W'",230,50,tmp_color,'black','gray',4,screen,text_font.font)
+    button_a = Button("LEFT  'A'",230,50,tmp_color,'black','gray',4,screen,text_font.font)
+    button_s = Button("DOWN 'S'",230,50,tmp_color,'black','gray',4,screen,text_font.font)
+    button_d = Button("RIGHT 'D'",230,50,tmp_color,'black','gray',4,screen,text_font.font)
     button_mitigate_noise = Button("ERROR MITIGATION",333,50,error_mitigate_bg_color,'black',error_mitigate_text_color,4,screen,text_font.font)
     #button_enter = Button("select 'enter'",325,50,'gray','black',4,screen,text_font.font)
     # button
@@ -392,16 +393,16 @@ def main():
             screen.fill((0,0,0))
             screen.blit(pygame.transform.scale(bgImg_1,(1366,768)),(0,0))
             
-            score = text_font.small_font_border.render("Score: "+str(card_deck.score),True,'dark gray')
+            score = text_font.small_font_border.render("Score: "+str(card_deck.score),True,'gray')
             screen.blit(score,(10,80))      
-            high_score = text_font.small_font_border.render("High Score: "+str(high_score_zero),True,'dark gray')
-            best_attempt_text = text_font.small_font_border.render("BEST Number",True,'dark gray')
-            best_attempt_text_2 = text_font.small_font_border.render("OF attempts",True,'dark gray')
-            best_attempt_text_3 = text_font.small_font_border.render(":"+str(best_attempt),True,'dark gray')
-            screen.blit(high_score,(10,130))  
-            screen.blit(best_attempt_text,(10,180))
-            screen.blit(best_attempt_text_2,(10,210))
-            screen.blit(best_attempt_text_3,(200,195))
+            high_score = text_font.small_font_border.render("High Score: "+str(high_score_zero),True,'gray')
+            best_attempt_text = text_font.small_font_border.render("BEST Number",True,'gray')
+            best_attempt_text_2 = text_font.small_font_border.render("OF attempts",True,'gray')
+            best_attempt_text_3 = text_font.small_font_border.render(":"+str(best_attempt),True,'gray')
+            screen.blit(high_score,(10,130-8))  
+            screen.blit(best_attempt_text,(10,180-8))
+            screen.blit(best_attempt_text_2,(10,210-8))
+            screen.blit(best_attempt_text_3,(200,195-8))
             text_display = Text()
             button_row.add_button(1025,10)
             button_column.add_button(1025,65)
@@ -415,9 +416,10 @@ def main():
             button_h.add_button(1025,120)
             button_x.add_button(1025,175)
             button_y.add_button(1025,230)
-            button_z.add_button(1025,285)
-            button_cnot.add_button(1025,340)
-            button_rotate.add_button(1025,395)
+            button_z.add_button(1195,230)
+            button_cnot.add_button(1025,340-55)
+            button_rotate.add_button(1025,395-55)
+            button_delete.add_button(1025,450-55)
             if transition_to_noise:
                 button_mitigate_noise.add_button(1025,450)
             button_h.un_press()
@@ -432,6 +434,7 @@ def main():
             button_rotate.un_press()
             button_mitigate_noise.un_press()
             options.un_press()
+            button_delete.un_press()
 
             if card_deck.score >= 15:
                 button_mitigate_noise.press()
@@ -479,7 +482,7 @@ def main():
                         col_flag = True
                         row_flag = False
 
-                    if keys[pygame.K_o]:
+                    if keys[pygame.K_g]:
                         select_sound.play()
                         first_scene.transition_to_options = True
                         if not transition_to_noise:
