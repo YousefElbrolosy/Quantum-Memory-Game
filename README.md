@@ -9,7 +9,6 @@ This interactive and fun memory game is designed to challenge your memory skills
 - [Getting Started](#getting-started)
 - [How to Play](#how-to-play)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
@@ -26,22 +25,22 @@ Check out the [live demo](#) to experience the game firsthand!
 
 ## Getting Started
 
-Follow these simple steps to get the Memory Game up and running on your local machine:
+Follow these steps to get the Memory Game up and running on your local machine:
 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/memory-game.git
+   git clone https://github.com/YousefElbrolosy/Quantum-Memory-Game.git
    ```
-2. Download [qiskit](https://qiskit.org/documentation/stable/0.24/install.html) and pygame
+2. Download [qiskit](https://qiskit.org/documentation/stable/0.24/install.html), [pygame](https://pypi.org/project/pygame/),[numpy](https://numpy.org/install/) and [sympy](https://docs.sympy.org/latest/install.html)
 
 That's it! You're ready to enjoy the Memory Game.
 
 ## How to Play
 
-1. Click on a card to reveal its symbol.
-2. Click on a second card to see if it matches the first one.
-3. If the cards match, they will stay face up. If not, they will be flipped back.
+1. Select on a card to reveal its symbol.
+2. Select a second card to see if it matches the first one.
+3. If the cards match, they be removed and you will earn points. If not, they will be flipped back.
 4. Continue selecting pairs of cards until all matches are found.
 5. The game is complete when all pairs are matched.
 
@@ -52,11 +51,5 @@ If you'd like to contribute to the project, follow these steps:
 1. Fork the repository.
 2. Create a new branch for your feature or bug fix.
 3. Make your changes and submit a pull request.
-
-## License
-
-This Memory Game is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
----
 
 Thank you for checking out the Memory Game project! Have fun testing and improving your memory skills. If you encounter any issues or have suggestions, feel free to open an issue or contribute to the project. Happy playing!
