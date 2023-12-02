@@ -44,8 +44,8 @@ That's it! You're ready to enjoy the Memory Game.
 7. The game is complete when all pairs are matched.
 8. If you flipped two matching cards using a circuit that generated entanglement you earn 10 points!
 9. Note that: when playing with noise the card you selected may not be the one that will flip because noise is introduced into the system. </br>
-  a. In order to remove that noise you need to perform error mitigation
-  b. error mitigation is unlocked when you reach 15 points.
+  A. In order to remove that noise you need to perform error mitigation </br>
+  B. error mitigation is unlocked when you reach 15 points.
 
 
 ## Contributing
