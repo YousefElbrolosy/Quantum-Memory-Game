@@ -5,7 +5,7 @@ This interactive and fun memory game is designed to challenge your memory skills
 ## Table of Contents
 
 - [Features](#features)
-- [Demo](#demo)
+- [Gameplay](#gameplay)
 - [Getting Started](#getting-started)
 - [How to Play](#how-to-play)
 - [Contributing](#contributing)
@@ -17,11 +17,9 @@ This interactive and fun memory game is designed to challenge your memory skills
 - Score tracking to measure your progress.
 - Intuitive and user-friendly interface.
 
-## Demo
+## Gameplay
 
-![Memory Game Demo](demo.gif)
-
-Check out the [live demo](#) to experience the game firsthand!
+Check out the [gameplay](https://m.youtube.com/watch?v=r27UGgq0eik&t=42s)
 
 ## Getting Started
 
@@ -53,3 +51,4 @@ If you'd like to contribute to the project, follow these steps:
 3. Make your changes and submit a pull request.
 
 Thank you for checking out the Memory Game project! Have fun testing and improving your memory skills. If you encounter any issues or have suggestions, feel free to open an issue or contribute to the project. Happy playing!
+
