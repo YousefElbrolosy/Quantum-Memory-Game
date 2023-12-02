@@ -702,7 +702,7 @@ def main():
             if len(card_deck.flip_dictionary) == 2:
                 # note that it is evennt.type not event.key
                 if event.type == pygame.K_RETURN :
-                    card_deck.check_cards(tmp_1_state_vector_2,tmp_1_state_vector_3,tmp_2_state_vector_2,tmp_2_state_vector_3,transition_to_noise) 
+                    card_deck.check_cards(tmp_1_state_vector_2,tmp_1_state_vector_3,tmp_2_state_vector_2,tmp_2_state_vector_3,transition_to_noise,revert_to_no_noise) 
             
             
             if card_deck.check_win():

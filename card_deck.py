@@ -272,7 +272,7 @@ class CardDeck():
             val.un_flip()
             del self.flip_dictionary[key]
             
-    def check_cards(self,flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3,error):
+    def check_cards(self,flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3,error,revert):
         self.checked = True
         self.attempts+=1
         if list(self.flip_dictionary.values())[0].img_number == list(self.flip_dictionary.values())[1].img_number:
@@ -283,7 +283,7 @@ class CardDeck():
             #elif self.entanglement_witness(flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3) and error:
             #    self.score += 10
             else:
-                if not error and not self.entanglement_witness(flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3):
+                if (not error or revert) and not self.entanglement_witness(flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3):
                     self.score +=1
                 else:
                     if error and not self.entanglement_witness(flip_1_state_vector_2,flip_1_state_vector_3,flip_2_state_vector_2,flip_2_state_vector_3):
