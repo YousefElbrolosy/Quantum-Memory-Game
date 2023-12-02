@@ -1,5 +1,5 @@
 # Quantum-Memory-Game
-This is a quantum version of the classic Memory card game using IBM Qiskit and PyGame. This game is based on James Weaver's quantum-circuit-pygame package: https://github.com/JavaFXpert/quantum-circuit-pygame. /
+This is a quantum version of the classic Memory card game using IBM Qiskit and PyGame. This game is based on James Weaver's quantum-circuit-pygame package: https://github.com/JavaFXpert/quantum-circuit-pygame. </br>
 This interactive and fun memory game is designed to challenge your memory skills by asking you to match pairs of cards from a grid. Test your memory and concentration as you try to remember the positions of various cards and match them to clear the board.
 
 ## Table of Contents
