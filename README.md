@@ -35,12 +35,13 @@ Follow these steps to get the Memory Game up and running on your local machine:
 That's it! You're ready to enjoy the Memory Game.
 
 ## How to Play
-
-1. Select on a card to reveal its symbol.
-2. Select a second card to see if it matches the first one.
-3. If the cards match, they be removed and you will earn points. If not, they will be flipped back.
-4. Continue selecting pairs of cards until all matches are found.
-5. The game is complete when all pairs are matched.
+1. Place quantum gates on the circuit grid to select the row.
+2. Repeat the process to select a column.
+3. Flip the a card to reveal its symbol.
+4. Flip a second card to see if it matches the first one.
+5. If the cards match, they be removed and you will earn points. If not, they will be flipped back.
+6. Continue selecting pairs of cards until all matches are found.
+7. The game is complete when all pairs are matched.
 
 ## Contributing
 
