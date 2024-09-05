@@ -51,7 +51,7 @@ That's it! You're ready to enjoy the Memory Game.
 ## Contributing
    Copyright 2024 Yousef Elbrolosy
 
-   Licensed under the Apache License, Version 2.0 (the "License");
+   Licensed under the Apache License, Version 2.0;
    you may not use this file except in compliance with the License.
    You may obtain a copy of the License at
 
@@ -62,12 +62,6 @@ That's it! You're ready to enjoy the Memory Game.
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-
-If you'd like to contribute to the project, follow these steps:
-
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Make your changes and submit a pull request.
 
 Thank you for checking out the Memory Game project! Have fun testing and improving your memory skills. If you encounter any issues or have suggestions, feel free to open an issue or contribute to the project. Happy playing!
 
