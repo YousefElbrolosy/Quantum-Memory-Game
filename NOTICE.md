@@ -1,0 +1,1 @@
+This project is created and developed by [Yousef Elbrolosy](https://github.com/YousefElbrolosy) and uses James Weaver's [quantum-circuit-pygame package](https://github.com/JavaFXpert/quantum-circuit-pygame).
