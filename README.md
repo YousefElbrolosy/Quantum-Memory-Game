@@ -32,6 +32,12 @@ Follow these steps to get the Memory Game up and running on your local machine:
    ```
 2. Download [qiskit](https://qiskit.org/documentation/stable/0.24/install.html), [pygame](https://pypi.org/project/pygame/),[numpy](https://numpy.org/install/) and [sympy](https://docs.sympy.org/latest/install.html)
 
+3. Run the code:
+
+   ```bash
+   python gametrial.py
+   ```
+   
 That's it! You're ready to enjoy the Memory Game.
 
 ## How to Play
